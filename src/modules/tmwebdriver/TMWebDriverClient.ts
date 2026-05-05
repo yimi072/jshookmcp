@@ -48,7 +48,10 @@ export class TMWebDriverClient extends EventEmitter {
   private _started = false;
 
   // ── HTTP long-poll queues (for extension HTTP fallback) ──
-  private httpQueues = new Map<string, { queue: string[]; waiting: Array<(msg: string) => void> }>();
+  private httpQueues = new Map<
+    string,
+    { queue: string[]; waiting: Array<(msg: string) => void> }
+  >();
 
   constructor(config: TMWebDriverConfig = {}) {
     super();
@@ -107,7 +110,9 @@ export class TMWebDriverClient extends EventEmitter {
 
     this.startHttpServer();
     this.startWsServer();
-    logger.info(`[tmwebdriver] Listening on ws://${this.host}:${this.port} (HTTP ${this.port + 1})`);
+    logger.info(
+      `[tmwebdriver] Listening on ws://${this.host}:${this.port} (HTTP ${this.port + 1})`,
+    );
   }
 
   /**
@@ -198,7 +203,9 @@ export class TMWebDriverClient extends EventEmitter {
         // Fallback to any active session
         const fallback = this.findActiveSession();
         if (fallback) {
-          logger.warn(`[tmwebdriver] Session ${sessionId} disconnected, falling back to ${fallback.id}`);
+          logger.warn(
+            `[tmwebdriver] Session ${sessionId} disconnected, falling back to ${fallback.id}`,
+          );
           this._defaultSessionId = fallback.id;
           return this.executeJs(code, { timeout, sessionId: fallback.id });
         }
@@ -229,7 +236,10 @@ export class TMWebDriverClient extends EventEmitter {
   /**
    * Navigate the current tab to a URL.
    */
-  async jump(url: string, options?: { timeout?: number; sessionId?: string }): Promise<ExecuteJsResult> {
+  async jump(
+    url: string,
+    options?: { timeout?: number; sessionId?: string },
+  ): Promise<ExecuteJsResult> {
     return this.executeJs(`window.location.href='${url}'`, options);
   }
 
@@ -349,11 +359,7 @@ export class TMWebDriverClient extends EventEmitter {
       .digest('base64');
   }
 
-  private handleWsFrame(
-    socket: Socket,
-    data: Buffer,
-    onMessage: (msg: string) => void,
-  ): void {
+  private handleWsFrame(socket: Socket, data: Buffer, onMessage: (msg: string) => void): void {
     // Minimal WS frame parser — handles text frames and close/ping
     let offset = 0;
     while (offset < data.length) {
@@ -546,9 +552,10 @@ export class TMWebDriverClient extends EventEmitter {
 
     if (!result.success) {
       const errData = result.data;
-      const msg = typeof errData === 'object' && errData !== null && 'message' in errData
-        ? String((errData as Record<string, unknown>).message)
-        : String(errData);
+      const msg =
+        typeof errData === 'object' && errData !== null && 'message' in errData
+          ? String((errData as Record<string, unknown>).message)
+          : String(errData);
       cmd.reject(new Error(msg));
       return;
     }
@@ -578,10 +585,7 @@ export class TMWebDriverClient extends EventEmitter {
     this.httpServer = server;
   }
 
-  private handleHttpResult(
-    req: IncomingMessage,
-    res: ServerResponse,
-  ): void {
+  private handleHttpResult(req: IncomingMessage, res: ServerResponse): void {
     this.readBody(req).then((body) => {
       try {
         const data = JSON.parse(body) as Record<string, unknown>;
@@ -600,16 +604,15 @@ export class TMWebDriverClient extends EventEmitter {
           });
         }
         this.resolvePending(id);
-      } catch { /* ignore parse errors */ }
+      } catch {
+        /* ignore parse errors */
+      }
       res.writeHead(200);
       res.end('ok');
     });
   }
 
-  private handleHttpLongPoll(
-    req: IncomingMessage,
-    res: ServerResponse,
-  ): void {
+  private handleHttpLongPoll(req: IncomingMessage, res: ServerResponse): void {
     this.readBody(req).then((body) => {
       try {
         const data = JSON.parse(body) as Record<string, unknown>;
@@ -644,7 +647,9 @@ export class TMWebDriverClient extends EventEmitter {
             try {
               const parsed = JSON.parse(msg) as Record<string, unknown>;
               if (parsed.id) this.acks.add(String(parsed.id));
-            } catch { /* ignore */ }
+            } catch {
+              /* ignore */
+            }
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(msg);
             return;
@@ -661,14 +666,17 @@ export class TMWebDriverClient extends EventEmitter {
           };
           queue.waiting.push(waiter);
           // Cleanup on timeout
-          setTimeout(() => {
-            const idx = queue.waiting.indexOf(waiter);
-            if (idx !== -1) {
-              queue.waiting.splice(idx, 1);
-              res.writeHead(200, { 'Content-Type': 'application/json' });
-              res.end(JSON.stringify({ id: '', ret: 'next long-poll' }));
-            }
-          }, Math.max(0, deadline - Date.now()));
+          setTimeout(
+            () => {
+              const idx = queue.waiting.indexOf(waiter);
+              if (idx !== -1) {
+                queue.waiting.splice(idx, 1);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ id: '', ret: 'next long-poll' }));
+              }
+            },
+            Math.max(0, deadline - Date.now()),
+          );
         };
 
         tryDequeue();
@@ -679,10 +687,7 @@ export class TMWebDriverClient extends EventEmitter {
     });
   }
 
-  private handleHttpLink(
-    req: IncomingMessage,
-    res: ServerResponse,
-  ): void {
+  private handleHttpLink(req: IncomingMessage, res: ServerResponse): void {
     this.readBody(req).then((body) => {
       try {
         const data = JSON.parse(body) as Record<string, unknown>;
@@ -717,7 +722,9 @@ export class TMWebDriverClient extends EventEmitter {
             });
           return;
         }
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
       res.writeHead(200);
       res.end('ok');
     });
@@ -768,9 +775,13 @@ export class TMWebDriverClient extends EventEmitter {
 
         const acked = this.acks.has(execId);
         if (acked) {
-          resolve({ result: `No response in ${timeout / 1000}s (ACK received, script may still be running)` });
+          resolve({
+            result: `No response in ${timeout / 1000}s (ACK received, script may still be running)`,
+          });
         } else {
-          resolve({ result: `No response in ${timeout / 1000}s (no ACK, script may not have been delivered)` });
+          resolve({
+            result: `No response in ${timeout / 1000}s (no ACK, script may not have been delivered)`,
+          });
         }
       }, timeout);
 
@@ -818,7 +829,10 @@ export class TMWebDriverClient extends EventEmitter {
     }
   }
 
-  private getHttpQueue(sessionId: string): { queue: string[]; waiting: Array<(msg: string) => void> } {
+  private getHttpQueue(sessionId: string): {
+    queue: string[];
+    waiting: Array<(msg: string) => void>;
+  } {
     let q = this.httpQueues.get(sessionId);
     if (!q) {
       q = { queue: [], waiting: [] };

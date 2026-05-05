@@ -4,14 +4,14 @@ import { tool } from '@server/registry/tool-builder';
 export const realBrowserTools: Tool[] = [
   tool('real_browser_setup_status', (t) =>
     t
-      .desc('Return extension path, bridge ports, and connection status for the real Chrome bridge.')
+      .desc(
+        'Return extension path, bridge ports, and connection status for the real Chrome bridge.',
+      )
       .readOnly(),
   ),
 
   tool('real_browser_list_tabs', (t) =>
-    t
-      .desc('List currently connected real Chrome browser tabs/sessions.')
-      .readOnly(),
+    t.desc('List currently connected real Chrome browser tabs/sessions.').readOnly(),
   ),
 
   tool('real_browser_switch_tab', (t) =>
@@ -39,9 +39,7 @@ export const realBrowserTools: Tool[] = [
   ),
 
   tool('real_browser_extension_path', (t) =>
-    t
-      .desc('Get the absolute path to the bundled Chrome extension directory.')
-      .readOnly(),
+    t.desc('Get the absolute path to the bundled Chrome extension directory.').readOnly(),
   ),
 
   tool('real_browser_execute_js', (t) =>
@@ -55,7 +53,9 @@ export const realBrowserTools: Tool[] = [
 
   tool('real_browser_scan_page', (t) =>
     t
-      .desc('Scan the real Chrome page: extract simplified HTML with visibility analysis and list truncation.')
+      .desc(
+        'Scan the real Chrome page: extract simplified HTML with visibility analysis and list truncation.',
+      )
       .string('sessionId', 'Session ID')
       .boolean('textOnly', 'Return plain text instead of HTML', { default: false })
       .boolean('cutlist', 'Enable list detection and truncation', { default: true })
@@ -78,7 +78,7 @@ export const realBrowserTools: Tool[] = [
     t
       .desc(
         'Run a batch of CDP commands via the extension bridge. ' +
-        'Supports $N.path references to previous results.',
+          'Supports $N.path references to previous results.',
       )
       .object(
         'commands',

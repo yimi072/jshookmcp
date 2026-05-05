@@ -101,7 +101,9 @@ export function processScanResult(
 
   const lists = findListsInDoc(doc);
   if (lists.length > 0) {
-    logger.info(`[dom-intel] Found ${lists.length} list(s): ${lists.map((l) => l.selector).join(', ')}`);
+    logger.info(
+      `[dom-intel] Found ${lists.length} list(s): ${lists.map((l) => l.selector).join(', ')}`,
+    );
   }
 
   for (const entry of lists) {
@@ -109,7 +111,9 @@ export function processScanResult(
     if (items.length < 5) continue;
     const totalLen = Array.from(items).reduce((sum, it) => sum + it.outerHTML.length, 0);
     const avgLen = totalLen / items.length;
-    logger.debug(`[dom-intel]   '${entry.selector}': ${items.length} items, avg ${Math.round(avgLen)} chars`);
+    logger.debug(
+      `[dom-intel]   '${entry.selector}': ${items.length} items, avg ${Math.round(avgLen)} chars`,
+    );
     if (avgLen < 200 || (avgLen < 700 && totalLen < 2500)) continue;
 
     const keep = Array.from(items).slice(0, 3);
@@ -129,7 +133,9 @@ export function processScanResult(
   }
 
   const optimized = optimizeHtmlForTokens(doc.body.innerHTML);
-  logger.info(`[dom-intel] Result: ${rawHtml.length} → ${optimized.length} chars (${rawHtml.length > 0 ? Math.round((1 - optimized.length / rawHtml.length) * 100) : 0}% saved)`);
+  logger.info(
+    `[dom-intel] Result: ${rawHtml.length} → ${optimized.length} chars (${rawHtml.length > 0 ? Math.round((1 - optimized.length / rawHtml.length) * 100) : 0}% saved)`,
+  );
 
   if (optimized.length > maxChars) return smartTruncate(optimized, maxChars);
   return optimized;

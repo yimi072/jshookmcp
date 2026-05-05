@@ -10,16 +10,8 @@ export {
 } from './page-scanner';
 
 // Server-side processing
-export {
-  optimizeHtmlForTokens,
-  smartTruncate,
-  optimizeAndTruncate,
-} from './token-optimizer';
-export {
-  processScanResult,
-  cleanTextOutput,
-  diffPages,
-} from './page-scanner';
+export { optimizeHtmlForTokens, smartTruncate, optimizeAndTruncate } from './token-optimizer';
+export { processScanResult, cleanTextOutput, diffPages } from './page-scanner';
 
 // Types
 export type { ScanOptions, ListCandidate, DomDiffResult, OptimizeStats } from './types';

@@ -15,22 +15,41 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('fetchCookies').addEventListener('click', fetchCookies);
-  document.getElementById('clearCookies').addEventListener('click', () => { out.textContent = ''; });
+  document.getElementById('clearCookies').addEventListener('click', () => {
+    out.textContent = '';
+  });
 });
 
 async function fetchCookies() {
   const out = document.getElementById('out');
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (!tab?.url) { out.textContent = 'No active tab'; return; }
+    if (!tab?.url) {
+      out.textContent = 'No active tab';
+      return;
+    }
     const resp = await chrome.runtime.sendMessage({ cmd: 'cookies', url: tab.url });
-    if (!resp?.ok) { out.textContent = 'Error: ' + (resp?.error || 'unknown'); return; }
-    if (!resp.data.length) { out.textContent = '(no cookies)'; return; }
-    out.textContent = resp.data.map(c =>
-      `${c.name}=${c.value}` + (c.httpOnly ? ' [H]' : '') + (c.secure ? ' [S]' : '') + (c.partitionKey ? ' [P]' : '')
-    ).join('\n');
+    if (!resp?.ok) {
+      out.textContent = 'Error: ' + (resp?.error || 'unknown');
+      return;
+    }
+    if (!resp.data.length) {
+      out.textContent = '(no cookies)';
+      return;
+    }
+    out.textContent = resp.data
+      .map(
+        (c) =>
+          `${c.name}=${c.value}` +
+          (c.httpOnly ? ' [H]' : '') +
+          (c.secure ? ' [S]' : '') +
+          (c.partitionKey ? ' [P]' : ''),
+      )
+      .join('\n');
     // Copy name=value; format to clipboard
-    const str = resp.data.map(c => `${c.name}=${c.value}`).join('; ');
+    const str = resp.data.map((c) => `${c.name}=${c.value}`).join('; ');
     await navigator.clipboard.writeText(str);
-  } catch (e) { out.textContent = 'Error: ' + e.message; }
+  } catch (e) {
+    out.textContent = 'Error: ' + e.message;
+  }
 }

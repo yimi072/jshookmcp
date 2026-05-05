@@ -129,10 +129,13 @@ export class CdpHandlers {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       cdp.on('Network.requestWillBeSent' as any, onEvent as any);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await cdp.send('Network.enable' as any, {
-        maxTotalBufferSize: 100_000_000,
-        maxResourceBufferSize: 50_000_000,
-      } as any);
+      await cdp.send(
+        'Network.enable' as any,
+        {
+          maxTotalBufferSize: 100_000_000,
+          maxResourceBufferSize: 50_000_000,
+        } as any,
+      );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await cdp.send('Page.enable' as any, {} as any);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

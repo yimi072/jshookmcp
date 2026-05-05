@@ -16,6 +16,7 @@ const registrations = defineMethodRegistrations<H, (typeof siteAdapterTools)[num
     { tool: 'site_info', method: 'handleSiteInfo' },
     { tool: 'site_run', method: 'handleSiteRun' },
     { tool: 'site_search', method: 'handleSiteSearch' },
+    { tool: 'site_update', method: 'handleSiteUpdate' },
   ],
 });
 

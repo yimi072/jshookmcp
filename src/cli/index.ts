@@ -27,6 +27,7 @@ import {
   searchAdapters,
   executeAdapter,
   resolveAdapter,
+  updateAdaptersFromGitHub,
 } from '@modules/site-adapters/adapter-runtime';
 import { formatEnvironmentDoctorReport, runEnvironmentDoctor } from '@utils/environmentDoctor';
 
@@ -51,6 +52,7 @@ COMMANDS:
   site info <name>                      Show adapter details
   site run <name> [--args '{}']         Run a site adapter
   site search <query>                   Search adapters by keyword
+  site update                           Update adapters from GitHub
   doctor                                Check environment health
 
 OPTIONS:
@@ -138,7 +140,10 @@ function prettyPrint(data: unknown, indent = 0): void {
 
 // ── Connection ─────────────────────────────────────────────────────
 
-async function connect(): Promise<{ client: TMWebDriverClient; handlers: RealBrowserToolHandlers }> {
+async function connect(): Promise<{
+  client: TMWebDriverClient;
+  handlers: RealBrowserToolHandlers;
+}> {
   const remoteUrl = process.env.JSHOOK_TMWD_REMOTE;
   const host = process.env.JSHOOK_TMWD_HOST || '127.0.0.1';
   const port = parseInt(process.env.JSHOOK_TMWD_PORT || '18765', 10);
@@ -218,10 +223,7 @@ async function main() {
       if (!name) die('Usage: jshook site info <name>');
       const adapter = resolveAdapter(name);
       if (!adapter) die(`Adapter "${name}" not found`);
-      output(
-        { name: adapter.meta.name, meta: adapter.meta, source: adapter.source },
-        jsonMode,
-      );
+      output({ name: adapter.meta.name, meta: adapter.meta, source: adapter.source }, jsonMode);
       process.exit(0);
     }
 
@@ -245,7 +247,18 @@ async function main() {
       process.exit(0);
     }
 
-    die(`Unknown site subcommand: ${sub}. Use: list, info, run, search`);
+    if (sub === 'update') {
+      console.log('Updating adapters from epiral/bb-sites...');
+      const result = await updateAdaptersFromGitHub();
+      if (result.success) {
+        output({ message: `Updated ${result.count} adapters`, count: result.count }, jsonMode);
+      } else {
+        die(`Update failed: ${result.error}`);
+      }
+      process.exit(0);
+    }
+
+    die(`Unknown site subcommand: ${sub}. Use: list, info, run, search, update`);
   }
 
   // Browser commands — need connection

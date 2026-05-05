@@ -9,10 +9,33 @@ import { JSDOM } from 'jsdom';
 import type { OptimizeStats } from './types';
 
 const KEEP_ATTRS = new Set([
-  'id', 'class', 'name', 'src', 'href', 'alt', 'value', 'type', 'placeholder',
-  'disabled', 'checked', 'selected', 'readonly', 'required', 'multiple',
-  'role', 'aria-label', 'aria-expanded', 'aria-hidden', 'contenteditable',
-  'title', 'for', 'action', 'method', 'target', 'colspan', 'rowspan',
+  'id',
+  'class',
+  'name',
+  'src',
+  'href',
+  'alt',
+  'value',
+  'type',
+  'placeholder',
+  'disabled',
+  'checked',
+  'selected',
+  'readonly',
+  'required',
+  'multiple',
+  'role',
+  'aria-label',
+  'aria-expanded',
+  'aria-hidden',
+  'contenteditable',
+  'title',
+  'for',
+  'action',
+  'method',
+  'target',
+  'colspan',
+  'rowspan',
 ]);
 
 /**
@@ -249,7 +272,10 @@ function findMainLists(doc: Document): Array<{ selector: string; count: number }
 /**
  * Optimize and truncate HTML to fit within maxChars.
  */
-export function optimizeAndTruncate(html: string, maxChars: number): { html: string; stats: OptimizeStats } {
+export function optimizeAndTruncate(
+  html: string,
+  maxChars: number,
+): { html: string; stats: OptimizeStats } {
   const originalLength = html.length;
   const optimized = optimizeHtmlForTokens(html);
   const truncated = optimized.length > maxChars ? smartTruncate(optimized, maxChars) : optimized;
@@ -258,7 +284,8 @@ export function optimizeAndTruncate(html: string, maxChars: number): { html: str
     stats: {
       originalLength,
       optimizedLength: truncated.length,
-      savedPercent: originalLength > 0 ? Math.round((1 - truncated.length / originalLength) * 100) : 0,
+      savedPercent:
+        originalLength > 0 ? Math.round((1 - truncated.length / originalLength) * 100) : 0,
     },
   };
 }

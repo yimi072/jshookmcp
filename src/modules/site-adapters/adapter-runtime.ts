@@ -6,16 +6,12 @@
  *   async function(args) { ... return structuredData; }
  */
 
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, mkdirSync, writeFileSync, cpSync, rmSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import { execSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { getProjectRoot } from '@utils/outputPaths';
-import type {
-  AdapterMeta,
-  AdapterFile,
-  AdapterEntry,
-  AdapterIndex,
-  AdapterResult,
-} from './types';
+import type { AdapterMeta, AdapterFile, AdapterEntry, AdapterIndex, AdapterResult } from './types';
 
 const ADAPTERS_DIR = join(getProjectRoot(), 'src', 'assets', 'bb-sites');
 const USER_ADAPTERS_DIR = join(
@@ -218,5 +214,71 @@ export async function executeAdapter(
       adapter: name,
       elapsedMs: Date.now() - start,
     };
+  }
+}
+
+/**
+ * Update bundled adapters from epiral/bb-sites GitHub repo.
+ * Clones to temp dir, copies .js files, regenerates index.json.
+ */
+export async function updateAdaptersFromGitHub(): Promise<{
+  success: boolean;
+  count?: number;
+  error?: string;
+}> {
+  const repoUrl = 'https://github.com/epiral/bb-sites.git';
+  const tmpDir = join(tmpdir(), `bb-sites-update-${Date.now()}`);
+
+  try {
+    // Clone shallow
+    execSync(`git clone --depth 1 ${repoUrl} "${tmpDir}"`, {
+      stdio: 'pipe',
+      timeout: 60000,
+    });
+
+    // Clear existing bundled adapters (except index.json)
+    if (existsSync(ADAPTERS_DIR)) {
+      for (const entry of readdirSync(ADAPTERS_DIR, { withFileTypes: true })) {
+        if (entry.name === 'index.json') continue;
+        const full = join(ADAPTERS_DIR, entry.name);
+        rmSync(full, { recursive: true, force: true });
+      }
+    } else {
+      mkdirSync(ADAPTERS_DIR, { recursive: true });
+    }
+
+    // Copy adapter directories from cloned repo
+    let count = 0;
+    for (const entry of readdirSync(tmpDir, { withFileTypes: true })) {
+      if (!entry.isDirectory() || entry.name.startsWith('.')) continue;
+      const srcDir = join(tmpDir, entry.name);
+      const dstDir = join(ADAPTERS_DIR, entry.name);
+
+      // Check if directory contains .js files
+      const files = readdirSync(srcDir).filter((f) => f.endsWith('.js'));
+      if (files.length === 0) continue;
+
+      cpSync(srcDir, dstDir, { recursive: true });
+      count += files.length;
+    }
+
+    // Regenerate index.json
+    const index: AdapterIndex = {};
+    scanAdaptersDir(ADAPTERS_DIR, index);
+    writeFileSync(join(ADAPTERS_DIR, 'index.json'), JSON.stringify(index, null, 2));
+
+    // Invalidate cache
+    invalidateAdapterIndex();
+
+    return { success: true, count };
+  } catch (e) {
+    return { success: false, error: (e as Error).message };
+  } finally {
+    // Cleanup temp dir
+    try {
+      rmSync(tmpDir, { recursive: true, force: true });
+    } catch {
+      // ignore
+    }
   }
 }

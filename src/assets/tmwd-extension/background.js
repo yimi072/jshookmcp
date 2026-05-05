@@ -4,14 +4,20 @@ chrome.runtime.onInstalled.addListener(() => {
   // Strip CSP headers to allow eval/inline scripts
   chrome.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: [9999],
-    addRules: [{
-      id: 9999, priority: 1,
-      action: { type: 'modifyHeaders', responseHeaders: [
-        { header: 'content-security-policy', operation: 'remove' },
-        { header: 'content-security-policy-report-only', operation: 'remove' }
-      ]},
-      condition: { urlFilter: '*', resourceTypes: ['main_frame', 'sub_frame'] }
-    }]
+    addRules: [
+      {
+        id: 9999,
+        priority: 1,
+        action: {
+          type: 'modifyHeaders',
+          responseHeaders: [
+            { header: 'content-security-policy', operation: 'remove' },
+            { header: 'content-security-policy-report-only', operation: 'remove' },
+          ],
+        },
+        condition: { urlFilter: '*', resourceTypes: ['main_frame', 'sub_frame'] },
+      },
+    ],
   });
 });
 
@@ -27,17 +33,34 @@ async function handleExtMessage(msg, sender) {
         await chrome.windows.update(tab.windowId, { focused: true });
         return { ok: true };
       } else {
-        const tabs = (await chrome.tabs.query({})).filter(t => isScriptable(t.url));
-        const data = tabs.map(t => ({ id: t.id, url: t.url, title: t.title, active: t.active, windowId: t.windowId }));
+        const tabs = (await chrome.tabs.query({})).filter((t) => isScriptable(t.url));
+        const data = tabs.map((t) => ({
+          id: t.id,
+          url: t.url,
+          title: t.title,
+          active: t.active,
+          windowId: t.windowId,
+        }));
         return { ok: true, data };
       }
-    } catch (e) { return { ok: false, error: e.message }; }
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
   }
   if (msg.cmd === 'management') {
     try {
       if (msg.method === 'list') {
         const all = await chrome.management.getAll();
-        return { ok: true, data: all.map(e => ({ id: e.id, name: e.name, enabled: e.enabled, type: e.type, version: e.version })) };
+        return {
+          ok: true,
+          data: all.map((e) => ({
+            id: e.id,
+            name: e.name,
+            enabled: e.enabled,
+            type: e.type,
+            version: e.version,
+          })),
+        };
       }
       if (msg.method === 'reload') {
         chrome.alarms.create('tmwd-self-reload', { when: Date.now() + 200 });
@@ -52,7 +75,9 @@ async function handleExtMessage(msg, sender) {
         return { ok: true };
       }
       return { ok: false, error: 'Unknown method: ' + msg.method };
-    } catch (e) { return { ok: false, error: e.message }; }
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
   }
   return { ok: false, error: 'Unknown cmd: ' + msg.cmd };
 }
@@ -71,10 +96,12 @@ async function handleCookies(msg, sender) {
     }
     const origin = url.match(/^https?:\/\/[^\/]+/)[0];
     const all = await chrome.cookies.getAll({ url });
-    const part = await chrome.cookies.getAll({ url, partitionKey: { topLevelSite: origin } }).catch(() => []);
+    const part = await chrome.cookies
+      .getAll({ url, partitionKey: { topLevelSite: origin } })
+      .catch(() => []);
     const merged = [...all];
     for (const c of part) {
-      if (!merged.some(x => x.name === c.name && x.domain === c.domain)) merged.push(c);
+      if (!merged.some((x) => x.name === c.name && x.domain === c.domain)) merged.push(c);
     }
     return { ok: true, data: merged };
   } catch (e) {
@@ -85,20 +112,38 @@ async function handleCookies(msg, sender) {
 async function handleBatch(msg, sender) {
   const R = [];
   let attached = null;
-  const resolve$N = (params) => JSON.parse(JSON.stringify(params || {}).replace(/"\$(\d+)\.([^"]+)"/g,
-    (_, i, path) => { let v = R[+i]; for (const k of path.split('.')) v = v[k]; return JSON.stringify(v); }));
+  const resolve$N = (params) =>
+    JSON.parse(
+      JSON.stringify(params || {}).replace(/"\$(\d+)\.([^"]+)"/g, (_, i, path) => {
+        let v = R[+i];
+        for (const k of path.split('.')) v = v[k];
+        return JSON.stringify(v);
+      }),
+    );
   try {
     for (const c of msg.commands) {
       if (c.tabId === undefined && msg.tabId !== undefined) c.tabId = msg.tabId;
       if (c.cmd === 'cookies') {
         R.push(await handleCookies(c, sender));
       } else if (c.cmd === 'tabs') {
-        const tabs = (await chrome.tabs.query({})).filter(t => isScriptable(t.url));
-        R.push({ ok: true, data: tabs.map(t => ({ id: t.id, url: t.url, title: t.title, active: t.active, windowId: t.windowId })) });
+        const tabs = (await chrome.tabs.query({})).filter((t) => isScriptable(t.url));
+        R.push({
+          ok: true,
+          data: tabs.map((t) => ({
+            id: t.id,
+            url: t.url,
+            title: t.title,
+            active: t.active,
+            windowId: t.windowId,
+          })),
+        });
       } else if (c.cmd === 'cdp') {
         const tabId = c.tabId || msg.tabId || sender.tab?.id;
         if (attached !== tabId) {
-          if (attached) { await chrome.debugger.detach({ tabId: attached }); attached = null; }
+          if (attached) {
+            await chrome.debugger.detach({ tabId: attached });
+            attached = null;
+          }
           await chrome.debugger.attach({ tabId }, '1.3');
           attached = tabId;
         }
@@ -110,7 +155,10 @@ async function handleBatch(msg, sender) {
     if (attached) await chrome.debugger.detach({ tabId: attached });
     return { ok: true, results: R };
   } catch (e) {
-    if (attached) try { await chrome.debugger.detach({ tabId: attached }); } catch (_) {}
+    if (attached)
+      try {
+        await chrome.debugger.detach({ tabId: attached });
+      } catch (_) {}
     return { ok: false, error: e.message, results: R };
   }
 }
@@ -120,7 +168,7 @@ async function handleBatch(msg, sender) {
  * return captured Network.requestWillBeSent rows (e.g. chapter POST bodies).
  */
 async function handleNetworkReloadCapture(msg, sender) {
-  const tabId = msg.tabId != null ? parseInt(msg.tabId, 10) : (sender.tab && sender.tab.id);
+  const tabId = msg.tabId != null ? parseInt(msg.tabId, 10) : sender.tab && sender.tab.id;
   if (!tabId) return { ok: false, error: 'network_reload_capture requires tabId' };
   const settleMs = Math.min(Math.max(Number(msg.settleMs) || 8000, 500), 120000);
   const needle = typeof msg.urlSubstring === 'string' ? msg.urlSubstring : '/web/book/chapter/e_';
@@ -154,8 +202,12 @@ async function handleNetworkReloadCapture(msg, sender) {
     chrome.debugger.onEvent.removeListener(onEvent);
     return { ok: true, captured, tabId, settleMs };
   } catch (e) {
-    try { await chrome.debugger.detach({ tabId }); } catch (_) {}
-    try { chrome.debugger.onEvent.removeListener(onEvent); } catch (_) {}
+    try {
+      await chrome.debugger.detach({ tabId });
+    } catch (_) {}
+    try {
+      chrome.debugger.onEvent.removeListener(onEvent);
+    } catch (_) {}
     return { ok: false, error: e.message || String(e), captured };
   }
 }
@@ -169,12 +221,14 @@ async function handleCDP(msg, sender) {
     await chrome.debugger.detach({ tabId });
     return { ok: true, data: result };
   } catch (e) {
-    try { await chrome.debugger.detach({ tabId }); } catch (_) {}
+    try {
+      await chrome.debugger.detach({ tabId });
+    } catch (_) {}
     return { ok: false, error: e.message };
   }
 }
 // Filter out chrome:// and other internal tabs that can't be scripted
-const isScriptable = url => url && /^https?:/.test(url);
+const isScriptable = (url) => url && /^https?:/.test(url);
 
 // --- Shared page/CDP script builder core ---
 function buildExecScript(code, errorHandler) {
@@ -220,17 +274,23 @@ function buildExecScript(code, errorHandler) {
 }
 
 function buildPageScript(code) {
-  return buildExecScript(code, `
+  return buildExecScript(
+    code,
+    `
       const errMsg = e.message || String(e);
       return { ok: false, error: { name: e.name || 'Error', message: errMsg, stack: e.stack || '' },
         csp: errMsg.includes('Refused to evaluate') || errMsg.includes('unsafe-eval') || errMsg.includes('Content Security Policy') };
-  `);
+  `,
+  );
 }
 
 function buildCdpScript(code) {
-  return buildExecScript(code, `
+  return buildExecScript(
+    code,
+    `
       return { ok: false, error: { name: e.name || 'Error', message: e.message || String(e), stack: e.stack || '' } };
-  `);
+  `,
+  );
 }
 
 // --- WebSocket Client for TMWebDriver ---
@@ -266,7 +326,9 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === 'tmwd-ws-keepalive') {
     // Keepalive: ping to keep SW alive + detect dead connections
     if (ws && ws.readyState === WebSocket.OPEN) {
-      try { ws.send('{"type":"ping"}'); } catch (_) {}
+      try {
+        ws.send('{"type":"ping"}');
+      } catch (_) {}
       scheduleKeepalive();
     } else {
       // Connection lost, switch to probe mode
@@ -295,7 +357,9 @@ async function handleWsExec(data) {
   }
   // Use onCreated listener to reliably capture new tabs (avoids race condition with query-diff)
   const newTabIds = new Set();
-  const onCreated = (tab) => { newTabIds.add(tab.id); };
+  const onCreated = (tab) => {
+    newTabIds.add(tab.id);
+  };
   chrome.tabs.onCreated.addListener(onCreated);
   try {
     let res;
@@ -304,16 +368,28 @@ async function handleWsExec(data) {
         target: { tabId },
         world: 'MAIN',
         func: async (s) => await eval(s),
-        args: [buildPageScript(data.code)]
+        args: [buildPageScript(data.code)],
       });
       res = result[0]?.result;
       if (res === null || res === undefined) {
         console.log('[TMWD-WS] executeScript returned null/undefined, treating as CSP issue');
-        res = { ok: false, error: { name: 'Error', message: 'executeScript returned null (possible CSP or context issue)', stack: '' }, csp: true };
+        res = {
+          ok: false,
+          error: {
+            name: 'Error',
+            message: 'executeScript returned null (possible CSP or context issue)',
+            stack: '',
+          },
+          csp: true,
+        };
       }
     } catch (e) {
       console.log('[TMWD-WS] scripting.executeScript failed:', e.message);
-      res = { ok: false, error: { name: e.name || 'Error', message: e.message || String(e), stack: e.stack || '' }, csp: true };
+      res = {
+        ok: false,
+        error: { name: e.name || 'Error', message: e.message || String(e), stack: e.stack || '' },
+        csp: true,
+      };
     }
     // CDP fallback for CSP-restricted pages
     if (res && !res.ok && res.csp) {
@@ -322,7 +398,9 @@ async function handleWsExec(data) {
       try {
         await chrome.debugger.attach({ tabId }, '1.3');
         const cdpRes = await chrome.debugger.sendCommand({ tabId }, 'Runtime.evaluate', {
-          expression: wrappedCode, awaitPromise: true, returnByValue: true
+          expression: wrappedCode,
+          awaitPromise: true,
+          returnByValue: true,
         });
         await chrome.debugger.detach({ tabId });
         if (cdpRes.exceptionDetails) {
@@ -332,26 +410,47 @@ async function handleWsExec(data) {
           res = cdpRes.result.value;
         }
       } catch (cdpErr) {
-        try { await chrome.debugger.detach({ tabId }); } catch (_) {}
-        res = { ok: false, error: { name: 'Error', message: 'CDP fallback failed: ' + cdpErr.message, stack: '' } };
+        try {
+          await chrome.debugger.detach({ tabId });
+        } catch (_) {}
+        res = {
+          ok: false,
+          error: { name: 'Error', message: 'CDP fallback failed: ' + cdpErr.message, stack: '' },
+        };
       }
     }
     // Grace period for async tab creation (e.g. link click with target=_blank)
-    if (newTabIds.size === 0) await new Promise(r => setTimeout(r, 200));
+    if (newTabIds.size === 0) await new Promise((r) => setTimeout(r, 200));
     chrome.tabs.onCreated.removeListener(onCreated);
     // Get full info for captured new tabs
     const newTabs = [];
     for (const id of newTabIds) {
-      try { const t = await chrome.tabs.get(id); newTabs.push({id: t.id, url: t.url, title: t.title}); } catch (_) {}
+      try {
+        const t = await chrome.tabs.get(id);
+        newTabs.push({ id: t.id, url: t.url, title: t.title });
+      } catch (_) {}
     }
     if (res?.ok) {
       ws.send(JSON.stringify({ type: 'result', id: data.id, result: res.data, newTabs }));
     } else {
       console.log(res);
-      ws.send(JSON.stringify({ type: 'error', id: data.id, error: res?.error || 'Unknown error', newTabs }));
+      ws.send(
+        JSON.stringify({
+          type: 'error',
+          id: data.id,
+          error: res?.error || 'Unknown error',
+          newTabs,
+        }),
+      );
     }
   } catch (e) {
-    ws.send(JSON.stringify({ type: 'error', id: data.id, error: { name: e.name || 'Error', message: e.message || String(e), stack: e.stack || '' } }));
+    ws.send(
+      JSON.stringify({
+        type: 'error',
+        id: data.id,
+        error: { name: e.name || 'Error', message: e.message || String(e), stack: e.stack || '' },
+      }),
+    );
   } finally {
     chrome.tabs.onCreated.removeListener(onCreated);
   }
@@ -372,11 +471,13 @@ function connectWS() {
   ws.onopen = async () => {
     console.log('[TMWD-WS] Connected!');
     scheduleKeepalive(); // Keep SW alive while connected
-    const tabs = (await chrome.tabs.query({})).filter(t => isScriptable(t.url));
-    ws.send(JSON.stringify({
-      type: 'ext_ready',
-      tabs: tabs.map(t => ({ id: t.id, url: t.url, title: t.title }))
-    }));
+    const tabs = (await chrome.tabs.query({})).filter((t) => isScriptable(t.url));
+    ws.send(
+      JSON.stringify({
+        type: 'ext_ready',
+        tabs: tabs.map((t) => ({ id: t.id, url: t.url, title: t.title })),
+      }),
+    );
     console.log('[TMWD-WS] Sent ext_ready with', tabs.length, 'tabs');
   };
   ws.onmessage = async (event) => {
@@ -386,21 +487,41 @@ function connectWS() {
         let code = data.code;
         // If code is a JSON string representing an object, parse it
         if (typeof code === 'string') {
-          try { const p = JSON.parse(code); if (p && typeof p === 'object') code = p; } catch (_) {}
+          try {
+            const p = JSON.parse(code);
+            if (p && typeof p === 'object') code = p;
+          } catch (_) {}
         }
         if (typeof code === 'object' && code !== null && code.cmd) {
           // Custom protocol message → route to handleExtMessage
           if (code.tabId === undefined && data.tabId !== undefined) code.tabId = data.tabId;
           const res = await handleExtMessage(code, {});
-          ws.send(JSON.stringify({ type: res.ok ? 'result' : 'error', id: data.id, result: res.data ?? res.results ?? res, error: res.error }));
+          ws.send(
+            JSON.stringify({
+              type: res.ok ? 'result' : 'error',
+              id: data.id,
+              result: res.data ?? res.results ?? res,
+              error: res.error,
+            }),
+          );
         } else if (typeof code === 'string') {
           // Plain JS code
           await handleWsExec(data);
         } else if (typeof code === 'object' && code !== null) {
           // Object without cmd → legacy extension message
-          const msg = code.tabId === undefined && data.tabId !== undefined ? { ...code, tabId: data.tabId } : code;
+          const msg =
+            code.tabId === undefined && data.tabId !== undefined
+              ? { ...code, tabId: data.tabId }
+              : code;
           const res = await handleExtMessage(msg, {});
-          ws.send(JSON.stringify({ type: res.ok ? 'result' : 'error', id: data.id, result: res.data ?? res.results ?? res, error: res.error }));
+          ws.send(
+            JSON.stringify({
+              type: res.ok ? 'result' : 'error',
+              id: data.id,
+              result: res.data ?? res.results ?? res,
+              error: res.error,
+            }),
+          );
         }
       }
     } catch (e) {
@@ -426,11 +547,15 @@ chrome.runtime.onInstalled.addListener(() => connectWS());
 // Sync tab list on changes
 async function sendTabsUpdate() {
   if (!ws || ws.readyState !== WebSocket.OPEN) return;
-  const tabs = (await chrome.tabs.query({})).filter(t => isScriptable(t.url) && !/streamlit/i.test(t.title));
-  ws.send(JSON.stringify({
-    type: 'tabs_update',
-    tabs: tabs.map(t => ({ id: t.id, url: t.url, title: t.title }))
-  }));
+  const tabs = (await chrome.tabs.query({})).filter(
+    (t) => isScriptable(t.url) && !/streamlit/i.test(t.title),
+  );
+  ws.send(
+    JSON.stringify({
+      type: 'tabs_update',
+      tabs: tabs.map((t) => ({ id: t.id, url: t.url, title: t.title })),
+    }),
+  );
 }
 chrome.tabs.onUpdated.addListener((_, changeInfo) => {
   if (changeInfo.status === 'complete') sendTabsUpdate();

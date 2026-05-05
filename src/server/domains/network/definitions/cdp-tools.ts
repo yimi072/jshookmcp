@@ -6,14 +6,17 @@ export const cdpTools: Tool[] = [
     t
       .desc(
         'Run a batch of Chrome DevTools Protocol commands on the current page. ' +
-        'Supports $N.path references to access results from previous commands in the batch.',
+          'Supports $N.path references to access results from previous commands in the batch.',
       )
       .array(
         'commands',
         {
           type: 'object',
           properties: {
-            method: { type: 'string', description: 'CDP method (e.g. Network.enable, Page.reload)' },
+            method: {
+              type: 'string',
+              description: 'CDP method (e.g. Network.enable, Page.reload)',
+            },
             params: { type: 'object', description: 'CDP method parameters' },
           },
           required: ['method'],
@@ -27,7 +30,7 @@ export const cdpTools: Tool[] = [
     t
       .desc(
         'Attach Chrome debugger, enable Network domain, reload the page, wait for requests to settle, ' +
-        'then return captured requests matching the URL substring. Useful for capturing encrypted API payloads.',
+          'then return captured requests matching the URL substring. Useful for capturing encrypted API payloads.',
       )
       .string('urlSubstring', 'URL substring to match captured requests', { default: '/' })
       .number('settleMs', 'Time to wait after reload for requests to settle', {

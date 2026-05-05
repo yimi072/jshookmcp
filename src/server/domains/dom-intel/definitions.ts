@@ -4,7 +4,9 @@ import { tool } from '@server/registry/tool-builder';
 export const domIntelTools: Tool[] = [
   tool('dom_scan', (t) =>
     t
-      .desc('Scan a page: extract simplified HTML with visibility analysis, overlay detection, and list truncation.')
+      .desc(
+        'Scan a page: extract simplified HTML with visibility analysis, overlay detection, and list truncation.',
+      )
       .string('url', 'URL to navigate and scan (uses current page if omitted)')
       .boolean('textOnly', 'Return plain text instead of HTML', { default: false })
       .boolean('cutlist', 'Enable list detection and truncation', { default: true })
@@ -32,7 +34,9 @@ export const domIntelTools: Tool[] = [
 
   tool('dom_optimize', (t) =>
     t
-      .desc('Optimize HTML for token efficiency: strip styles, truncate long attributes, compress data-* attributes.')
+      .desc(
+        'Optimize HTML for token efficiency: strip styles, truncate long attributes, compress data-* attributes.',
+      )
       .string('html', 'Raw HTML to optimize')
       .number('maxChars', 'Max output characters', { default: 35000 })
       .required('html')

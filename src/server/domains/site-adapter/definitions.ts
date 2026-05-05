@@ -8,9 +8,14 @@ export const siteAdapterTools: Tool[] = [
         'List all available site adapters. Returns name, domain, description for each adapter. ' +
           'Adapters are JS functions that run in your browser to extract structured data using your login state.',
       )
-      .enum('category', ['all', 'search', 'social', 'news', 'dev', 'video', 'finance', 'jobs', 'knowledge'], 'Filter by category', {
-        default: 'all',
-      }),
+      .enum(
+        'category',
+        ['all', 'search', 'social', 'news', 'dev', 'video', 'finance', 'jobs', 'knowledge'],
+        'Filter by category',
+        {
+          default: 'all',
+        },
+      ),
   ),
 
   tool('site_info', (t) =>
@@ -37,5 +42,14 @@ export const siteAdapterTools: Tool[] = [
       .desc('Search adapters by keyword. Matches against name, description, and domain.')
       .string('query', 'Search keyword')
       .required('query'),
+  ),
+
+  tool('site_update', (t) =>
+    t
+      .desc(
+        'Update site adapters from the bb-sites GitHub repo. ' +
+          'Downloads latest adapters and regenerates the index.',
+      )
+      .idempotent(),
   ),
 ];

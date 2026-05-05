@@ -6,6 +6,7 @@ export {
   resolveAdapter,
   searchAdapters,
   executeAdapter,
+  updateAdaptersFromGitHub,
 } from './adapter-runtime';
 
 export type {

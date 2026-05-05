@@ -1,13 +1,15 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { TMWebDriverClient, ExtensionManager } from '@modules/tmwebdriver';
+import { FULL_SCAN_JS, TEXT_ONLY_JS, processScanResult, cleanTextOutput } from '@modules/dom-intel';
 import {
-  FULL_SCAN_JS,
-  TEXT_ONLY_JS,
-  processScanResult,
-  cleanTextOutput,
-} from '@modules/dom-intel';
-import { SNAPSHOT_JS, parseSnapshot, refRegistry, clickRefJs, fillRefJs, hoverRefJs } from '@modules/a11y-snapshot';
+  SNAPSHOT_JS,
+  parseSnapshot,
+  refRegistry,
+  clickRefJs,
+  fillRefJs,
+  hoverRefJs,
+} from '@modules/a11y-snapshot';
 import { argString, argNumber, argBool } from '@server/domains/shared/parse-args';
 import { R } from '@server/domains/shared/ResponseBuilder';
 import type { ToolResponse } from '@server/domains/shared/ResponseBuilder';
@@ -298,7 +300,10 @@ export class RealBrowserToolHandlers {
       const sessionId = argString(args, 'sessionId');
       const maxDepth = argNumber(args, 'maxDepth', 15);
 
-      const script = SNAPSHOT_JS.replace('buildTree(document.body, 0, 15)', `buildTree(document.body, 0, ${maxDepth})`);
+      const script = SNAPSHOT_JS.replace(
+        'buildTree(document.body, 0, 15)',
+        `buildTree(document.body, 0, ${maxDepth})`,
+      );
       const result = await this.client.executeJs(script, {
         sessionId: sessionId || undefined,
         timeout: 30000,

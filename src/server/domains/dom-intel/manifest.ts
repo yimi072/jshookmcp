@@ -1,5 +1,9 @@
 import type { DomainManifest, MCPServerContext } from '@server/domains/shared/registry';
-import { defineMethodRegistrations, ensureBrowserCore, toolLookup } from '@server/domains/shared/registry';
+import {
+  defineMethodRegistrations,
+  ensureBrowserCore,
+  toolLookup,
+} from '@server/domains/shared/registry';
 import { domIntelTools } from '@server/domains/dom-intel/definitions';
 import type { DomIntelToolHandlers } from '@server/domains/dom-intel/index';
 
@@ -54,7 +58,10 @@ const manifest = {
 
   prerequisites: {
     dom_scan: [
-      { condition: 'Browser must be launched', fix: 'Call browser_launch or browser_attach first (unless url is provided)' },
+      {
+        condition: 'Browser must be launched',
+        fix: 'Call browser_launch or browser_attach first (unless url is provided)',
+      },
     ],
     dom_find_lists: [
       { condition: 'Browser must be launched', fix: 'Call browser_launch or browser_attach first' },

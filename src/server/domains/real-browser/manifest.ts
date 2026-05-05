@@ -68,7 +68,7 @@ const manifest = {
       'real_browser_execute_js',
       'real_browser_list_tabs',
     ],
-    hint: 'Real browser automation: connect to user\'s existing Chrome via extension bridge → scan page → execute JS',
+    hint: "Real browser automation: connect to user's existing Chrome via extension bridge → scan page → execute JS",
   },
 
   prerequisites: {},

@@ -7,10 +7,7 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-const REFS_DIR = join(
-  process.env.HOME || process.env.USERPROFILE || '.',
-  '.jshookmcp',
-);
+const REFS_DIR = join(process.env.HOME || process.env.USERPROFILE || '.', '.jshookmcp');
 const REFS_FILE = join(REFS_DIR, 'refs.json');
 
 export class RefRegistry {

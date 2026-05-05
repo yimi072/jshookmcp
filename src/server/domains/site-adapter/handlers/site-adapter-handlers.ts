@@ -4,6 +4,7 @@ import {
   resolveAdapter,
   searchAdapters,
   executeAdapter,
+  updateAdaptersFromGitHub,
 } from '@modules/site-adapters';
 import type { AdapterEntry } from '@modules/site-adapters';
 import { argString } from '@server/domains/shared/parse-args';
@@ -16,9 +17,30 @@ interface SiteAdapterHandlerDeps {
 
 const CATEGORY_DOMAIN_MAP: Record<string, string[]> = {
   search: ['google', 'baidu', 'bing', 'duckduckgo', 'sogou'],
-  social: ['twitter', 'reddit', 'weibo', 'm_weibo', 'xiaohongshu', 'jike', 'linkedin', 'hupu', 'linuxdo'],
+  social: [
+    'twitter',
+    'reddit',
+    'weibo',
+    'm_weibo',
+    'xiaohongshu',
+    'jike',
+    'linkedin',
+    'hupu',
+    'linuxdo',
+  ],
   news: ['bbc', 'reuters', '36kr', 'toutiao', 'eastmoney'],
-  dev: ['github', 'stackoverflow', 'hackernews', 'csdn', 'cnblogs', 'v2ex', 'devto', 'npm', 'pypi', 'arxiv'],
+  dev: [
+    'github',
+    'stackoverflow',
+    'hackernews',
+    'csdn',
+    'cnblogs',
+    'v2ex',
+    'devto',
+    'npm',
+    'pypi',
+    'arxiv',
+  ],
   video: ['youtube', 'bilibili'],
   finance: ['xueqiu', 'eastmoney', 'yahoo-finance'],
   jobs: ['boss', 'linkedin'],
@@ -133,6 +155,21 @@ export class SiteAdapterToolHandlers {
           domain: r.domain,
           description: r.description,
         })),
+      });
+    } catch (e) {
+      return R.fail(e).build();
+    }
+  }
+
+  async handleSiteUpdate(): Promise<ToolResponse> {
+    try {
+      const result = await updateAdaptersFromGitHub();
+      if (!result.success) {
+        return R.fail(result.error ?? 'Update failed').build();
+      }
+      return R.ok().build({
+        message: `Updated ${result.count} adapters from epiral/bb-sites`,
+        count: result.count,
       });
     } catch (e) {
       return R.fail(e).build();
