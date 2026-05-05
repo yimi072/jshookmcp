@@ -141,7 +141,7 @@ JSHookMCP 跨 **39 个技术域**提供了 **414 个内置原子工具**，赋�
 
 <!-- metadata-sync:start -->
 - 包版本：`0.3.0`
-- 内置工具数：`450+`
+- 内置工具数：`436`
 - 域列表：`adb-bridge`, `antidebug`, `binary-instrument`, `boringssl-inspector`, `browser`, `canvas`, `coordination`, `core`, `cross-domain`, `debugger`, `dom-intel`, `encoding`, `evidence`, `extension-registry`, `graphql`, `hooks`, `instrumentation`, `macro`, `maintenance`, `memory`, `mojo-ipc`, `network`, `pcap-carve`, `platform`, `process`, `protocol-analysis`, `proxy`, `pwn-tools`, `real-browser`, `sandbox`, `shared-state-board`, `site-adapter`, `skia-capture`, `sourcemap`, `stego`, `streaming`, `syscall-hook`, `trace`, `transform`, `v8-inspector`, `wasm`, `workflow`, `yara-scan`
 - 说明：以上数据由运行时 registry 动态生成，不要手改计数。
 <!-- metadata-sync:end -->

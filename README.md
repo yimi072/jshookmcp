@@ -142,7 +142,7 @@ The built-in surface below is generated from the runtime registry and checked in
 
 <!-- metadata-sync:start -->
 - Package version: `0.3.0`
-- Built-in Tools: `450+`
+- Built-in Tools: `436`
 - Domains: `adb-bridge`, `antidebug`, `binary-instrument`, `boringssl-inspector`, `browser`, `canvas`, `coordination`, `core`, `cross-domain`, `debugger`, `dom-intel`, `encoding`, `evidence`, `extension-registry`, `graphql`, `hooks`, `instrumentation`, `macro`, `maintenance`, `memory`, `mojo-ipc`, `network`, `pcap-carve`, `platform`, `process`, `protocol-analysis`, `proxy`, `pwn-tools`, `real-browser`, `sandbox`, `shared-state-board`, `site-adapter`, `skia-capture`, `sourcemap`, `stego`, `streaming`, `syscall-hook`, `trace`, `transform`, `v8-inspector`, `wasm`, `workflow`, `yara-scan`
 - Note: this snapshot is generated from the runtime registry; do not edit the counts by hand.
 <!-- metadata-sync:end -->
