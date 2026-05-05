@@ -550,6 +550,104 @@ const META = {
     ],
     enCombos: ['proxy + network', 'proxy + adb-bridge'],
   },
+  'pcap-carve': {
+    zhTitle: 'PCAP Carve',
+    zhSummary: 'PCAP 网络流量分析域，支持 TCP 流重组、文件 carving、DNS exfil 检测与 HTTP 提取。',
+    zhScenarios: ['TCP 流重组', '文件 carving', 'DNS 隐蔽隧道检测'],
+    zhCombos: ['pcap-carve + network', 'pcap-carve + encoding'],
+    enTitle: 'PCAP Carve',
+    enSummary:
+      'PCAP network traffic analysis domain supporting TCP stream reassembly, file carving, DNS exfiltration detection, and HTTP extraction.',
+    enScenarios: [
+      'TCP stream reassembly',
+      'File carving from traffic',
+      'DNS covert channel detection',
+    ],
+    enCombos: ['pcap-carve + network', 'pcap-carve + encoding'],
+  },
+  'pwn-tools': {
+    zhTitle: 'Pwn Tools',
+    zhSummary:
+      '二进制漏洞利用工具域，支持 ELF 解析、checksec、pattern 生成、shellcode 分析、ROP gadget 搜索与链构建。',
+    zhScenarios: ['二进制保护检查', 'ROP gadget 搜索', '栈溢出利用'],
+    zhCombos: ['pwn-tools + binary-instrument', 'pwn-tools + memory'],
+    enTitle: 'Pwn Tools',
+    enSummary:
+      'Binary exploitation tooling domain supporting ELF parsing, checksec, pattern generation, shellcode analysis, ROP gadget search and chain building.',
+    enScenarios: ['Binary protection check', 'ROP gadget search', 'Stack overflow exploitation'],
+    enCombos: ['pwn-tools + binary-instrument', 'pwn-tools + memory'],
+  },
+  stego: {
+    zhTitle: 'Steganography',
+    zhSummary:
+      '隐写分析域，支持文件扫描、LSB 提取、PNG chunks 分析、EXIF 提取、边框解码与 XOR 暴力破解。',
+    zhScenarios: ['图片隐写检测', 'LSB 数据提取', '元数据取证'],
+    zhCombos: ['stego + encoding', 'stego + core'],
+    enTitle: 'Steganography',
+    enSummary:
+      'Steganography analysis domain supporting file scanning, LSB extraction, PNG chunk analysis, EXIF extraction, border decoding, and XOR brute-forcing.',
+    enScenarios: ['Image steganography detection', 'LSB data extraction', 'Metadata forensics'],
+    enCombos: ['stego + encoding', 'stego + core'],
+  },
+  'yara-scan': {
+    zhTitle: 'YARA Scan',
+    zhSummary: 'YARA 风格模式扫描域，支持内置规则匹配、自定义规则生成与 PE 可疑指标检测。',
+    zhScenarios: ['恶意软件模式匹配', 'PE 可疑指标检测', '自定义规则生成'],
+    zhCombos: ['yara-scan + binary-instrument', 'yara-scan + process'],
+    enTitle: 'YARA Scan',
+    enSummary:
+      'YARA-style pattern scanning domain supporting built-in rule matching, custom rule generation, and PE suspicious indicator detection.',
+    enScenarios: [
+      'Malware pattern matching',
+      'PE suspicious indicator detection',
+      'Custom rule generation',
+    ],
+    enCombos: ['yara-scan + binary-instrument', 'yara-scan + process'],
+  },
+  'dom-intel': {
+    zhTitle: 'DOM Intel',
+    zhSummary: 'DOM 情报收集域，支持页面结构分析、元素指纹、动态行为追踪。',
+    zhScenarios: ['页面结构分析', '元素指纹提取', '动态行为追踪'],
+    zhCombos: ['dom-intel + browser', 'dom-intel + hooks'],
+    enTitle: 'DOM Intel',
+    enSummary:
+      'DOM intelligence collection domain supporting page structure analysis, element fingerprinting, and dynamic behavior tracking.',
+    enScenarios: [
+      'Page structure analysis',
+      'Element fingerprint extraction',
+      'Dynamic behavior tracking',
+    ],
+    enCombos: ['dom-intel + browser', 'dom-intel + hooks'],
+  },
+  'real-browser': {
+    zhTitle: 'Real Browser',
+    zhSummary: '真实浏览器控制域，通过 Chrome 扩展接管用户浏览器（保留登录态）。',
+    zhScenarios: ['真实浏览器控制', '保留登录态自动化', '多标签页管理'],
+    zhCombos: ['real-browser + site-adapter', 'real-browser + browser'],
+    enTitle: 'Real Browser',
+    enSummary: 'Real browser control domain via Chrome extension, preserving user login state.',
+    enScenarios: [
+      'Real browser control',
+      'Automation with preserved login',
+      'Multi-tab management',
+    ],
+    enCombos: ['real-browser + site-adapter', 'real-browser + browser'],
+  },
+  'site-adapter': {
+    zhTitle: 'Site Adapter',
+    zhSummary: '站点适配器域，126 个社区维护的适配器覆盖 36+ 平台，无需 API key。',
+    zhScenarios: ['社交媒体数据抓取', '电商网站数据采集', '无需 API key 的数据提取'],
+    zhCombos: ['site-adapter + real-browser', 'site-adapter + workflow'],
+    enTitle: 'Site Adapter',
+    enSummary:
+      'Site adapter domain with 126 community-maintained adapters covering 36+ platforms, no API keys needed.',
+    enScenarios: [
+      'Social media data extraction',
+      'E-commerce data collection',
+      'API-key-free data gathering',
+    ],
+    enCombos: ['site-adapter + real-browser', 'site-adapter + workflow'],
+  },
 };
 
 async function main() {
