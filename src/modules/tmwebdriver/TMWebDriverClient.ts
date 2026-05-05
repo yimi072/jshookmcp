@@ -144,9 +144,37 @@ export class TMWebDriverClient extends EventEmitter {
   /**
    * List all active sessions.
    */
-  getSessions(): CompactSession[] {
+  async getSessions(): Promise<CompactSession[]> {
+    if (this.isRemote) {
+      return this.remoteGetSessions();
+    }
     this.cleanStaleSessions();
     return this.compactSessions();
+  }
+
+  /**
+   * Get sessions from remote TMWebDriver (remote mode only).
+   */
+  private async remoteGetSessions(): Promise<CompactSession[]> {
+    try {
+      const resp = await this.remotePost({ cmd: 'get_all_sessions' });
+      const sessions = (resp.r ?? []) as CompactSession[];
+      // Update local cache
+      this.sessions.clear();
+      for (const s of sessions) {
+        this.sessions.set(s.id, {
+          id: s.id,
+          info: { url: s.url, title: s.title ?? '', type: 'ext_ws' },
+          connectAt: Date.now(),
+          disconnectAt: null,
+          type: 'ext_ws',
+        });
+      }
+      return sessions;
+    } catch (err) {
+      logger.error('[tmwebdriver] Failed to get remote sessions:', err);
+      return [];
+    }
   }
 
   /**

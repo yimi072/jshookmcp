@@ -26,7 +26,7 @@ export class RealBrowserToolHandlers {
   async handleSetupStatus(): Promise<ToolResponse> {
     try {
       await this.client.start();
-      const sessions = this.client.getSessions();
+      const sessions = await this.client.getSessions();
       const extPath = this.extManager.getExtensionPath();
       return R.ok().build({
         extensionName: 'TMWD CDP Bridge',
@@ -54,7 +54,7 @@ export class RealBrowserToolHandlers {
       await this.client.start();
       return R.ok().build({
         defaultSessionId: this.client.defaultSessionId,
-        tabs: this.client.getSessions(),
+        tabs: await this.client.getSessions(),
       });
     } catch (e) {
       return R.fail(e).build();
@@ -77,7 +77,7 @@ export class RealBrowserToolHandlers {
 
       return R.ok().build({
         activeSessionId: this.client.defaultSessionId,
-        tabs: this.client.getSessions(),
+        tabs: await this.client.getSessions(),
       });
     } catch (e) {
       return R.fail(e).build();
@@ -110,7 +110,7 @@ export class RealBrowserToolHandlers {
       const result = await this.client.newTab(url);
       return R.ok().build({
         result,
-        tabs: this.client.getSessions(),
+        tabs: await this.client.getSessions(),
       });
     } catch (e) {
       return R.fail(e).build();
@@ -179,7 +179,7 @@ export class RealBrowserToolHandlers {
 
       return R.ok().build({
         activeSessionId: this.client.defaultSessionId,
-        tabs: this.client.getSessions(),
+        tabs: await this.client.getSessions(),
         content,
       });
     } catch (e) {
