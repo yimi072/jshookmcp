@@ -112,15 +112,16 @@ MCP tools: `agent_browser_*` (mouse_click, type_text, hotkey, capture_desktop_sc
 
 ## 🛡️ Core Capabilities
 
-JSHookMCP exposes **414 atomic tools** across **39 domains**, empowering AI orchestrators with unparalleled capabilities:
+JSHookMCP exposes **450+ atomic tools** across **43 domains**, empowering AI orchestrators with unparalleled capabilities:
 
 - 🕸️ **Browser Automation & Reverse Engineering**: Zero-config Chromium/Camoufox injection, CDP (Chrome DevTools Protocol) orchestration, and iframe evaluation bypasses.
-- 📡 **Network Interception & Spoofing**: Deep HTTP/2 frame building, MiTM traffic capture, GraphQL introspection, and Burp Suite bridge.
+- 📡 **Network Interception & Spoofing**: Deep HTTP/2 frame building, MiTM traffic capture, GraphQL introspection, Burp Suite bridge, and PCAP analysis with file carving.
 - 🧠 **AST & Semantic Analysis**: LLM-powered deobfuscation, WebAssembly (WASM) disassembly, Source Map reconstruction, and binary entropy visualization.
-- 🧰 **Process & Memory Forensics**: Native Frida instrumentation, memory scanning, pointer dereferencing, and strict Anti-Debug mitigation.
+- 🧰 **Process & Memory Forensics**: Native Frida instrumentation, memory scanning, pointer dereferencing, YARA-style pattern scanning, and strict Anti-Debug mitigation.
+- 🎯 **CTF & Security Research**: Binary exploitation tools (checksec, pattern offset, ROP gadgets), steganography analysis (LSB, PNG chunks, EXIF), and malware indicator detection.
 - 🔌 **Dynamic Extensibility**: Hot-reloadable B-Skeleton plugins and declarative `WorkflowContract` pipelines.
 
-> **[View the complete 39-domain tool catalog ↗](https://vmoranv.github.io/jshookmcp/reference/)**
+> **[View the complete 43-domain tool catalog ↗](https://vmoranv.github.io/jshookmcp/reference/)**
 
 ## Architecture & Performance
 
@@ -141,8 +142,8 @@ The built-in surface below is generated from the runtime registry and checked in
 
 <!-- metadata-sync:start -->
 - Package version: `0.3.0`
-- Built-in Tools: `414`
-- Domains: `adb-bridge`, `antidebug`, `binary-instrument`, `boringssl-inspector`, `browser`, `canvas`, `coordination`, `core`, `cross-domain`, `debugger`, `dom-intel`, `encoding`, `evidence`, `extension-registry`, `graphql`, `hooks`, `instrumentation`, `macro`, `maintenance`, `memory`, `mojo-ipc`, `network`, `platform`, `process`, `protocol-analysis`, `proxy`, `real-browser`, `sandbox`, `shared-state-board`, `site-adapter`, `skia-capture`, `sourcemap`, `streaming`, `syscall-hook`, `trace`, `transform`, `v8-inspector`, `wasm`, `workflow`
+- Built-in Tools: `450+`
+- Domains: `adb-bridge`, `antidebug`, `binary-instrument`, `boringssl-inspector`, `browser`, `canvas`, `coordination`, `core`, `cross-domain`, `debugger`, `dom-intel`, `encoding`, `evidence`, `extension-registry`, `graphql`, `hooks`, `instrumentation`, `macro`, `maintenance`, `memory`, `mojo-ipc`, `network`, `pcap-carve`, `platform`, `process`, `protocol-analysis`, `proxy`, `pwn-tools`, `real-browser`, `sandbox`, `shared-state-board`, `site-adapter`, `skia-capture`, `sourcemap`, `stego`, `streaming`, `syscall-hook`, `trace`, `transform`, `v8-inspector`, `wasm`, `workflow`, `yara-scan`
 - Note: this snapshot is generated from the runtime registry; do not edit the counts by hand.
 <!-- metadata-sync:end -->
 
