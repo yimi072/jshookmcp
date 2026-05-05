@@ -42,23 +42,77 @@
 ## 🌟 核心亮点
 
 - 🤖 **AI 智能分析**：结合大语言模型实现 JavaScript 语义级反混淆、加密算法识别与深度 AST 结构理解。
-- ⚡ **搜索优先的上下文效率**：BM25 驱动的 `search_tools` 配合动态加权，可将 jshook 内置配置档位中的“工具 schema 增量初始化上下文”从 `full` 档约 ~40.0K+ tokens 降至 `search` 档约 ~3.0K（Claude 服务端计数；不含 Claude Code 基线提示词）。
+- ⚡ **搜索优先的上下文效率**：BM25 驱动的 `search_tools` 配合动态加权，可将 jshook 内置配置档位中的"工具 schema 增量初始化上下文"从 `full` 档约 ~40.0K+ tokens 降至 `search` 档约 ~3.0K（Claude 服务端计数；不含 Claude Code 基线提示词）。
 - 🎯 **渐进式能力分层**：内置三档配置（`search`/`workflow`/`full`），默认从 `search` 基座档启动，按需升级能力范围。
-- 🌐 **全链路自动化**：将浏览器环境（Chromium/Camoufox）、CDP 底层调试与网络拦截无缝整合为原子操作。
 - 🛡️ **高级反反调试**：内置强大的指纹伪装与检测绕过补丁，轻松应对各类反爬与调试器对抗保护。
 - 🧩 **动态热插拔扩展**：支持从本地目录动态加载插件与高层工作流，无需重新编译主服务即可无限横向拓展能力。
-- 🌍 **站点适配器 (bb-sites)**：126 个社区适配器，覆盖 Twitter、Reddit、GitHub、B站、知乎、豆瓣、小红书、YouTube 等平台——`site_list` / `site_run` 利用登录态提取结构化数据。
-- 🏗️ **无障碍快照与 Ref 交互**：AI 优化的 DOM 树，带 `@ref` 编号，通过 `real_browser_snapshot` / `real_browser_click` / `real_browser_fill` / `real_browser_hover` 实现元素操作。
-- 💻 **CLI 命令行**：`jshook eval "document.title"`、`jshook snapshot`、`jshook site run reddit/me` 等 14+ 命令，终端直接操控浏览器。
 - 🔧 **零胶水扩展性**：通过 `manifest.ts` 自动发现域、懒加载处理器实例化、B-Skeleton 契约驱动的插件/工作流架构。
 - 🛠️ **全能逆向工具链**：集成 WASM 反编译、二进制漏洞/熵分析、实时内存扫描，并原生提供 Burp Suite 与 Ghidra/IDA Pro 桥接。
-- 🌍 **站点适配器**：126 个社区维护的 JS 适配器，覆盖 36+ 平台（Twitter、Reddit、GitHub、B站、知乎等）——利用浏览器登录态提取结构化数据。
-- 🏗️ **无障碍快照**：带 `@ref` 编号的 DOM 树，AI 可直接操作元素（`click @3`、`fill @5 "text"`、`hover @7`）。
 - 💻 **CLI 命令行**：`jshook eval`、`jshook snapshot`、`jshook click`、`jshook site run` 等 14+ 命令，终端直接操控浏览器。
+
+## 🌐 三种浏览器模式
+
+JSHookMCP 支持三种浏览器自动化模式，适用于不同场景：
+
+| 模式 | 工作方式 | 适用场景 |
+|------|---------|---------|
+| **`browser_launch`** | 通过 Puppeteer/Playwright 启动 Chromium 或 Camoufox（反指纹） | 全新浏览器、隐匿自动化、反检测 |
+| **`browser_attach`** | 通过 CDP 端点（`--remote-debugging-port`）连接任意运行中的浏览器 | 附加到已有浏览器、调试会话 |
+| **`real_browser_*`** | Chrome 扩展桥（TMWebDriver）连接用户的**真实浏览器**，**保留登录态** | 利用已有登录、Cookie、会话——无需重新认证 |
+
+`real_browser_*` 模式是**站点适配器**和**无障碍快照**的基础——让 AI 直接操控你的真实浏览器会话。
+
+## 🌍 站点适配器 (bb-sites)
+
+126 个社区维护的 JS 适配器，覆盖 36+ 平台。每个适配器利用浏览器登录态提取网站结构化数据——无需 API 密钥。
+
+```bash
+# 列出所有可用适配器
+jshook site list
+
+# 搜索平台
+jshook site search twitter
+
+# 运行适配器（使用当前浏览器登录态）
+jshook site run reddit/me --json
+jshook site run twitter/search --args '{"query":"AI agent"}'
+```
+
+支持平台包括：**Twitter/X、Reddit、GitHub、B站、知乎、豆瓣、小红书、YouTube、LinkedIn、微博、Hacker News、StackOverflow、ArXiv、维基百科、V2EX、36氪、百度、Google、Bing** 等。
+
+MCP 工具：`site_list`、`site_info`、`site_run`、`site_search`
+
+## 🏗️ 无障碍快照与 Ref 交互 (bb-browser)
+
+受 [bb-browser](https://github.com/epiral/bb-browser) 的 `buildDomTree.js` 启发，无障碍快照生成 AI 优化的 DOM 树，为交互元素标注 `@ref` 编号。AI 可直接通过编号点击、填写、悬停元素——无需了解 XPath/CSS 选择器。
+
+```
+# 获取带 @ref 编号的页面快照
+jshook snapshot
+
+# 输出：
+#   [#1] <a href="/home"> 首页
+#   [#2] <a href="/profile"> 我的
+#   [#3] <input placeholder="搜索...">
+#   [#4] <button> 提交
+
+# 通过编号交互
+jshook click 3
+jshook fill 3 "hello world"
+jshook hover 1
+```
+
+MCP 工具：`real_browser_snapshot`、`real_browser_click`、`real_browser_fill`、`real_browser_hover`
+
+## 🤖 Agent Browser 集成
+
+JSHookMCP 还集成了 [agent-browser-mcp](https://github.com/)，支持桌面级自动化——鼠标点击、键盘输入、拖拽操作和桌面截图，超越浏览器页面上下文的限制。
+
+MCP 工具：`agent_browser_*`（mouse_click、type_text、hotkey、capture_desktop_screenshot 等）
 
 ## 🛡️ 核心能力矩阵
 
-JSHookMCP 跨 36 个技术域提供了 **360+ 个内置原子工具**，赋予 AI 前所未有的能力栈：
+JSHookMCP 跨 **39 个技术域**提供了 **414 个内置原子工具**，赋予 AI 前所未有的能力栈：
 
 - 🕸️ **浏览器自动化与逆向**：零配置注入 Chromium/Camoufox，接管 CDP (Chrome DevTools Protocol) 编排，支持 iframe 跨域突破。
 - 📡 **网络拦截与流量嗅探**：深度 HTTP/2 帧构造、中间人 (MiTM) 流量捕获、GraphQL 内省嗅探以及 Burp Suite 无缝桥接。
@@ -66,12 +120,12 @@ JSHookMCP 跨 36 个技术域提供了 **360+ 个内置原子工具**，赋予 A
 - 🧰 **进程与内存剖析**：系统级 Frida hook 注入、内存地址扫描挖掘、指针解引用以及严苛的反反调试 (Anti-Debug) 对抗。
 - 🔌 **动态扩展性引擎**：支持热重载的 B-Skeleton 插件系统与声明式 `WorkflowContract` 业务流管线。
 
-> **[查看完整的 36 个能力域与工具参考 ↗](https://vmoranv.github.io/jshookmcp/reference/)**
+> **[查看完整的 39 个能力域与工具参考 ↗](https://vmoranv.github.io/jshookmcp/reference/)**
 
 ## 架构与性能
 
 > [!TIP]
-> **上下文效率基准 (Context Efficiency Benchmark)**：基于 Claude 服务端实测，“Schema 初始化 Context 增量” —— `search` 档 ≈ 3.0K tokens vs `full` 档 ≈ 40.0K+ tokens。
+> **上下文效率基准 (Context Efficiency Benchmark)**：基于 Claude 服务端实测，"Schema 初始化 Context 增量" —— `search` 档 ≈ 3.0K tokens vs `full` 档 ≈ 40.0K+ tokens。
 
 - **渐进式工具发现**：`search_tools` 元工具（BM25 排序）+ `activate_tools` / `activate_domain` + 配置档位升级（`boost_profile`）
 - **search 档行为说明**：`search_tools` 只负责检索与排序，不会自动 `activate_tools`，也不会自动 `boost_profile`；推荐链路是 `search_tools -> activate_tools / activate_domain -> （确有需要时）boost_profile`
