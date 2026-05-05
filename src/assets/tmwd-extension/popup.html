@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{width:420px;max-height:500px;margin:0;padding:8px;font:12px monospace;background:#1e1e1e;color:#d4d4d4;overflow-y:auto}
+h3{margin:4px 0;color:#569cd6}
+button{background:#264f78;color:#fff;border:none;padding:4px 12px;cursor:pointer;border-radius:3px;margin-bottom:6px}
+button:hover{background:#37699e}
+pre{white-space:pre-wrap;word-break:break-all;margin:0;padding:6px;background:#252526;border-radius:3px;max-height:420px;overflow-y:auto}
+.status{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.status.ok{background:#4CAF50}
+.status.err{background:#f44336}
+.row{margin:4px 0}
+</style>
+</head>
+<body>
+<h3>jshookmcp Bridge</h3>
+<div class="row"><span class="status" id="wsStatus"></span> WebSocket: <span id="wsInfo">checking...</span></div>
+<div class="row"><span class="status" id="extStatus"></span> Extension: active</div>
+<hr style="border-color:#333">
+<button id="fetchCookies">Show Cookies</button>
+<button id="clearCookies" style="background:#682">Clear</button>
+<pre id="out"></pre>
+<script src="popup.js"></script>
+</body>
+</html>

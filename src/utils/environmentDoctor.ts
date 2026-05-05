@@ -1,6 +1,7 @@
 import { promisify } from 'node:util';
 import { execFile } from 'node:child_process';
 import { createRequire } from 'node:module';
+import * as net from 'node:net';
 import { ToolRegistry } from '@modules/external/ToolRegistry';
 import { GHIDRA_BRIDGE_ENDPOINT, IDA_BRIDGE_ENDPOINT } from '@src/constants';
 import { getProjectRoot } from '@utils/outputPaths';
@@ -74,6 +75,7 @@ export async function runEnvironmentDoctor(options?: {
             process.env.BURP_MCP_SSE_URL?.trim() || 'http://127.0.0.1:9876',
           ),
         ),
+        ioLimit(() => checkTmWebDriver()),
       ])
     : Promise.resolve([] as DoctorCheck[]);
 
@@ -363,6 +365,72 @@ async function checkHttpEndpoint(name: string, url: string): Promise<DoctorCheck
   }
 }
 
+function checkTcpPort(port: number, timeoutMs = 2000): Promise<boolean> {
+  return new Promise((resolve) => {
+    const socket = net.createConnection({ port, host: '127.0.0.1' });
+    const timer = setTimeout(() => {
+      socket.destroy();
+      resolve(false);
+    }, timeoutMs);
+    socket.on('connect', () => {
+      clearTimeout(timer);
+      socket.destroy();
+      resolve(true);
+    });
+    socket.on('error', () => {
+      clearTimeout(timer);
+      resolve(false);
+    });
+  });
+}
+
+const TMWD_WS_PORT = 18765;
+const TMWD_HTTP_PORT = 18766;
+
+async function checkTmWebDriver(): Promise<DoctorCheck> {
+  const wsOpen = await checkTcpPort(TMWD_WS_PORT);
+  const httpOpen = await checkTcpPort(TMWD_HTTP_PORT);
+
+  if (wsOpen && httpOpen) {
+    // Both ports open — try to query session count via HTTP
+    try {
+      const res = await fetch(`http://127.0.0.1:${TMWD_HTTP_PORT}/sessions`, {
+        signal: AbortSignal.timeout(3000),
+      });
+      if (res.ok) {
+        const data = (await res.json()) as { sessions?: unknown[] };
+        const count = Array.isArray(data.sessions) ? data.sessions.length : 0;
+        return {
+          name: 'tmwebdriver',
+          status: 'ok',
+          detail: `WS:${TMWD_WS_PORT} + HTTP:${TMWD_HTTP_PORT} active, ${count} session(s)`,
+        };
+      }
+    } catch {
+      // fall through to basic status
+    }
+    return {
+      name: 'tmwebdriver',
+      status: 'ok',
+      detail: `WS:${TMWD_WS_PORT} + HTTP:${TMWD_HTTP_PORT} active`,
+    };
+  }
+
+  if (wsOpen || httpOpen) {
+    return {
+      name: 'tmwebdriver',
+      status: 'warn',
+      detail: `partial: WS:${TMWD_WS_PORT}=${wsOpen ? 'open' : 'closed'}, HTTP:${TMWD_HTTP_PORT}=${httpOpen ? 'open' : 'closed'}`,
+    };
+  }
+
+  return {
+    name: 'tmwebdriver',
+    status: 'warn',
+    detail: `not running (WS:${TMWD_WS_PORT}, HTTP:${TMWD_HTTP_PORT} both closed)`,
+  };
+}
+
 function buildPlatformLimitations(): string[] {
   const limitations: string[] = [];
   if (process.platform === 'darwin') {
@@ -431,6 +499,12 @@ function buildRecommendations(
   if (bridges.some((item) => item.status !== 'ok')) {
     recommendations.push(
       'Check local bridge endpoints (Ghidra / IDA / Burp) before relying on native-bridge workflows.',
+    );
+  }
+  const tmwd = bridges.find((item) => item.name === 'tmwebdriver');
+  if (tmwd && tmwd.status !== 'ok') {
+    recommendations.push(
+      'TMWebDriver not detected. Start it with `real-browser setup_status` or load the Chrome extension from `src/assets/tmwd-extension/` to enable real-browser tools.',
     );
   }
   if (limitations.length > 0) {

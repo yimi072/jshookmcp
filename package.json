@@ -76,6 +76,7 @@
     "dev": "tsx --conditions=development watch src/index.ts",
     "start": "node dist/index.mjs",
     "doctor": "tsx src/cli/doctor.ts",
+    "cli": "tsx src/cli/index.ts",
     "docs:generate": "node scripts/generate-vitepress-reference.mjs",
     "docs:dev": "vitepress dev docs --host 127.0.0.1 --port 5173",
     "docs:build": "corepack pnpm run docs:generate && vitepress build docs",

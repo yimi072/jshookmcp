@@ -24,6 +24,7 @@ import { ReplayHandlers } from './handlers/replay-handlers';
 import { InterceptHandlers } from './handlers/intercept-handlers';
 import { RawHandlers } from './handlers/raw-handlers';
 import { TlsBotHandlers } from './handlers/tls-bot-handlers';
+import { CdpHandlers } from './handlers/cdp-handlers';
 
 export class AdvancedToolHandlers {
   protected collector: CodeCollector;
@@ -40,6 +41,7 @@ export class AdvancedToolHandlers {
   private intercept: InterceptHandlers;
   private raw: RawHandlers;
   private tlsBot: TlsBotHandlers;
+  private cdp: CdpHandlers;
 
   constructor(
     collector: CodeCollector,
@@ -62,6 +64,7 @@ export class AdvancedToolHandlers {
     this.intercept = new InterceptHandlers({ consoleMonitor, eventBus });
     this.raw = new RawHandlers(eventBus);
     this.tlsBot = new TlsBotHandlers({ consoleMonitor });
+    this.cdp = new CdpHandlers({ collector });
   }
 
   protected getPerformanceMonitor(): PerformanceMonitor {
@@ -212,4 +215,10 @@ export class AdvancedToolHandlers {
     this.tlsBot.handleNetworkTlsFingerprint(args);
   handleNetworkBotDetectAnalyze = (args: Record<string, unknown>) =>
     this.tlsBot.handleNetworkBotDetectAnalyze(args);
+
+  // ── CDP Batch & Reload Capture ──
+
+  handleCdpBatch = (args: Record<string, unknown>) => this.cdp.handleCdpBatch(args);
+  handleNetworkReloadCapture = (args: Record<string, unknown>) =>
+    this.cdp.handleNetworkReloadCapture(args);
 }

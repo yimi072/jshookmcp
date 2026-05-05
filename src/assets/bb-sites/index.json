@@ -1,0 +1,2070 @@
+{
+  "36kr/newsflash": {
+    "file": "36kr/newsflash.js",
+    "description": "36氪快讯 (tech news flash: title, description, timestamp)",
+    "domain": "36kr.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of items to return (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "arxiv/search": {
+    "file": "arxiv/search.js",
+    "description": "Search arXiv papers by query",
+    "domain": "arxiv.org",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 10, max 50)"
+      }
+    },
+    "capabilities": []
+  },
+  "baidu/search": {
+    "file": "baidu/search.js",
+    "description": "百度搜索 (Baidu search: title, url, snippet)",
+    "domain": "www.baidu.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 10)"
+      }
+    },
+    "capabilities": []
+  },
+  "bbc/news": {
+    "file": "bbc/news.js",
+    "description": "BBC News headlines (RSS) or search",
+    "domain": "www.bbc.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": false,
+        "description": "Search query. If omitted, returns top headlines from RSS feed"
+      },
+      "count": {
+        "required": false,
+        "description": "Max results to return (default 20)"
+      }
+    },
+    "capabilities": []
+  },
+  "bilibili/comments": {
+    "file": "bilibili/comments.js",
+    "description": "Get comments for a Bilibili video",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "bvid": {
+        "required": true,
+        "description": "Video BV ID"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      },
+      "count": {
+        "required": false,
+        "description": "Comments per page (default: 20, max: 30)"
+      },
+      "sort": {
+        "required": false,
+        "description": "Sort: 0=by_time, 2=by_likes (default: 2)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/feed": {
+    "file": "bilibili/feed.js",
+    "description": "Get Bilibili dynamic feed (timeline from followed users)",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "type": {
+        "required": false,
+        "description": "Filter type: all (default), video, article, draw"
+      },
+      "count": {
+        "required": false,
+        "description": "Max items to return (default: 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/history": {
+    "file": "bilibili/history.js",
+    "description": "Get Bilibili watch history",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of items (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/me": {
+    "file": "bilibili/me.js",
+    "description": "Get current Bilibili logged-in user info",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/opus": {
+    "file": "bilibili/opus.js",
+    "description": "获取 Bilibili 单篇图文动态的详细内容",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Opus ID (from URL: bilibili.com/opus/<id>)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/popular": {
+    "file": "bilibili/popular.js",
+    "description": "Get Bilibili popular/trending videos",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of videos (default: 20, max: 50)"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/ranking": {
+    "file": "bilibili/ranking.js",
+    "description": "Get Bilibili top ranking videos (all categories or specific category)",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of videos to return (default: 20, max: 100)"
+      },
+      "category": {
+        "required": false,
+        "description": "Category ID (rid): 0=all, 1=anime, 3=music, 4=game, 5=dance, 36=knowledge, 188=tech, 160=life, 211=food, 217=animal, 119=kichiku, 155=fashion, 202=info, 165=ad, 234=sports, 223=car, 177=documentary, 181=movie, 11=tv (default: 0)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/search": {
+    "file": "bilibili/search.js",
+    "description": "Search Bilibili videos by keyword",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "keyword": {
+        "required": true,
+        "description": "Search keyword"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      },
+      "count": {
+        "required": false,
+        "description": "Results per page (default: 20, max: 50)"
+      },
+      "order": {
+        "required": false,
+        "description": "Sort order: totalrank (default), click (views), pubdate (newest), dm (danmaku), stow (favorites)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/trending": {
+    "file": "bilibili/trending.js",
+    "description": "Get Bilibili trending search keywords (hot searches)",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of trending items (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/user-opus": {
+    "file": "bilibili/user-opus.js",
+    "description": "获取指定用户的图文动态列表",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "mid": {
+        "required": true,
+        "description": "用户 mid (从 space.bilibili.com/<mid> 获取)"
+      },
+      "count": {
+        "required": false,
+        "description": "返回数量 (default: 20, max: 50)"
+      },
+      "offset": {
+        "required": false,
+        "description": "分页偏移 (上一页返回的 offset)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bilibili/video": {
+    "file": "bilibili/video.js",
+    "description": "Get Bilibili video details by bvid",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "args": {
+      "bvid": {
+        "required": true,
+        "description": "Video BV ID (e.g. BV1xx411c7mD)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "bing/search": {
+    "file": "bing/search.js",
+    "description": "Bing 搜索 (Bing search: title, url, snippet)",
+    "domain": "www.bing.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 10)"
+      }
+    },
+    "capabilities": []
+  },
+  "boss/detail": {
+    "file": "boss/detail.js",
+    "description": "获取 BOSS直聘职位详情（JD、公司信息）",
+    "domain": "www.zhipin.com",
+    "readOnly": true,
+    "args": {
+      "securityId": {
+        "required": true,
+        "description": "Job securityId (from boss/search results)"
+      }
+    },
+    "capabilities": []
+  },
+  "boss/search": {
+    "file": "boss/search.js",
+    "description": "BOSS直聘搜索职位",
+    "domain": "www.zhipin.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search keyword (e.g. AI agent, 前端)"
+      },
+      "city": {
+        "required": false,
+        "description": "City code (default 101010100=北京, 101020100=上海, 101280100=广州, 101210100=杭州, 101280600=深圳)"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default 1)"
+      },
+      "experience": {
+        "required": false,
+        "description": "Experience filter (e.g. 101=在校, 102=应届, 103=1年以内, 104=1-3年, 105=3-5年, 106=5-10年, 107=10年以上)"
+      },
+      "degree": {
+        "required": false,
+        "description": "Degree filter (e.g. 209=高中, 208=大专, 206=本科, 203=硕士, 201=博士)"
+      }
+    },
+    "capabilities": []
+  },
+  "cnblogs/search": {
+    "file": "cnblogs/search.js",
+    "description": "博客园技术文章搜索",
+    "domain": "zzkx.cnblogs.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default 1)"
+      }
+    },
+    "capabilities": []
+  },
+  "csdn/search": {
+    "file": "csdn/search.js",
+    "description": "CSDN 技术文章搜索",
+    "domain": "so.csdn.net",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default 1)"
+      }
+    },
+    "capabilities": []
+  },
+  "ctrip/search": {
+    "file": "ctrip/search.js",
+    "description": "携程旅行搜索 - 搜索目的地景点信息",
+    "domain": "www.ctrip.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "搜索关键词，如城市名或景点名"
+      }
+    },
+    "capabilities": []
+  },
+  "devto/search": {
+    "file": "devto/search.js",
+    "description": "Search Dev.to articles by keyword",
+    "domain": "dev.to",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search keyword or phrase"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 20, max 60)"
+      }
+    },
+    "capabilities": []
+  },
+  "douban/comments": {
+    "file": "douban/comments.js",
+    "description": "Get short reviews/comments for a Douban movie or TV show",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Douban subject ID (e.g. 1292052)"
+      },
+      "sort": {
+        "required": false,
+        "description": "Sort order: new_score (default, hot), time (newest first)"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of comments (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "douban/movie-hot": {
+    "file": "douban/movie-hot.js",
+    "description": "Get hot/trending movies or TV shows on Douban by tag",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "args": {
+      "type": {
+        "required": false,
+        "description": "Type: movie (default) or tv"
+      },
+      "tag": {
+        "required": false,
+        "description": "Tag filter (default: 热门). Movies: 热门/最新/豆瓣高分/冷门佳片/华语/欧美/韩国/日本. TV: 热门/国产剧/综艺/美剧/日剧/韩剧/日本动画/纪录片"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "douban/movie-top": {
+    "file": "douban/movie-top.js",
+    "description": "Get top rated movies by genre from Douban charts",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "args": {
+      "genre": {
+        "required": false,
+        "description": "Genre (default: 剧情). Options: 剧情/喜剧/动作/爱情/科幻/动画/悬疑/惊悚/恐怖/纪录片/短片/情色/音乐/歌舞/家庭/儿童/传记/历史/战争/犯罪/西部/奇幻/冒险/灾难/武侠/古装/运动/黑色电影"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "douban/movie": {
+    "file": "douban/movie.js",
+    "description": "Get detailed movie/TV info with rating, cast, and hot reviews from Douban",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Douban subject ID (e.g. 1292052 for The Shawshank Redemption)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "douban/search": {
+    "file": "douban/search.js",
+    "description": "Search Douban across movies, books, and music",
+    "domain": "www.douban.com",
+    "readOnly": true,
+    "args": {
+      "keyword": {
+        "required": true,
+        "description": "Search keyword (Chinese or English)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "douban/top250": {
+    "file": "douban/top250.js",
+    "description": "Get Douban Top 250 movies list",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "args": {
+      "start": {
+        "required": false,
+        "description": "Start position (default: 0, step by 25). Use 0 for #1-25, 25 for #26-50, etc."
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "duckduckgo/search": {
+    "file": "duckduckgo/search.js",
+    "description": "DuckDuckGo search (HTML lite, no JS needed)",
+    "domain": "duckduckgo.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      }
+    },
+    "capabilities": []
+  },
+  "eastmoney/news": {
+    "file": "eastmoney/news.js",
+    "description": "东方财富财经新闻 (finance news: title, summary, source, url)",
+    "domain": "www.eastmoney.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "返回新闻条数，默认 20，最大 50"
+      }
+    },
+    "capabilities": []
+  },
+  "eastmoney/stock": {
+    "file": "eastmoney/stock.js",
+    "description": "东方财富股票行情 (stock quote: price, change%, volume, market cap)",
+    "domain": "quote.eastmoney.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "股票名称或代码，如 贵州茅台 或 600519"
+      }
+    },
+    "capabilities": []
+  },
+  "genius/search": {
+    "file": "genius/search.js",
+    "description": "Genius 歌曲/歌词搜索",
+    "domain": "genius.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "type": "string",
+        "required": true,
+        "description": "搜索关键词"
+      }
+    },
+    "capabilities": []
+  },
+  "github/fork": {
+    "file": "github/fork.js",
+    "description": "Fork a GitHub repository",
+    "domain": "github.com",
+    "readOnly": false,
+    "args": {
+      "repo": {
+        "required": true,
+        "description": "Repository to fork (owner/repo)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "github/issue-create": {
+    "file": "github/issue-create.js",
+    "description": "Create a GitHub issue",
+    "domain": "github.com",
+    "readOnly": false,
+    "args": {
+      "repo": {
+        "required": true,
+        "description": "owner/repo format"
+      },
+      "title": {
+        "required": true,
+        "description": "Issue title"
+      },
+      "body": {
+        "required": false,
+        "description": "Issue body (markdown)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "github/issues": {
+    "file": "github/issues.js",
+    "description": "获取 GitHub 仓库的 issue 列表",
+    "domain": "github.com",
+    "readOnly": true,
+    "args": {
+      "repo": {
+        "required": true,
+        "description": "owner/repo format"
+      },
+      "state": {
+        "required": false,
+        "description": "open, closed, or all (default: open)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "github/me": {
+    "file": "github/me.js",
+    "description": "获取当前 GitHub 登录用户信息",
+    "domain": "github.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "github/pr-create": {
+    "file": "github/pr-create.js",
+    "description": "Create a GitHub pull request",
+    "domain": "github.com",
+    "readOnly": false,
+    "args": {
+      "repo": {
+        "required": true,
+        "description": "Target repo (owner/repo)"
+      },
+      "title": {
+        "required": true,
+        "description": "PR title"
+      },
+      "head": {
+        "required": true,
+        "description": "Source branch (user:branch or branch)"
+      },
+      "base": {
+        "required": false,
+        "description": "Target branch (default: main)"
+      },
+      "body": {
+        "required": false,
+        "description": "PR description (markdown)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "github/repo": {
+    "file": "github/repo.js",
+    "description": "获取 GitHub 仓库信息",
+    "domain": "github.com",
+    "readOnly": true,
+    "args": {
+      "repo": {
+        "required": true,
+        "description": "owner/repo format (e.g. epiral/bb-browser)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "google/search": {
+    "file": "google/search.js",
+    "description": "Google 搜索 (Google search: title, url, snippet)",
+    "domain": "www.google.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 10)"
+      }
+    },
+    "capabilities": []
+  },
+  "gsmarena/search": {
+    "file": "gsmarena/search.js",
+    "description": "GSMArena 手机搜索",
+    "domain": "www.gsmarena.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Phone name to search (e.g. iPhone 16, Galaxy S25)"
+      }
+    },
+    "capabilities": []
+  },
+  "hackernews/thread": {
+    "file": "hackernews/thread.js",
+    "description": "获取 Hacker News 帖子的评论树",
+    "domain": "news.ycombinator.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "HN item ID or URL"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "hackernews/top": {
+    "file": "hackernews/top.js",
+    "description": "获取 Hacker News 当前热门帖子",
+    "domain": "news.ycombinator.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of posts (default: 20, max: 50)"
+      }
+    },
+    "capabilities": []
+  },
+  "hupu/hot": {
+    "file": "hupu/hot.js",
+    "description": "虎扑热帖 (Hupu hot posts: title, replies, forum)",
+    "domain": "bbs.hupu.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": []
+  },
+  "imdb/search": {
+    "file": "imdb/search.js",
+    "description": "IMDb 电影搜索",
+    "domain": "www.imdb.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "type": "string",
+        "required": true,
+        "description": "搜索关键词"
+      }
+    },
+    "capabilities": []
+  },
+  "jike/feed": {
+    "file": "jike/feed.js",
+    "description": "获取即刻推荐 Feed",
+    "domain": "web.okjike.com",
+    "readOnly": true,
+    "args": {
+      "limit": {
+        "required": false,
+        "description": "Number of posts (default 20)"
+      }
+    },
+    "capabilities": []
+  },
+  "jike/search": {
+    "file": "jike/search.js",
+    "description": "即刻搜索动态",
+    "domain": "web.okjike.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search keyword"
+      },
+      "limit": {
+        "required": false,
+        "description": "Number of results (default 20)"
+      }
+    },
+    "capabilities": []
+  },
+  "linkedin/profile": {
+    "file": "linkedin/profile.js",
+    "description": "获取 LinkedIn 用户 profile",
+    "domain": "www.linkedin.com",
+    "readOnly": true,
+    "args": {
+      "username": {
+        "required": true,
+        "description": "LinkedIn username (from URL linkedin.com/in/<username>)"
+      }
+    },
+    "capabilities": []
+  },
+  "linkedin/search": {
+    "file": "linkedin/search.js",
+    "description": "搜索 LinkedIn 帖子",
+    "domain": "www.linkedin.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search keyword"
+      },
+      "count": {
+        "required": false,
+        "description": "Max results to return (default 10)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "linuxdo/hot": {
+    "file": "linuxdo/hot.js",
+    "description": "Get Linux.do hot topics",
+    "domain": "linux.do",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of items to return (default: 30, max: 50)"
+      },
+      "period": {
+        "required": false,
+        "description": "Top period: daily, weekly, monthly, quarterly, yearly, all (default: daily)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "linuxdo/latest": {
+    "file": "linuxdo/latest.js",
+    "description": "Get latest topics from Linux.do",
+    "domain": "linux.do",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of items to return (default: 30, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "linuxdo/topic": {
+    "file": "linuxdo/topic.js",
+    "description": "Get a Linux.do topic by id",
+    "domain": "linux.do",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Linux.do topic id"
+      },
+      "posts": {
+        "required": false,
+        "description": "Number of posts to return (default: 20, max: 100)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "m_weibo/comments": {
+    "file": "m_weibo/comments.js",
+    "description": "Get comments for a Weibo post (mobile site)",
+    "domain": "m.weibo.cn",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Post ID (mid)"
+      },
+      "max_id": {
+        "required": false,
+        "description": "Pagination ID (from previous response)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "m_weibo/feed": {
+    "file": "m_weibo/feed.js",
+    "description": "Get current logged-in Weibo user's friends feed (mobile site)",
+    "domain": "m.weibo.cn",
+    "readOnly": true,
+    "args": {
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "m_weibo/hot": {
+    "file": "m_weibo/hot.js",
+    "description": "Get Weibo hot search / trending topics from mobile site",
+    "domain": "m.weibo.cn",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of items to return (default: 30, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "m_weibo/me": {
+    "file": "m_weibo/me.js",
+    "description": "Get current logged-in Weibo user info (mobile site)",
+    "domain": "m.weibo.cn",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "m_weibo/search": {
+    "file": "m_weibo/search.js",
+    "description": "Search Weibo posts (mobile site)",
+    "domain": "m.weibo.cn",
+    "readOnly": true,
+    "args": {
+      "q": {
+        "required": true,
+        "description": "Search query"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "m_weibo/user": {
+    "file": "m_weibo/user.js",
+    "description": "Get Weibo user info (mobile site)",
+    "domain": "m.weibo.cn",
+    "readOnly": true,
+    "args": {
+      "uid": {
+        "required": true,
+        "description": "User ID (numeric)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "m_weibo/user_posts": {
+    "file": "m_weibo/user_posts.js",
+    "description": "Get a Weibo user's posts from mobile site",
+    "domain": "m.weibo.cn",
+    "readOnly": true,
+    "args": {
+      "uid": {
+        "required": true,
+        "description": "User ID (numeric)"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "npm/search": {
+    "file": "npm/search.js",
+    "description": "Search npm packages via registry API",
+    "domain": "www.npmjs.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "type": "string",
+        "description": "Search query",
+        "required": true
+      },
+      "count": {
+        "type": "number",
+        "description": "Number of results (default 20, max 250)",
+        "default": 20
+      }
+    },
+    "capabilities": []
+  },
+  "openlibrary/search": {
+    "file": "openlibrary/search.js",
+    "description": "Open Library 图书搜索 (book search: title, authors, year)",
+    "domain": "openlibrary.org",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "type": "string",
+        "required": true,
+        "description": "搜索关键词"
+      },
+      "count": {
+        "type": "number",
+        "required": false,
+        "default": 10,
+        "description": "返回数量"
+      }
+    },
+    "capabilities": []
+  },
+  "producthunt/today": {
+    "file": "producthunt/today.js",
+    "description": "Product Hunt 今日产品 (today's products: name, tagline, votes)",
+    "domain": "www.producthunt.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of products to return (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "pypi/package": {
+    "file": "pypi/package.js",
+    "description": "获取 Python 包详情",
+    "domain": "pypi.org",
+    "readOnly": true,
+    "args": {
+      "name": "包名"
+    },
+    "capabilities": []
+  },
+  "pypi/search": {
+    "file": "pypi/search.js",
+    "description": "搜索 Python 包",
+    "domain": "pypi.org",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search keyword"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default 1)"
+      }
+    },
+    "capabilities": []
+  },
+  "qidian/search": {
+    "file": "qidian/search.js",
+    "description": "起点中文网小说搜索",
+    "domain": "www.qidian.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search keyword (e.g. 仙侠, 系统流)"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default 1)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "reddit/context": {
+    "file": "reddit/context.js",
+    "description": "获取评论的 ancestor chain（从根帖到目标评论的完整路径）",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "args": {
+      "url": {
+        "required": true,
+        "description": "Reddit comment URL (utm params are stripped automatically)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "reddit/hot": {
+    "file": "reddit/hot.js",
+    "description": "获取 subreddit 热门帖子（或 Reddit 首页）",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "args": {
+      "subreddit": {
+        "required": false,
+        "description": "Subreddit name without r/ prefix (omit for front page)"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of posts (default 25, max 100)"
+      },
+      "after": {
+        "required": false,
+        "description": "Fullname of the last item for pagination (e.g. t3_abc123)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "reddit/me": {
+    "file": "reddit/me.js",
+    "description": "获取当前 Reddit 登录用户信息",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "reddit/posts": {
+    "file": "reddit/posts.js",
+    "description": "获取用户发帖列表（自动翻页）",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "args": {
+      "username": {
+        "required": false,
+        "description": "Reddit username (defaults to current user)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "reddit/search": {
+    "file": "reddit/search.js",
+    "description": "搜索 Reddit 帖子",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "subreddit": {
+        "required": false,
+        "description": "Limit search to a subreddit (without r/ prefix)"
+      },
+      "sort": {
+        "required": false,
+        "description": "Sort order: relevance (default), hot, top, new, comments"
+      },
+      "time": {
+        "required": false,
+        "description": "Time filter: all (default), hour, day, week, month, year"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 25, max 100)"
+      },
+      "after": {
+        "required": false,
+        "description": "Fullname of the last item for pagination"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "reddit/thread": {
+    "file": "reddit/thread.js",
+    "description": "获取 Reddit 帖子的完整讨论树",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "args": {
+      "url": {
+        "required": true,
+        "description": "Reddit post URL"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "reuters/search": {
+    "file": "reuters/search.js",
+    "description": "Reuters 路透社新闻搜索",
+    "domain": "www.reuters.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "count": {
+        "required": false,
+        "description": "Max results to return (default 10)"
+      }
+    },
+    "capabilities": []
+  },
+  "smzdm/search": {
+    "file": "smzdm/search.js",
+    "description": "什么值得买搜索好价",
+    "domain": "search.smzdm.com",
+    "readOnly": true,
+    "args": {
+      "keyword": {
+        "required": true,
+        "description": "Search keyword (e.g. 耳机)"
+      },
+      "count": {
+        "required": false,
+        "description": "Max results to return (default: 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "sogou/weixin": {
+    "file": "sogou/weixin.js",
+    "description": "搜狗微信搜索 (WeChat article search: title, snippet, account)",
+    "domain": "weixin.sogou.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default 1)"
+      }
+    },
+    "capabilities": []
+  },
+  "sohu/user": {
+    "file": "sohu/user.js",
+    "description": "获取搜狐号用户资料（头像、名称、简介、粉丝数、关注数）",
+    "domain": "mp.sohu.com",
+    "readOnly": true,
+    "args": {
+      "xpt": {
+        "required": true,
+        "description": "用户 xpt 标识（从 URL ?xpt= 参数中提取）"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "sohu/user_posts": {
+    "file": "sohu/user_posts.js",
+    "description": "获取搜狐号用户近期发布文章列表（自动滚动加载，直到满足日期截止或到底）",
+    "domain": "mp.sohu.com",
+    "readOnly": true,
+    "args": {
+      "xpt": {
+        "required": true,
+        "description": "用户 xpt 标识（从 URL ?xpt= 参数中提取）"
+      },
+      "days": {
+        "required": false,
+        "description": "获取最近 N 天内的文章（默认 90）"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "stackoverflow/search": {
+    "file": "stackoverflow/search.js",
+    "description": "Search Stack Overflow questions",
+    "domain": "stackoverflow.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 10, max 50)"
+      }
+    },
+    "capabilities": []
+  },
+  "toutiao/hot": {
+    "file": "toutiao/hot.js",
+    "description": "今日头条热榜 (Toutiao trending: title, hot_value)",
+    "domain": "www.toutiao.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "返回条数 (默认 20, 最多 50)"
+      }
+    },
+    "capabilities": []
+  },
+  "toutiao/search": {
+    "file": "toutiao/search.js",
+    "description": "今日头条搜索 (Toutiao search: title, snippet, source)",
+    "domain": "so.toutiao.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "搜索关键词"
+      },
+      "count": {
+        "required": false,
+        "description": "返回结果数量 (默认 10, 最多 20)"
+      }
+    },
+    "capabilities": []
+  },
+  "twitter/bookmarks": {
+    "file": "twitter/bookmarks.js",
+    "description": "获取 Twitter 书签列表",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of bookmarks to return (default 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "twitter/following": {
+    "file": "twitter/following.js",
+    "description": "获取首页 Following 时间线（关注的人的推文，过滤广告）",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of tweets (default 20, max 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "twitter/for_you": {
+    "file": "twitter/for_you.js",
+    "description": "获取首页 For You 时间线（过滤广告）",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of tweets (default 20, max 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "twitter/notifications": {
+    "file": "twitter/notifications.js",
+    "description": "获取 Twitter 通知（点赞、转发、回复、关注、提及等）",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "type": {
+        "required": false,
+        "description": "Notification type: all (default), mentions, likes, retweets"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of notifications (default 20, max 50)"
+      },
+      "cursor": {
+        "required": false,
+        "description": "Pagination cursor (from previous response's next_cursor)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "twitter/search": {
+    "file": "twitter/search.js",
+    "description": "搜索推文",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default 20, max 50)"
+      },
+      "type": {
+        "required": false,
+        "description": "Result type: latest (default) or top"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "twitter/thread": {
+    "file": "twitter/thread.js",
+    "description": "获取推文对话线程（原文 + 所有回复）",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "tweet_id": {
+        "required": true,
+        "description": "Tweet ID (numeric) or full URL"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "twitter/tweets": {
+    "file": "twitter/tweets.js",
+    "description": "获取用户最近的推文（时间线）",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "screen_name": {
+        "required": true,
+        "description": "Twitter handle (without @)"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of tweets (default 20, max 100)"
+      },
+      "cursor": {
+        "required": false,
+        "description": "Pagination cursor (from previous response's next_cursor)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "twitter/user": {
+    "file": "twitter/user.js",
+    "description": "获取 Twitter 用户 profile",
+    "domain": "x.com",
+    "readOnly": true,
+    "args": {
+      "screen_name": {
+        "required": true,
+        "description": "Twitter handle (without @)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "v2ex/hot": {
+    "file": "v2ex/hot.js",
+    "description": "获取 V2EX 最热主题",
+    "domain": "www.v2ex.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": []
+  },
+  "v2ex/latest": {
+    "file": "v2ex/latest.js",
+    "description": "获取 V2EX 最新主题",
+    "domain": "www.v2ex.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": []
+  },
+  "v2ex/topic": {
+    "file": "v2ex/topic.js",
+    "description": "获取 V2EX 主题详情和回复",
+    "domain": "www.v2ex.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Topic ID"
+      }
+    },
+    "capabilities": []
+  },
+  "weibo/comments": {
+    "file": "weibo/comments.js",
+    "description": "Get comments on a Weibo post",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Post ID (numeric idstr)"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of comments (default: 20, max: 50)"
+      },
+      "max_id": {
+        "required": false,
+        "description": "Pagination cursor (from previous response)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/favorites": {
+    "file": "weibo/favorites.js",
+    "description": "Get current user's favorited (bookmarked) Weibo posts",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1, use 'all' to fetch everything)"
+      },
+      "format": {
+        "required": false,
+        "description": "Output format: json (default) or md (markdown)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/feed": {
+    "file": "weibo/feed.js",
+    "description": "Get Weibo home timeline (posts from followed users)",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of posts (default: 15, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/hot": {
+    "file": "weibo/hot.js",
+    "description": "Get Weibo hot search / trending topics",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of items to return (default: 30, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/likes": {
+    "file": "weibo/likes.js",
+    "description": "Get posts liked by a Weibo user",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "uid": {
+        "required": false,
+        "description": "User ID (default: current logged-in user)"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/me": {
+    "file": "weibo/me.js",
+    "description": "Get current logged-in Weibo user info",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/post": {
+    "file": "weibo/post.js",
+    "description": "Get a single Weibo post by ID (numeric or mblogid)",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Post ID (numeric idstr) or mblogid (short alphanumeric ID from URL)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/user": {
+    "file": "weibo/user.js",
+    "description": "Get Weibo user profile by uid (numeric) or screen_name",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "User ID (numeric uid) or screen name"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "weibo/user_posts": {
+    "file": "weibo/user_posts.js",
+    "description": "Get a Weibo user's posts (timeline)",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "args": {
+      "uid": {
+        "required": true,
+        "description": "User ID (numeric)"
+      },
+      "page": {
+        "required": false,
+        "description": "Page number (default: 1)"
+      },
+      "feature": {
+        "required": false,
+        "description": "Filter: 0=all, 1=original, 2=picture, 3=video, 4=music (default: 0)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "wikipedia/search": {
+    "file": "wikipedia/search.js",
+    "description": "维基百科搜索 (Wikipedia search: title, snippet, url)",
+    "domain": "en.wikipedia.org",
+    "readOnly": true,
+    "args": {
+      "query": "搜索关键词",
+      "count": "返回结果数量 (默认 10)"
+    },
+    "capabilities": []
+  },
+  "wikipedia/summary": {
+    "file": "wikipedia/summary.js",
+    "description": "维基百科摘要 (Wikipedia summary: title, extract, url)",
+    "domain": "en.wikipedia.org",
+    "readOnly": true,
+    "args": {
+      "title": "页面标题 (用下划线替换空格)"
+    },
+    "capabilities": []
+  },
+  "xiaohongshu/comments": {
+    "file": "xiaohongshu/comments.js",
+    "description": "Get Xiaohongshu note comments",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "args": {
+      "note_id": {
+        "required": true,
+        "description": "Note ID or full note URL"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "xiaohongshu/feed": {
+    "file": "xiaohongshu/feed.js",
+    "description": "Get Xiaohongshu home feed",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "xiaohongshu/me": {
+    "file": "xiaohongshu/me.js",
+    "description": "Get current logged-in Xiaohongshu user",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "xiaohongshu/note": {
+    "file": "xiaohongshu/note.js",
+    "description": "Get Xiaohongshu note details",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "args": {
+      "note_id": {
+        "required": true,
+        "description": "Note ID or full note URL"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "xiaohongshu/search": {
+    "file": "xiaohongshu/search.js",
+    "description": "Search Xiaohongshu notes",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "args": {
+      "keyword": {
+        "required": true,
+        "description": "Search keyword"
+      },
+      "sort": {
+        "required": false,
+        "description": "Sort: general (default), latest, likes, comments, collects"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "xiaohongshu/user_posts": {
+    "file": "xiaohongshu/user_posts.js",
+    "description": "Get Xiaohongshu user posts",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "args": {
+      "user_id": {
+        "required": true,
+        "description": "User ID"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "xiaoyuzhoufm/episode": {
+    "file": "xiaoyuzhoufm/episode.js",
+    "description": "获取小宇宙单集详情（播放数、评论数、完整 shownotes、嘉宾、链接）",
+    "domain": "www.xiaoyuzhoufm.com",
+    "readOnly": true,
+    "args": {
+      "eid": {
+        "required": true,
+        "description": "Episode ID (URL 中的 ID)"
+      }
+    },
+    "capabilities": []
+  },
+  "xiaoyuzhoufm/podcast": {
+    "file": "xiaoyuzhoufm/podcast.js",
+    "description": "获取小宇宙播客详情（订阅数、集数、每集播放数和评论数）",
+    "domain": "www.xiaoyuzhoufm.com",
+    "readOnly": true,
+    "args": {
+      "pid": {
+        "required": true,
+        "description": "Podcast ID (URL 中的 ID)"
+      }
+    },
+    "capabilities": []
+  },
+  "xueqiu/feed": {
+    "file": "xueqiu/feed.js",
+    "description": "获取雪球首页时间线（关注用户的动态）",
+    "domain": "xueqiu.com",
+    "readOnly": true,
+    "args": {
+      "page": {
+        "required": false,
+        "description": "页码，默认 1"
+      },
+      "count": {
+        "required": false,
+        "description": "每页数量，默认 20"
+      }
+    },
+    "capabilities": []
+  },
+  "xueqiu/hot-stock": {
+    "file": "xueqiu/hot-stock.js",
+    "description": "获取雪球热门股票榜",
+    "domain": "xueqiu.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "返回数量，默认 20，最大 50"
+      },
+      "type": {
+        "required": false,
+        "description": "榜单类型：10=人气榜(默认) 12=关注榜"
+      }
+    },
+    "capabilities": []
+  },
+  "xueqiu/hot": {
+    "file": "xueqiu/hot.js",
+    "description": "获取雪球热门动态",
+    "domain": "xueqiu.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "返回数量，默认 20，最大 50"
+      }
+    },
+    "capabilities": []
+  },
+  "xueqiu/search": {
+    "file": "xueqiu/search.js",
+    "description": "搜索雪球股票（代码或名称）",
+    "domain": "xueqiu.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "搜索关键词，如 茅台、AAPL、腾讯"
+      },
+      "count": {
+        "required": false,
+        "description": "返回数量，默认 10"
+      }
+    },
+    "capabilities": []
+  },
+  "xueqiu/stock": {
+    "file": "xueqiu/stock.js",
+    "description": "获取雪球股票实时行情",
+    "domain": "xueqiu.com",
+    "readOnly": true,
+    "args": {
+      "symbol": {
+        "required": true,
+        "description": "股票代码，如 SH600519、SZ000858、AAPL、00700"
+      }
+    },
+    "capabilities": []
+  },
+  "xueqiu/watchlist": {
+    "file": "xueqiu/watchlist.js",
+    "description": "获取雪球自选股列表",
+    "domain": "xueqiu.com",
+    "readOnly": true,
+    "args": {
+      "category": {
+        "required": false,
+        "description": "分类：1=自选(默认) 2=持仓 3=关注"
+      }
+    },
+    "capabilities": []
+  },
+  "yahoo-finance/quote": {
+    "file": "yahoo-finance/quote.js",
+    "description": "Yahoo Finance 股票行情",
+    "domain": "finance.yahoo.com",
+    "readOnly": true,
+    "args": {
+      "symbol": {
+        "required": true,
+        "description": "Stock ticker symbol, e.g. AAPL, MSFT, TSLA"
+      }
+    },
+    "capabilities": []
+  },
+  "youdao/translate": {
+    "file": "youdao/translate.js",
+    "description": "有道翻译/词典查询",
+    "domain": "dict.youdao.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Word or sentence to translate (English or Chinese)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "youtube/channel": {
+    "file": "youtube/channel.js",
+    "description": "Get YouTube channel info and recent videos",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": false,
+        "description": "Channel ID (UCxxxx) or handle (@name). Defaults to current page channel."
+      },
+      "max": {
+        "required": false,
+        "description": "Max recent videos to return (default: 10)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "youtube/comments": {
+    "file": "youtube/comments.js",
+    "description": "Get comments for a YouTube video",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": false,
+        "description": "Video ID (defaults to current page video)"
+      },
+      "max": {
+        "required": false,
+        "description": "Max comments to return (default: 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "youtube/feed": {
+    "file": "youtube/feed.js",
+    "description": "Get YouTube home feed or subscriptions feed",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "args": {
+      "type": {
+        "required": false,
+        "description": "Feed type: 'home' (default) or 'subscriptions'"
+      },
+      "max": {
+        "required": false,
+        "description": "Max videos to return (default: 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "youtube/search": {
+    "file": "youtube/search.js",
+    "description": "Search YouTube videos",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "args": {
+      "query": {
+        "required": true,
+        "description": "Search query string"
+      },
+      "max": {
+        "required": false,
+        "description": "Max results to return (default: 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "youtube/transcript": {
+    "file": "youtube/transcript.js",
+    "description": "Get video transcript/captions (must be on the video page)",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "args": {
+      "lang": {
+        "required": false,
+        "description": "Language code (default: first available, e.g. 'en', 'ja')"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "youtube/video": {
+    "file": "youtube/video.js",
+    "description": "Get detailed info for a YouTube video (from current page or by video ID)",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": false,
+        "description": "Video ID (defaults to current page video)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "zhihu/hot": {
+    "file": "zhihu/hot.js",
+    "description": "Get Zhihu hot list (trending topics)",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "args": {
+      "count": {
+        "required": false,
+        "description": "Number of items to return (default: 20, max: 50)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "zhihu/me": {
+    "file": "zhihu/me.js",
+    "description": "Get current logged-in Zhihu user info",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "args": {},
+    "capabilities": [
+      "network"
+    ]
+  },
+  "zhihu/question": {
+    "file": "zhihu/question.js",
+    "description": "Get a Zhihu question and its top answers",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "args": {
+      "id": {
+        "required": true,
+        "description": "Question ID (numeric)"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of answers to fetch (default: 5, max: 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  },
+  "zhihu/search": {
+    "file": "zhihu/search.js",
+    "description": "Search Zhihu for questions and answers",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "args": {
+      "keyword": {
+        "required": true,
+        "description": "Search keyword"
+      },
+      "count": {
+        "required": false,
+        "description": "Number of results (default: 10, max: 20)"
+      }
+    },
+    "capabilities": [
+      "network"
+    ]
+  }
+}

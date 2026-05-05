@@ -53,6 +53,8 @@ const registrations = defineMethodRegistrations<H, (typeof advancedTools)[number
     { tool: 'network_intercept', method: 'handleNetworkInterceptDispatch' },
     { tool: 'network_tls_fingerprint', method: 'handleNetworkTlsFingerprint' },
     { tool: 'network_bot_detect_analyze', method: 'handleNetworkBotDetectAnalyze' },
+    { tool: 'cdp_batch', method: 'handleCdpBatch' },
+    { tool: 'network_reload_capture', method: 'handleNetworkReloadCapture' },
   ],
 });
 
@@ -118,6 +120,12 @@ const manifest: DomainManifest<typeof DEP_KEY, H, typeof DOMAIN> = {
         condition: 'Network monitoring must be enabled',
         fix: 'Call network_monitor(enable) first',
       },
+    ],
+    cdp_batch: [
+      { condition: 'Browser must be launched', fix: 'Call browser_launch or browser_attach first' },
+    ],
+    network_reload_capture: [
+      { condition: 'Browser must be launched', fix: 'Call browser_launch or browser_attach first' },
     ],
   },
 
