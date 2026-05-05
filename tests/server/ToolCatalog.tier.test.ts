@@ -107,7 +107,8 @@ describe('ToolCatalog – tier system', () => {
 
   it('getProfileDomains returns correct domains for each profile', () => {
     const searchDomains = getProfileDomains('search');
-    expect(searchDomains).toEqual([]);
+    expect(searchDomains).toHaveLength(2);
+    expect(searchDomains).toEqual(expect.arrayContaining(['real-browser', 'site-adapter']));
 
     const workflowDomains = getProfileDomains('workflow');
     expect(workflowDomains).toContain('browser');

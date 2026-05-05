@@ -12,6 +12,8 @@ jshook CLI 遵循 **agent-friendly** 输出规范，便于程序化解析：
 | **stderr** | 人类可读日志 | 文本，前缀 `[jshook]` |
 | **Exit code** | 0 = 成功，1 = 错误 | - |
 
+说明：`--json` 只是兼容性参数；CLI 默认始终输出 JSON。
+
 ### Success Response
 ```json
 {"ok": true, "data": {...}, "meta": {"command": "stego scan", "elapsedMs": 123}}
@@ -89,14 +91,16 @@ jshook eval "document.querySelectorAll('.result').length"
 
 **何时使用：** 需要从特定网站提取结构化数据（无需编写自定义脚本）。
 
-**优势：** 126 个预置适配器覆盖 36+ 平台，自动使用当前浏览器登录态。
+<!-- AUTO-GENERATED:site-adapter-stats:start -->
+**优势：** 126 个预置适配器，覆盖 48 个站点目录，自动使用当前浏览器登录态。
+<!-- AUTO-GENERATED:site-adapter-stats:end -->
 
 | 场景 | 命令 | 示例 |
 |------|------|------|
 | 查看可用适配器 | `jshook site list` | 列出所有适配器 |
 | 搜索适配器 | `jshook site search twitter` | 按关键词搜索 |
 | 查看适配器详情 | `jshook site info twitter/me` | 查看参数和描述 |
-| 运行适配器 | `jshook site run reddit/me --json` | 提取当前用户 Reddit 信息 |
+| 运行适配器 | `jshook site run reddit/me` | 提取当前用户 Reddit 信息 |
 | 带参数运行 | `jshook site run twitter/search --args '{"query":"AI"}'` | 搜索推文 |
 | 更新适配器 | `jshook site update` | 从 GitHub 同步最新适配器 |
 
@@ -234,6 +238,70 @@ jshook doctor
 ---
 
 ## Quick Reference Card
+
+<!-- AUTO-GENERATED:cli-commands:start -->
+## CLI 命令总览（自动生成）
+
+以下命令分组直接来自 `src/cli/index.ts` 的帮助文本，用来降低文档与实现漂移。
+
+### Browser Automation
+
+| 命令 | 说明 |
+| --- | --- |
+| `eval <script>` | Execute JavaScript in the browser |
+| `snapshot [--max-depth N]` | Get accessibility tree with @ref numbers |
+| `click <ref>` | Click element by @ref from snapshot |
+| `fill <ref> <text>` | Fill input by @ref |
+| `hover <ref>` | Hover element by @ref |
+| `open <url>` | Navigate to URL |
+| `open-new <url>` | Open URL in new tab |
+| `tabs` | List connected browser tabs |
+| `cookies` | Get page cookies |
+### Site Adapters
+
+| 命令 | 说明 |
+| --- | --- |
+| `site list [--filter keyword]` | List available site adapters |
+| `site info <name>` | Show adapter details |
+| `site run <name> [--args '{}']` | Run a site adapter |
+| `site search <query>` | Search adapters by keyword |
+| `site update` | Update adapters from GitHub |
+### Steganography
+
+| 命令 | 说明 |
+| --- | --- |
+| `stego scan <file>` | Scan file for stego indicators |
+| `stego png <file>` | Parse PNG chunks |
+| `stego exif <file>` | Extract EXIF/metadata |
+| `stego xor <hex|file> [--top-n 10]` | Brute-force single-byte XOR |
+### PCAP Analysis
+
+| 命令 | 说明 |
+| --- | --- |
+| `pcap carve <file> [--output-dir dir]` | Carve files from PCAP |
+| `pcap dns <file>` | Detect DNS exfiltration |
+| `pcap http <file> [--include-body]` | Extract HTTP traffic |
+### YARA Scan
+
+| 命令 | 说明 |
+| --- | --- |
+| `yara scan <file> [--rule-file file]` | Scan with YARA rules |
+| `yara rules [--category all]` | List built-in rules |
+### Pwn Tools
+
+| 命令 | 说明 |
+| --- | --- |
+| `pwn checksec <binary>` | Check binary protections |
+| `pwn elf <binary>` | Parse ELF header info |
+| `pwn pattern create [--length 256]` | Generate cyclic pattern |
+| `pwn pattern offset <value>` | Find offset in pattern |
+| `pwn shellcode <hex|file>` | Analyze shellcode |
+### Utility
+
+| 命令 | 说明 |
+| --- | --- |
+| `doctor` | Check environment health |
+<!-- AUTO-GENERATED:cli-commands:end -->
 
 | 任务类型 | 首选命令 | 需要浏览器 |
 |----------|----------|------------|

@@ -22,6 +22,7 @@
 | `core` | Core | workflow, full | 核心静态/半静态分析域，覆盖脚本采集、反混淆、语义理解、webpack/source map 与加密识别。 |
 | `cross-domain` | Cross-Domain | full | 跨域关联域，将多个域的分析结果进行交叉关联，支持自动化工作流编排与证据图桥接。 |
 | `debugger` | Debugger | workflow, full | 基于 CDP 的断点、单步、调用栈、watch 与调试会话管理域。 |
+| `dom-intel` | DOM Intel | workflow, full | DOM 情报收集域，支持页面结构分析、元素指纹、动态行为追踪。 |
 | `encoding` | Encoding | workflow, full | 二进制格式检测、编码转换、熵分析与 protobuf 原始解码。 |
 | `evidence` | Evidence | full | 逆向证据图域，用图结构串联 URL、脚本、函数、Hook 与捕获产物之间的溯源关系。 |
 | `extension-registry` | Extension Registry | full | 扩展注册域，管理和发现社区扩展。 |
@@ -38,12 +39,14 @@
 | `process` | Process | full | 进程、模块、内存诊断与受控注入域，适合宿主级分析、故障排查与 Windows 进程实验场景。 |
 | `protocol-analysis` | Protocol Analysis | full | 自定义协议分析域，支持协议模式定义、自动字段检测、状态机推断和可视化。 |
 | `proxy` | Proxy | full | 全栈 HTTP/HTTPS 中间人代理域，提供系统级的流量拦截、篡改与应用级挂载配置。 |
-| `pwn-tools` | Pwn Tools | workflow, full | 二进制漏洞利用工具域，支持 ELF 解析、checksec、pattern 生成、shellcode 分析、ROP gadget 搜索与链构建。 |
+| `pwn-tools` | Pwn Tools | full, workflow | 二进制漏洞利用工具域，支持 ELF 解析、checksec、pattern 生成、shellcode 分析、ROP gadget 搜索与链构建。 |
+| `real-browser` | Real Browser | search, workflow, full | 真实浏览器控制域，通过 Chrome 扩展接管用户浏览器（保留登录态）。 |
 | `sandbox` | Sandbox | full | 基于 QuickJS WASM 的安全沙箱域，支持执行自定义脚本并调用 MCP 工具。 |
 | `shared-state-board` | Shared State Board | workflow, full | 跨 Agent 状态同步域，提供全局共享的状态板用于多 Agent 协作。 |
+| `site-adapter` | Site Adapter | search, workflow, full | 站点适配器域，126 个社区维护的适配器覆盖 36+ 平台，无需 API key。 |
 | `skia-capture` | Skia Capture | workflow, full | Skia 渲染引擎捕获域，用于 UI 渲染分析和可视化。 |
 | `sourcemap` | SourceMap | full | SourceMap 发现、抓取、解析与源码树重建。 |
-| `stego` | Steganography | workflow, full | 隐写分析域，支持文件扫描、LSB 提取、PNG chunks 分析、EXIF 提取、边框解码与 XOR 暴力破解。 |
+| `stego` | Steganography | full, workflow | 隐写分析域，支持文件扫描、LSB 提取、PNG chunks 分析、EXIF 提取、边框解码与 XOR 暴力破解。 |
 | `streaming` | Streaming | workflow, full | WebSocket 与 SSE 监控域。 |
 | `syscall-hook` | Syscall Hook | full | 系统调用挂钩域，提供系统调用监控和映射能力。 |
 | `trace` | Trace | full | 时间旅行调试域，录制 CDP 事件并写入 SQLite，支持 SQL 查询与堆快照对比。 |
@@ -51,7 +54,7 @@
 | `v8-inspector` | V8 Inspector | workflow, full | V8 检查器域，提供堆快照分析、CPU 分析和内存检查。 |
 | `wasm` | WASM | full | WebAssembly dump、反汇编、反编译、优化与离线执行域。 |
 | `workflow` | Workflow | workflow, full | 复合工作流与脚本库域，是 built-in 高层编排入口。 |
-| `yara-scan` | YARA Scan | workflow, full | YARA 风格模式扫描域，支持内置规则匹配、自定义规则生成与 PE 可疑指标检测。 |
+| `yara-scan` | YARA Scan | full, workflow | YARA 风格模式扫描域，支持内置规则匹配、自定义规则生成与 PE 可疑指标检测。 |
 
 ## 重点高层入口
 

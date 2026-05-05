@@ -74,19 +74,18 @@ function hasFlag(args: string[], flag: string): boolean {
   return args.includes(flag);
 }
 
-function stripFlags(args: string[], flags: string[]): string[] {
+function stripFlags(args: string[], valueFlags: string[], booleanFlags: string[] = []): string[] {
   const result: string[] = [];
-  let skip = false;
-  for (const a of args) {
-    if (skip) {
-      skip = false;
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (booleanFlags.includes(arg)) {
       continue;
     }
-    if (flags.includes(a)) {
-      skip = true;
+    if (valueFlags.includes(arg)) {
+      i++;
       continue;
     }
-    result.push(a);
+    result.push(arg);
   }
   return result;
 }
@@ -198,7 +197,7 @@ async function main() {
   }
 
   const sessionFlag = getArg(rawArgs, '--session');
-  const cmdArgs = stripFlags(rawArgs, ['--session', '--help', '-h']);
+  const cmdArgs = stripFlags(rawArgs, ['--session'], ['--json', '--help', '-h']);
   const command = cmdArgs[0];
   const sub = cmdArgs[1];
 

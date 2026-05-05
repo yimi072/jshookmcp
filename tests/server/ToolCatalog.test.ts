@@ -146,9 +146,10 @@ describe('Three-Tier Boost Hierarchy', () => {
     expect(fullTools.length).toBeGreaterThan(workflowTools.length);
   });
 
-  it('search tier is currently empty', () => {
+  it('search tier includes the currently exposed discovery domains', () => {
     const searchDomains = getProfileDomains('search');
-    expect(searchDomains).toEqual([]);
+    expect(searchDomains).toHaveLength(2);
+    expect(searchDomains).toEqual(expect.arrayContaining(['real-browser', 'site-adapter']));
   });
 
   it('getToolMinimalTier returns correct tier for known tools', () => {

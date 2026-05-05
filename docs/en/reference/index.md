@@ -22,6 +22,7 @@ The following tool domains are available:
 | `core` | Core | workflow, full | Core static and semi-static analysis domain for script collection, deobfuscation, semantic inspection, webpack analysis, source map recovery, and crypto detection. |
 | `cross-domain` | Cross-Domain | full | Cross-domain correlation domain that bridges analysis results across multiple domains, supporting workflow orchestration and evidence graph integration. |
 | `debugger` | Debugger | workflow, full | CDP-based debugging domain covering breakpoints, stepping, call stacks, watches, and debugger sessions. |
+| `dom-intel` | DOM Intel | workflow, full | DOM intelligence collection domain supporting page structure analysis, element fingerprinting, and dynamic behavior tracking. |
 | `encoding` | Encoding | workflow, full | Binary format detection, encoding conversion, entropy analysis, and raw protobuf decoding. |
 | `evidence` | Evidence | full | Evidence-graph domain that models provenance between URLs, scripts, functions, hooks, and captured artifacts. |
 | `extension-registry` | Extension Registry | full | Extension registry domain for managing and discovering community extensions. |
@@ -33,14 +34,19 @@ The following tool domains are available:
 | `memory` | Memory | full | Memory analysis domain for native scans, pointer-chain discovery, structure inference, and breakpoint-based observation. |
 | `mojo-ipc` | Mojo IPC | full | Mojo IPC monitoring domain for Chromium inter-process communication analysis. |
 | `network` | Network | workflow, full | Request capture, response extraction, HAR export, safe replay, and performance tracing. |
+| `pcap-carve` | PCAP Carve | full | PCAP network traffic analysis domain supporting TCP stream reassembly, file carving, DNS exfiltration detection, and HTTP extraction. |
 | `platform` | Platform | full | Platform and package analysis domain covering miniapps, ASAR archives, and Electron apps. |
 | `process` | Process | full | Process, module, memory diagnostics, and controlled injection domain for host-level inspection, troubleshooting, and Windows process experimentation workflows. |
 | `protocol-analysis` | Protocol Analysis | full | Custom protocol analysis domain supporting protocol pattern definition, automatic field detection from hex payloads, state machine inference from captured messages, and Mermaid diagram visualization. |
 | `proxy` | Proxy | full | Full-stack HTTP/HTTPS MITM proxy domain for system-level traffic interception, modification, and application configuration. |
+| `pwn-tools` | Pwn Tools | full, workflow | Binary exploitation tooling domain supporting ELF parsing, checksec, pattern generation, shellcode analysis, ROP gadget search and chain building. |
+| `real-browser` | Real Browser | search, workflow, full | Real browser control domain via Chrome extension, preserving user login state. |
 | `sandbox` | Sandbox | full | WASM-isolated QuickJS sandbox domain for secure custom script execution with MCP tool access. |
 | `shared-state-board` | Shared State Board | workflow, full | Cross-agent state synchronization domain providing a global shared state board for multi-agent collaboration. |
+| `site-adapter` | Site Adapter | search, workflow, full | Site adapter domain with 126 community-maintained adapters covering 36+ platforms, no API keys needed. |
 | `skia-capture` | Skia Capture | workflow, full | Skia rendering engine capture domain for UI rendering analysis and visualization. |
 | `sourcemap` | SourceMap | full | Source map discovery, fetching, parsing, and source tree reconstruction. |
+| `stego` | Steganography | full, workflow | Steganography analysis domain supporting file scanning, LSB extraction, PNG chunk analysis, EXIF extraction, border decoding, and XOR brute-forcing. |
 | `streaming` | Streaming | workflow, full | WebSocket and SSE monitoring domain. |
 | `syscall-hook` | Syscall Hook | full | System call hooking domain providing system call monitoring and mapping capabilities. |
 | `trace` | Trace | full | Time-travel debugging domain that records CDP events into SQLite for SQL-based querying and heap snapshot comparison. |
@@ -48,6 +54,7 @@ The following tool domains are available:
 | `v8-inspector` | V8 Inspector | workflow, full | V8 inspector domain providing heap snapshot analysis, CPU profiling, and memory inspection. |
 | `wasm` | WASM | full | WebAssembly dump, disassembly, decompilation, optimization, and offline execution domain. |
 | `workflow` | Workflow | workflow, full | Composite workflow and script-library domain; the main built-in orchestration layer. |
+| `yara-scan` | YARA Scan | full, workflow | YARA-style pattern scanning domain supporting built-in rule matching, custom rule generation, and PE suspicious indicator detection. |
 
 ## Key high-level entry points
 
