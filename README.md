@@ -49,6 +49,9 @@ Use jshookmcp instantly with Claude Desktop or Cursor without installing anythin
 - 🧩 **Dynamic Extensibility**: Hot-reload plugins and workflows from local directories without recompiling the core server.
 - 🔧 **Zero-Wiring Extensibility**: Auto-discovered domains via `manifest.ts`, lazy handler instantiation, and B-Skeleton contracts for plugins/workflows.
 - 🛠️ **Reverse Engineering Toolchain**: Integrated WASM disassembly, binary entropy analysis, in-memory scanning, and bridges for Burp Suite/Ghidra/IDA Pro.
+- 🌍 **Site Adapters**: 126 community-maintained JS adapters for 36+ platforms (Twitter, Reddit, GitHub, Bilibili, Zhihu, etc.) — extract structured data using the browser's login state.
+- 🏗️ **Accessibility Snapshot**: DOM tree with `@ref` numbers for AI-friendly element interaction (`click @3`, `fill @5 "text"`, `hover @7`).
+- 💻 **CLI**: Command-line interface — `jshook eval`, `jshook snapshot`, `jshook click`, `jshook site run`, and more.
 
 ## 🛡️ Core Capabilities
 
@@ -59,6 +62,9 @@ JSHookMCP exposes **360+ atomic tools** across 36 domains, empowering AI orchest
 - 🧠 **AST & Semantic Analysis**: LLM-powered deobfuscation, WebAssembly (WASM) disassembly, Source Map reconstruction, and binary entropy visualization.
 - 🧰 **Process & Memory Forensics**: Native Frida instrumentation, memory scanning, pointer dereferencing, and strict Anti-Debug mitigation.
 - 🔌 **Dynamic Extensibility**: Hot-reloadable B-Skeleton plugins and declarative `WorkflowContract` pipelines.
+- 🌍 **Site Adapters (bb-sites)**: 126 community adapters for platforms including Twitter, Reddit, GitHub, Bilibili, Zhihu, Douban, Xiaohongshu, YouTube, and more — run `site_list` / `site_run` to extract structured data with login state.
+- 🏗️ **Accessibility Snapshot & Ref Interaction**: AI-optimized DOM tree with `@ref` numbers for click/fill/hover via `real_browser_snapshot` / `real_browser_click` / `real_browser_fill` / `real_browser_hover`.
+- 💻 **CLI Access**: `jshook eval "document.title"`, `jshook snapshot`, `jshook site run reddit/me`, and 14+ commands for direct browser automation from the terminal.
 
 > **[View the complete 36-domain tool catalog ↗](https://vmoranv.github.io/jshookmcp/reference/)**
 

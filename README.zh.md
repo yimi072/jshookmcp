@@ -47,8 +47,14 @@
 - 🌐 **全链路自动化**：将浏览器环境（Chromium/Camoufox）、CDP 底层调试与网络拦截无缝整合为原子操作。
 - 🛡️ **高级反反调试**：内置强大的指纹伪装与检测绕过补丁，轻松应对各类反爬与调试器对抗保护。
 - 🧩 **动态热插拔扩展**：支持从本地目录动态加载插件与高层工作流，无需重新编译主服务即可无限横向拓展能力。
+- 🌍 **站点适配器 (bb-sites)**：126 个社区适配器，覆盖 Twitter、Reddit、GitHub、B站、知乎、豆瓣、小红书、YouTube 等平台——`site_list` / `site_run` 利用登录态提取结构化数据。
+- 🏗️ **无障碍快照与 Ref 交互**：AI 优化的 DOM 树，带 `@ref` 编号，通过 `real_browser_snapshot` / `real_browser_click` / `real_browser_fill` / `real_browser_hover` 实现元素操作。
+- 💻 **CLI 命令行**：`jshook eval "document.title"`、`jshook snapshot`、`jshook site run reddit/me` 等 14+ 命令，终端直接操控浏览器。
 - 🔧 **零胶水扩展性**：通过 `manifest.ts` 自动发现域、懒加载处理器实例化、B-Skeleton 契约驱动的插件/工作流架构。
 - 🛠️ **全能逆向工具链**：集成 WASM 反编译、二进制漏洞/熵分析、实时内存扫描，并原生提供 Burp Suite 与 Ghidra/IDA Pro 桥接。
+- 🌍 **站点适配器**：126 个社区维护的 JS 适配器，覆盖 36+ 平台（Twitter、Reddit、GitHub、B站、知乎等）——利用浏览器登录态提取结构化数据。
+- 🏗️ **无障碍快照**：带 `@ref` 编号的 DOM 树，AI 可直接操作元素（`click @3`、`fill @5 "text"`、`hover @7`）。
+- 💻 **CLI 命令行**：`jshook eval`、`jshook snapshot`、`jshook click`、`jshook site run` 等 14+ 命令，终端直接操控浏览器。
 
 ## 🛡️ 核心能力矩阵
 
