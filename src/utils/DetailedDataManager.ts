@@ -137,7 +137,10 @@ export class DetailedDataManager {
     return {
       summary,
       detailId,
-      hint: `Data too large. Use get_detailed_data("${detailId}") to retrieve full data, or get_detailed_data("${detailId}", path="key.subkey") for specific part.`,
+      hint:
+        `Data too large. Use get_detailed_data("${detailId}") to retrieve full data, or ` +
+        `get_detailed_data("${detailId}` +
+        `", path="key.subkey") for specific part.`,
       expiresAt: Date.now() + this.DEFAULT_TTL,
     };
   }
@@ -285,7 +288,8 @@ export class DetailedDataManager {
       const entry = this.cache.get(oldestId)!;
       this.cache.delete(oldestId);
       logger.info(
-        `Evicted LRU entry: ${oldestId}, last accessed: ${new Date(entry.lastAccessedAt).toISOString()}, access count: ${entry.accessCount}`,
+        `Evicted LRU entry: ${oldestId}, last accessed: ${new Date(entry.lastAccessedAt).toISOString()}, access ` +
+          `count: ${entry.accessCount}`,
       );
     }
   }

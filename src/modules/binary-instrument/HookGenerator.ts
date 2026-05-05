@@ -53,7 +53,8 @@ export class HookGenerator {
 
       if (includeRetAddr) {
         lines.push(
-          `      console.log("[binary-instrument] enter ${this.escapeForDoubleQuotes(label)} ret=" + this.returnAddress);`,
+          `      console.log("[binary-instrument] enter ${this.escapeForDoubleQuotes(label)} ret=" + ` +
+            `this.returnAddress);`,
         );
       } else {
         lines.push(

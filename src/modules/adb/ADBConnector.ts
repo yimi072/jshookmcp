@@ -29,7 +29,8 @@ async function loadAdbkit(): Promise<AdbkitModule | null> {
 
 function adbUnavailableError(): never {
   throw new Error(
-    'ADB server binary not found in PATH. Install Android Platform Tools: https://developer.android.com/studio/command-line/adb',
+    'ADB server binary not found in PATH. Install Android Platform Tools: ' +
+      'https://developer.android.com/studio/command-line/adb',
   );
 }
 
@@ -280,7 +281,8 @@ export class ADBConnector {
       // Clean up forward on failure
       await this.removeForward(serial, hostPort).catch(() => {});
       throw new Error(
-        `Failed to fetch WebView targets: ${err instanceof Error ? err.message : String(err)}. Ensure the app has android:debuggable="true".`,
+        `Failed to fetch WebView targets: ${err instanceof Error ? err.message : String(err)}. Ensure the app has ` +
+          `android:debuggable="true".`,
         { cause: err },
       );
     }

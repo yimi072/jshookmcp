@@ -104,7 +104,8 @@ export class RawLatencyHandlers {
     try {
       if (!isIcmpAvailable()) {
         return R.text(
-          'ICMP traceroute not available on this platform (Windows: native API, Linux/macOS: requires root/CAP_NET_RAW)',
+          'ICMP traceroute not available on this platform (Windows: native API, Linux/macOS: requires ' +
+            'root/CAP_NET_RAW)',
           true,
         );
       }

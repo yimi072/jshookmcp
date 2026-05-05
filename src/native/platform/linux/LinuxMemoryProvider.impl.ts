@@ -125,7 +125,9 @@ export class LinuxMemoryProviderImpl implements PlatformMemoryAPI {
     return parsed.map((region) => ({
       start: region.start,
       end: region.end,
-      perms: `${region.permissions.read ? 'r' : '-'}${region.permissions.write ? 'w' : '-'}${region.permissions.exec ? 'x' : '-'}${region.permissions.private ? 'p' : 's'}`,
+      perms:
+        `${region.permissions.read ? 'r' : '-'}${region.permissions.write ? 'w' : '-'}` +
+        `${region.permissions.exec ? 'x' : '-'}${region.permissions.private ? 'p' : 's'}`,
       path: region.pathname || undefined,
     }));
   }
@@ -194,7 +196,9 @@ export class LinuxMemoryProviderImpl implements PlatformMemoryAPI {
         return toRegionInfo({
           start: region.start,
           end: region.end,
-          perms: `${region.permissions.read ? 'r' : '-'}${region.permissions.write ? 'w' : '-'}${region.permissions.exec ? 'x' : '-'}${region.permissions.private ? 'p' : 's'}`,
+          perms:
+            `${region.permissions.read ? 'r' : '-'}${region.permissions.write ? 'w' : '-'}` +
+            `${region.permissions.exec ? 'x' : '-'}${region.permissions.private ? 'p' : 's'}`,
           path: region.pathname || undefined,
         });
       }

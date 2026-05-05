@@ -172,6 +172,7 @@ export function buildDomainDescription(ctx: MCPServerContext): string {
     `Use activate_tools for exact matches, activate_domain for an entire domain. ` +
     `Domains: ${parts}. ` +
     `Query tip: before searching, distill your intent into key concepts (action verb + target + domain). ` +
-    `Pass distilled keywords, not full sentences — the search engine works on token matching, not semantic understanding.`
+    `Pass distilled keywords, not full sentences — the search engine works on token matching, not semantic ` +
+    `understanding.`
   );
 }

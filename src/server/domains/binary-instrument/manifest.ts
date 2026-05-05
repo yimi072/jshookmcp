@@ -63,7 +63,9 @@ const manifest = {
     ],
     priority: 88,
     tools: ['frida_attach', 'ghidra_analyze', 'generate_hooks', 'unidbg_launch'],
-    hint: 'Binary analysis pipeline: attach Frida → decompile (Ghidra/IDA/JADX) → generate hook scripts → emulate with Unidbg.',
+    hint:
+      'Binary analysis pipeline: attach Frida → decompile (Ghidra/IDA/JADX) → generate hook scripts → emulate' +
+      'with Unidbg.',
   },
   prerequisites: {
     frida_attach: [

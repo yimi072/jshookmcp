@@ -299,7 +299,10 @@ export async function routeToolRequest(
         action: 'activate',
         toolName: activationCandidates.length === 1 ? activationCandidates[0]!.name : undefined,
         command: `activate_tools with names: [${activationCandidates.map((tool) => `"${tool.name}"`).join(', ')}]`,
-        description: `Activate ${activationCandidates.length} preset tool${activationCandidates.length === 1 ? '' : 's'} for ${routeMatchMetadata!.name}`,
+        description:
+          `Activate ${activationCandidates.length} preset tool` +
+          `${activationCandidates.length === 1 ? '' : 's'} for ` +
+          `${routeMatchMetadata!.name}`,
       });
     }
 
@@ -366,7 +369,10 @@ export async function routeToolRequest(
       toolName: recommendations[0].name,
       command: recommendations[0].name,
       exampleArgs: generateExampleArgs(recommendations[0].inputSchema),
-      description: `Call ${recommendations[0].name}. Use describe_tool("${recommendations[0].name}") only if you need the full schema.`,
+      description:
+        `Call ${recommendations[0].name}. Use describe_tool("${recommendations[0].name}") only if ` +
+        `you need the full ` +
+        `schema.`,
     });
   } else if (activationCandidates.length > 0) {
     const topInactive = activationCandidates[0]!;
@@ -375,7 +381,9 @@ export async function routeToolRequest(
       action: 'activate',
       toolName: activationCandidates.length === 1 ? topInactive.name : undefined,
       command: `activate_tools with names: [${activationCandidates.map((tool) => `"${tool.name}"`).join(', ')}]`,
-      description: `Activate ${activationCandidates.length} recommended tool${activationCandidates.length === 1 ? '' : 's'}`,
+      description:
+        `Activate ${activationCandidates.length} recommended tool` +
+        `${activationCandidates.length === 1 ? '' : 's'}`,
     });
     nextActions.push({
       step: 2,
@@ -383,7 +391,9 @@ export async function routeToolRequest(
       toolName: topInactive.name,
       command: topInactive.name,
       exampleArgs: generateExampleArgs(topInactive.inputSchema),
-      description: `Call ${topInactive.name}. Use describe_tool("${topInactive.name}") only if you need the full schema.`,
+      description:
+        `Call ${topInactive.name}. Use describe_tool("${topInactive.name}") only if you need the ` +
+        `full schema.`,
     });
   }
 
@@ -391,7 +401,8 @@ export async function routeToolRequest(
     recommendations,
     nextActions,
     workflowHint: routeMatchMetadata
-      ? `${routeMatchMetadata.kind === 'preset' ? 'Preset' : 'Workflow'} ${routeMatchMetadata.name}: ${routeMatchMetadata.description}`
+      ? `${routeMatchMetadata.kind === 'preset' ? 'Preset' : 'Workflow'} ${routeMatchMetadata.name}: ` +
+        `${routeMatchMetadata.description}`
       : workflow?.hint,
     routeMatch: routeMatchMetadata,
     autoActivated: false,

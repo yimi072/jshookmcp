@@ -5,7 +5,8 @@ export const antidebugTools: Tool[] = [
   tool('antidebug_bypass', (t) =>
     t
       .desc(
-        'Bypass one or more anti-debug protection types. Specify types to apply; omit or use ["all"] to apply all bypasses. Types: all, debugger_statement, timing, stack_trace, console_detect.',
+        'Bypass one or more anti-debug protection types. Specify types to apply; omit or use ["all"] to apply all' +
+          ' bypasses. Types: all, debugger_statement, timing, stack_trace, console_detect.',
       )
       .array(
         'types',

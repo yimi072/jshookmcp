@@ -30,7 +30,8 @@ export const graphqlTools: Tool[] = [
       })
       .boolean(
         'useBrowser',
-        'Use the active browser session for fetch so cookies and CSRF/app-injected headers are preserved. Set false to force a Node-side fetch.',
+        'Use the active browser session for fetch so cookies and CSRF/app-injected headers are preserved. Set ' +
+          'false to force a Node-side fetch.',
         { default: true },
       )
       .requiredOpenWorld('endpoint'),
@@ -59,7 +60,8 @@ export const graphqlTools: Tool[] = [
       })
       .boolean(
         'useBrowser',
-        'Use the active browser session for fetch so cookies and CSRF/app-injected headers are preserved. Set false to force a Node-side fetch.',
+        'Use the active browser session for fetch so cookies and CSRF/app-injected headers are preserved. Set ' +
+          'false to force a Node-side fetch.',
         { default: true },
       )
       .requiredOpenWorld('endpoint', 'query'),

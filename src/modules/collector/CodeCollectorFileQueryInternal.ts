@@ -72,7 +72,8 @@ export function getFilesByPatternImpl(
     );
   }
   logger.info(
-    ` Pattern "${pattern}": matched ${matched.length}, returning ${returned.length} files (${(totalSize / 1024).toFixed(2)} KB)`,
+    ` Pattern "${pattern}": matched ${matched.length}, returning ${returned.length} files (` +
+      `${(totalSize / 1024).toFixed(2)} KB)`,
   );
   return {
     files: returned,

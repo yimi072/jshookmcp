@@ -137,7 +137,9 @@ export function detectCodePatterns(code: string): {
               name: 'Long Function',
               location: loc.start.line,
               severity: 'medium',
-              recommendation: `Function is ${lines} lines long. Consider breaking it into smaller functions (max 50 lines)`,
+              recommendation:
+                `Function is ${lines} lines long. Consider breaking it into smaller ` +
+                `functions (max 50 lines)`,
             });
           }
         }
@@ -159,7 +161,9 @@ export function detectCodePatterns(code: string): {
             name: 'Deep Nesting',
             location: path.node.loc?.start.line || 0,
             severity: 'medium',
-            recommendation: `Nesting depth is ${depth}. Consider extracting to separate functions or using early returns`,
+            recommendation:
+              `Nesting depth is ${depth}. Consider extracting to separate functions or ` +
+              `using early returns`,
           });
         }
       },
@@ -214,7 +218,10 @@ export function detectCodePatterns(code: string): {
         name: 'Duplicate Code',
         location: dup.location,
         severity: 'medium',
-        recommendation: `Duplicate code found at lines ${dup.location} and ${dup.duplicateLocation}. Extract into a reusable function.`,
+        recommendation:
+          `Duplicate code found at lines ${dup.location} and ${dup.duplicateLocation}. ` +
+          `Extract into a reusable ` +
+          `function.`,
       });
     });
   } catch (error) {

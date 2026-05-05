@@ -37,7 +37,7 @@ export class PackerDeobfuscator {
         const unpacked = await this.unpack(currentCode);
 
         if (!unpacked || unpacked === currentCode) {
-          warnings.push('');
+          warnings.push('Packer unpack produced no change, stopping early');
           break;
         }
 

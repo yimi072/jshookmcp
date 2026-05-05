@@ -58,7 +58,10 @@ async function checkCamoufoxDependencies(): Promise<string | null> {
     const errorMsg = error instanceof Error ? error.message : String(error);
 
     if (isBetterSqlite3RelatedError(error)) {
-      return `Camoufox requires the same native SQLite backend used by trace tooling. ${formatBetterSqlite3Error(error)}`;
+      return (
+        `Camoufox requires the same native SQLite backend used by trace tooling. ` +
+        `${formatBetterSqlite3Error(error)}`
+      );
     }
 
     if (errorMsg.includes("Cannot find package 'camoufox-js'")) {
@@ -107,7 +110,8 @@ export class CamoufoxBrowserHandlers {
             blockWebgl: config.blockWebgl,
           },
           message:
-            'Camoufox server launched. Connect with: browser_launch(driver="camoufox", mode="connect", wsEndpoint=<wsEndpoint>)',
+            'Camoufox server launched. Connect with: browser_launch(driver="camoufox", mode="connect", ' +
+            'wsEndpoint=<wsEndpoint>)',
         })
         .json();
     } catch (error) {

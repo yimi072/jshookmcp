@@ -184,7 +184,9 @@ export function applyPayloadMutation(
         summary: {
           index,
           strategy: mutation.strategy,
-          detail: `incremented ${mutation.signed ? 'signed' : 'unsigned'} ${mutation.width}-byte integer at offset ${mutation.offset} by ${mutation.delta}`,
+          detail:
+            `incremented ${mutation.signed ? 'signed' : 'unsigned'} ${mutation.width}-byte integer at offset ` +
+            `${mutation.offset} by ${mutation.delta}`,
         },
       };
     }

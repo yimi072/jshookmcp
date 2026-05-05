@@ -97,7 +97,9 @@ const manifest: DomainManifest<typeof DEP_KEY, H, typeof DOMAIN> = {
       'page_navigate',
       'network_get_requests',
     ],
-    hint: 'Network capture workflow: prefer extension workflows first; otherwise bootstrap browser/page state -> enable capture -> navigate or act -> inspect captured requests',
+    hint:
+      'Network capture workflow: prefer extension workflows first; otherwise bootstrap browser/page state ->' +
+      'enable capture -> navigate or act -> inspect captured requests',
   },
 
   prerequisites: {

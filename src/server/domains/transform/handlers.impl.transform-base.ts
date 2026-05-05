@@ -145,7 +145,8 @@ const __bootstrap = async () => {
 
       const isValidIdentifier = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(functionName);
       const targetExpression = isValidIdentifier
-        ? "(typeof " + functionName + " !== 'undefined' ? " + functionName + " : globalThis[" + JSON.stringify(functionName) + "])"
+        ? "(typeof " + functionName + " !== 'undefined' ? " +
+          functionName + " : globalThis[" + JSON.stringify(functionName) + "])"
         : "globalThis[" + JSON.stringify(functionName) + "]";
 
       const script = new vm.Script(

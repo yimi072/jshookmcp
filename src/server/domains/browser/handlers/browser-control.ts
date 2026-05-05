@@ -53,22 +53,26 @@ export class BrowserControlHandlers {
       this.deps.consoleMonitor.markContextChanged();
     } catch (error) {
       logger.warn(
-        `[${context}] Failed to mark monitoring context as stale: ${error instanceof Error ? error.message : String(error)}`,
+        `[${context}] Failed to mark monitoring context as stale: ` +
+          `${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
 
   private async syncTabRegistryWithCollectorPages(context: string): Promise<void> {
     try {
-      const resolvedPages = await this.deps.collector.listResolvedPages();
+      // Use listPages() instead of listResolvedPages() — the latter calls resolvePageTargetHandle()
+      // for every target simultaneously, which blocks indefinitely on WebGL/Canvas-heavy tabs.
+      const pages = await this.deps.collector.listPages();
       const registry = this.deps.getTabRegistry();
       registry.reconcilePages(
-        resolvedPages.map((entry) => entry.page),
-        resolvedPages.map(({ page: _page, ...meta }) => meta),
+        pages.map(() => null as unknown as import('rebrowser-puppeteer-core').Page),
+        pages,
       );
     } catch (error) {
       logger.warn(
-        `[${context}] Failed to sync attached tabs into TabRegistry: ${error instanceof Error ? error.message : String(error)}`,
+        `[${context}] Failed to sync attached tabs into TabRegistry: ` +
+          `${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -153,7 +157,10 @@ export class BrowserControlHandlers {
     if (!this.isAutoConnectRequest(request)) {
       return null;
     }
-    return 'Chrome 144+ autoConnect may prompt for manual approval. Switch to Chrome and click Allow for this client if prompted.';
+    return (
+      'Chrome 144+ autoConnect may prompt for manual approval. Switch to Chrome and click Allow for this client if ' +
+      'prompted.'
+    );
   }
 
   private shouldAttemptLinuxHeadfulFallback(
@@ -209,7 +216,8 @@ export class BrowserControlHandlers {
           const wsEndpoint = argString(args, 'wsEndpoint');
           if (!wsEndpoint) {
             return R.fail(
-              'wsEndpoint is required for connect mode. Use camoufox_server({ action: "launch" }) first to get a wsEndpoint.',
+              'wsEndpoint is required for connect mode. Use camoufox_server({ action: "launch" }) first to get a ' +
+                'wsEndpoint.',
             ).json();
           }
           return R.ok()
@@ -227,7 +235,9 @@ export class BrowserControlHandlers {
             driver: 'camoufox',
             mode: 'launch',
             message: 'Camoufox (Firefox) browser launched',
-            note: 'Use page_navigate to begin. CDP debugger is limited in Firefox; network_enable and console_monitor({ action: "enable" }) use Playwright events and are fully supported.',
+            note:
+              'Use page_navigate to begin. CDP debugger is limited in Firefox; network_enable and console_monitor({ ' +
+              'action: "enable" }) use Playwright events and are fully supported.',
           })
           .json();
       }
@@ -379,7 +389,8 @@ export class BrowserControlHandlers {
       return R.fail(error)
         .set(
           'hint',
-          'Make sure browser is attached via browser_attach first, or provide browserURL/autoConnect. Chrome 144+ autoConnect may require manual approval in the Chrome window.',
+          'Make sure browser is attached via browser_attach first, or provide browserURL/autoConnect. Chrome 144+' +
+            ' autoConnect may require manual approval in the Chrome window.',
         )
         .set('approvalHint', this.getAutoConnectApprovalHint(connectRequest))
         .json();
@@ -531,7 +542,8 @@ export class BrowserControlHandlers {
           takeoverReady: pageHandleReady,
           note: pageHandleReady
             ? 'Monitoring will auto-rebind on the next console/network operation for the selected tab.'
-            : 'Connected to existing Chrome, but the selected tab does not currently expose a stable Puppeteer Page handle. Tab discovery still works; try selecting a different tab or navigate the tab and retry.',
+            : 'Connected to existing Chrome, but the selected tab does not currently expose a stable Puppeteer Page' +
+              ' handle. Tab discovery still works; try selecting a different tab or navigate the tab and retry.',
           status,
         })
         .json();

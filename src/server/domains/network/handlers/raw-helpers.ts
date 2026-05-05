@@ -187,7 +187,8 @@ export async function resolveAuthorizedTransportTarget(
     !hasAuthorizedTargets(authorizationPolicy)
   ) {
     throw new Error(
-      'authorization must include at least one allowed host or CIDR when enabling private network or insecure HTTP access.',
+      'authorization must include at least one allowed host or CIDR when enabling private network or insecure ' +
+        'HTTP access.',
     );
   }
 
@@ -222,7 +223,8 @@ export async function resolveAuthorizedTransportTarget(
   const effectivePort = Number.parseInt(url.port || (url.protocol === 'https:' ? '443' : '80'), 10);
   if (url.protocol === 'http:' && !isInsecureHttpAllowed(target)) {
     throw new Error(
-      `${operationLabel} blocked: insecure HTTP is only allowed for loopback or explicitly authorized targets, got "${target.hostname}:${String(effectivePort)}"`,
+      `${operationLabel} blocked: insecure HTTP is only allowed for loopback or explicitly authorized targets, got "` +
+        `${target.hostname}:${String(effectivePort)}"`,
     );
   }
 
@@ -237,11 +239,13 @@ export async function resolveAuthorizedTransportTarget(
   ) {
     if (!hostnameIsPrivate && resolvedAddressIsPrivate && target.resolvedAddress) {
       throw new Error(
-        `${operationLabel} blocked: "${target.hostname}:${String(effectivePort)}" resolved to private IP ${target.resolvedAddress}`,
+        `${operationLabel} blocked: "${target.hostname}:${String(effectivePort)}" resolved to private IP ` +
+          `${target.resolvedAddress}`,
       );
     }
     throw new Error(
-      `${operationLabel} blocked: target "${target.hostname}:${String(effectivePort)}" resolves to a private or reserved address.`,
+      `${operationLabel} blocked: target "${target.hostname}:${String(effectivePort)}" resolves to a private or ` +
+        `reserved address.`,
     );
   }
 

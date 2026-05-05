@@ -170,7 +170,8 @@ Actions:
   tool('memory_vtable_parse', (t) =>
     t
       .desc(
-        'Parse a vtable to enumerate virtual function pointers and resolve them to module+offset. Also attempts RTTI parsing for class name and inheritance hierarchy.',
+        'Parse a vtable to enumerate virtual function pointers and resolve them to module+offset. Also attempts ' +
+          'RTTI parsing for class name and inheritance hierarchy.',
       )
       .number('pid', 'Target process ID')
       .string('vtableAddress', 'Address of the vtable (hex)')
@@ -190,7 +191,8 @@ Actions:
   tool('memory_structure_compare', (t) =>
     t
       .desc(
-        'Compare two structure instances to identify which fields differ (dynamic values like health/position) vs which are constant (vtable, type flags). Useful for finding important fields.',
+        'Compare two structure instances to identify which fields differ (dynamic values like health/position) vs' +
+          ' which are constant (vtable, type flags). Useful for finding important fields.',
       )
       .number('pid', 'Target process ID')
       .string('address1', 'First instance address (hex)')
@@ -282,7 +284,8 @@ Actions:
   tool('memory_freeze', (t) =>
     t
       .desc(
-        `Freeze or unfreeze a memory address. Freeze continuously writes a value to prevent changes; unfreeze stops it.`,
+        `Freeze or unfreeze a memory address. Freeze continuously writes a value to prevent changes; unfreeze stops ` +
+          `it.`,
       )
       .enum('action', ['freeze', 'unfreeze'], 'Freeze operation')
       .number('pid', 'Target process ID (action=freeze)')
@@ -337,7 +340,8 @@ Actions:
   tool('memory_heap_enumerate', (t) =>
     t
       .desc(
-        'Enumerate all heaps and heap blocks in a process via Toolhelp32 snapshot. Returns heap list with block counts, sizes, and overall statistics.',
+        'Enumerate all heaps and heap blocks in a process via Toolhelp32 snapshot. Returns heap list with block ' +
+          'counts, sizes, and overall statistics.',
       )
       .number('pid', 'Target process ID')
       .number('maxBlocks', 'Maximum blocks to enumerate per heap (default: 10000)')
@@ -347,7 +351,8 @@ Actions:
   tool('memory_heap_stats', (t) =>
     t
       .desc(
-        'Get detailed heap statistics with size distribution buckets (0-64B, 64B-1KB, 1-64KB, 64KB-1MB, >1MB), fragmentation ratio, and aggregate metrics.',
+        'Get detailed heap statistics with size distribution buckets (0-64B, 64B-1KB, 1-64KB, 64KB-1MB, >1MB), ' +
+          'fragmentation ratio, and aggregate metrics.',
       )
       .number('pid', 'Target process ID')
       .required('pid')
@@ -356,7 +361,8 @@ Actions:
   tool('memory_heap_anomalies', (t) =>
     t
       .desc(
-        'Detect heap anomalies: heap spray patterns (many same-size blocks), possible use-after-free (non-zero free blocks), and suspicious block sizes (0 or >100MB).',
+        'Detect heap anomalies: heap spray patterns (many same-size blocks), possible use-after-free (non-zero ' +
+          'free blocks), and suspicious block sizes (0 or >100MB).',
       )
       .number('pid', 'Target process ID')
       .required('pid')
@@ -367,7 +373,8 @@ Actions:
   tool('memory_pe_headers', (t) =>
     t
       .desc(
-        'Parse PE headers (DOS, NT, File, Optional) from a module base address in process memory. Returns machine type, entry point, image base, section count, and data directory info.',
+        'Parse PE headers (DOS, NT, File, Optional) from a module base address in process memory. Returns machine' +
+          ' type, entry point, image base, section count, and data directory info.',
       )
       .number('pid', 'Target process ID')
       .string('moduleBase', 'Module base address (hex, e.g. "0x7ff612340000")')
@@ -377,7 +384,8 @@ Actions:
   tool('memory_pe_imports_exports', (t) =>
     t
       .desc(
-        'Parse import and/or export tables from a PE module in process memory. Returns DLL names, function names, ordinals, hints, and forwarded exports.',
+        'Parse import and/or export tables from a PE module in process memory. Returns DLL names, function names,' +
+          ' ordinals, hints, and forwarded exports.',
       )
       .number('pid', 'Target process ID')
       .string('moduleBase', 'Module base address (hex)')
@@ -388,7 +396,8 @@ Actions:
   tool('memory_inline_hook_detect', (t) =>
     t
       .desc(
-        'Detect inline hooks by comparing the first 16 bytes of each exported function on disk vs in memory. Identifies JMP rel32, JMP abs64, PUSH+RET hooks and decodes jump targets.',
+        'Detect inline hooks by comparing the first 16 bytes of each exported function on disk vs in memory. ' +
+          'Identifies JMP rel32, JMP abs64, PUSH+RET hooks and decodes jump targets.',
       )
       .number('pid', 'Target process ID')
       .string('moduleName', 'Module name filter (optional — scans all modules if omitted)')
@@ -400,7 +409,9 @@ Actions:
   tool('memory_anticheat_detect', (t) =>
     t
       .desc(
-        'Scan process imports for anti-debug/anti-cheat mechanisms: IsDebuggerPresent, NtQueryInformationProcess, timing checks (QPC, GetTickCount), thread hiding, heap flag checks, and DR register inspection. Each detection includes a bypass suggestion.',
+        'Scan process imports for anti-debug/anti-cheat mechanisms: IsDebuggerPresent, NtQueryInformationProcess,' +
+          ' timing checks (QPC, GetTickCount), thread hiding, heap flag checks, and DR register inspection. Each ' +
+          'detection includes a bypass suggestion.',
       )
       .number('pid', 'Target process ID')
       .required('pid')
@@ -409,7 +420,8 @@ Actions:
   tool('memory_guard_pages', (t) =>
     t
       .desc(
-        'Find all memory regions with PAGE_GUARD protection in a process. Guard pages are often used as anti-tampering mechanisms or stack overflow detection.',
+        'Find all memory regions with PAGE_GUARD protection in a process. Guard pages are often used as ' +
+          'anti-tampering mechanisms or stack overflow detection.',
       )
       .number('pid', 'Target process ID')
       .required('pid')
@@ -418,7 +430,8 @@ Actions:
   tool('memory_integrity_check', (t) =>
     t
       .desc(
-        'Check executable memory regions against their corresponding on-disk PE files (.text sections) to detect modifications like inline hooks or code patches.',
+        'Check executable memory regions against their corresponding on-disk PE files (.text sections) to detect ' +
+          'modifications like inline hooks or code patches.',
       )
       .number('pid', 'Target process ID')
       .required('pid')

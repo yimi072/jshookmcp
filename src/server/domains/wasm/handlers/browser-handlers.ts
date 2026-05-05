@@ -110,7 +110,8 @@ export class BrowserHandlers {
               totalModules: result.moduleCount,
               hint: wasmBytes
                 ? 'Use wasm_disassemble or wasm_decompile on the dumped file for further analysis.'
-                : 'Binary not captured. Inject hook_preset("webassembly-full") BEFORE page navigation, with window.__wasmModuleStorage patching.',
+                : 'Binary not captured. Inject hook_preset("webassembly-full") BEFORE page navigation, with ' +
+                  'window.__wasmModuleStorage patching.',
             },
             null,
             2,
@@ -186,7 +187,9 @@ export class BrowserHandlers {
             {
               success: true,
               ...traceData,
-              hint: 'Top functions show VMP handler dispatch patterns. Use wasm_disassemble to analyze their implementation.',
+              hint:
+                'Top functions show VMP handler dispatch patterns. Use wasm_disassemble to analyze their ' +
+                'implementation.',
             },
             null,
             2,

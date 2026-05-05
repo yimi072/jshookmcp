@@ -440,7 +440,8 @@ export class BrowserPool {
       await entry.manager.close();
     } catch (error) {
       logger.error(
-        `[BrowserPool] Failed to dispose entry "${entry.profile}": ${error instanceof Error ? error.message : String(error)}`,
+        `[BrowserPool] Failed to dispose entry "${entry.profile}": ` +
+          `${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -466,7 +467,8 @@ export class BrowserPool {
 
     for (const [profile, entry] of toDispose) {
       logger.debug(
-        `[BrowserPool] Cleanup: disposing idle profile "${profile}" (last accessed ${new Date(entry.lastAccess).toISOString()})`,
+        `[BrowserPool] Cleanup: disposing idle profile "${profile}" (last accessed ` +
+          `${new Date(entry.lastAccess).toISOString()})`,
       );
       this.disposeEntry(entry).catch((error) => {
         logger.error(`[BrowserPool] Cleanup failed for "${profile}": ${String(error)}`);

@@ -601,7 +601,8 @@ export async function extractSceneTree(
 ): Promise<LegacySkiaSceneTree> {
   if (hasEvaluate(pageController)) {
     const scene = await pageController.evaluate<LegacySceneProbe>(
-      `(() => { /* drawCommands canvasMeta ${canvasId ?? ''} */ return { canvas: {}, layers: [], drawCommands: [] }; })()`,
+      `(() => { /* drawCommands canvasMeta ${canvasId ?? ''} */ return { canvas: {}, layers: [], drawCommands: [] }; ` +
+        `})()`,
     );
     return normalizeLegacyScene(scene);
   }

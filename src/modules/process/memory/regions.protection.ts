@@ -95,8 +95,20 @@ public class ProtectionChecker {
             if ((protect & PAGE_WRITECOPY) != 0) { protectionStr += "WC "; isReadable = true; isWritable = true; }
             if ((protect & PAGE_EXECUTE) != 0) { protectionStr += "X "; isExecutable = true; }
             if ((protect & PAGE_EXECUTE_READ) != 0) { protectionStr += "RX "; isReadable = true; isExecutable = true; }
-            if ((protect & PAGE_EXECUTE_READWRITE) != 0) { protectionStr += "RWX "; isReadable = true; isWritable = true; isExecutable = true; }
-            if ((protect & PAGE_EXECUTE_WRITECOPY) != 0) { protectionStr += "RWCX "; isReadable = true; isWritable = true; isExecutable = true; }
+            if ((protect & PAGE_EXECUTE_READWRITE) != 0) {
+              protectionStr += "RWX ";
+              isReadable = true;
+              isWritable = true;
+              isExecutable = true;
+              ;
+            }
+            if ((protect & PAGE_EXECUTE_WRITECOPY) != 0) {
+              protectionStr += "RWCX ";
+              isReadable = true;
+              isWritable = true;
+              isExecutable = true;
+              ;
+            }
             if ((protect & PAGE_GUARD) != 0) protectionStr += "GUARD ";
 
             return new {

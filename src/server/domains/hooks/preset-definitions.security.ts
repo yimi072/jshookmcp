@@ -4,7 +4,8 @@ import { buildHookCode } from '@server/domains/hooks/preset-builder';
 export const SECURITY_PRESETS: Record<string, PresetEntry> = {
   'anti-debug-bypass': {
     description:
-      ' Block anti-debugging: setInterval/setTimeout debugger traps, console.clear spam, timing attacks (performance.now freeze), outerWidth/outerHeight devtools detection',
+      ' Block anti-debugging: setInterval/setTimeout debugger traps, console.clear spam, timing attacks ' +
+      '(performance.now freeze), outerWidth/outerHeight devtools detection',
     buildCode: (cs, lc) =>
       buildHookCode(
         'anti-debug-bypass',
@@ -16,7 +17,12 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
     const rest = Array.prototype.slice.call(arguments, 2);
     const fnStr = typeof fn === 'function' ? fn.toString() : String(fn);
     if (fnStr.includes('debugger') || fnStr.includes('devtools') || fnStr.includes('disable-devtool')) {
-      window.__aiHooks['preset-anti-debug-bypass'].push({ blocked: 'setInterval', fn: fnStr.substring(0, 200), ts: Date.now() });
+      window.__aiHooks['preset-anti-debug-bypass'].push(
+        {
+          blocked: 'setInterval',
+          fn: fnStr.substring(0, 200),
+          ts: Date.now(),
+        });
       return -1;
     }
     return _si.apply(this, [fn, delay].concat(rest));
@@ -26,7 +32,12 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
     const rest = Array.prototype.slice.call(arguments, 2);
     const fnStr = typeof fn === 'function' ? fn.toString() : String(fn);
     if (fnStr.includes('debugger') || fnStr.includes('devtools')) {
-      window.__aiHooks['preset-anti-debug-bypass'].push({ blocked: 'setTimeout', fn: fnStr.substring(0, 200), ts: Date.now() });
+      window.__aiHooks['preset-anti-debug-bypass'].push(
+        {
+          blocked: 'setTimeout',
+          fn: fnStr.substring(0, 200),
+          ts: Date.now(),
+        });
       return -1;
     }
     return _st.apply(this, [fn, delay].concat(rest));
@@ -41,7 +52,8 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
   performance.now = function() { return (_t += 0.001); };
   // 4. Fix outerWidth/outerHeight DevTools size detection
   Object.defineProperty(window, 'outerWidth', { get: function() { return window.innerWidth; }, configurable: true });
-  Object.defineProperty(window, 'outerHeight', { get: function() { return window.innerHeight; }, configurable: true });`,
+  Object.defineProperty(window, 'outerHeight',
+    { get: function() { return window.innerHeight; }, configurable: true });`,
         cs,
         lc,
       ),
@@ -49,7 +61,8 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
 
   'crypto-key-capture': {
     description:
-      ' Force extractable:true on all WebCrypto importKey calls and capture plaintext/ciphertext + key material for encrypt/decrypt/sign/verify',
+      ' Force extractable:true on all WebCrypto importKey calls and capture plaintext/ciphertext + key material ' +
+      'for encrypt/decrypt/sign/verify',
     buildCode: (cs, lc) =>
       buildHookCode(
         'crypto-key-capture',
@@ -71,11 +84,22 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
     };
     _subtle.importKey = async function(format, keyData, algorithm, extractable, usages) {
       {{STACK_CODE}}
-      const keyHex = (keyData instanceof ArrayBuffer || ArrayBuffer.isView(keyData)) ? toHex(keyData) : JSON.stringify(keyData);
-      const __msg = '[Hook:importKey] format=' + format + ' algo=' + JSON.stringify(algorithm) + ' key=' + keyHex.substring(0,64);
+      const keyHex = (keyData instanceof ArrayBuffer || ArrayBuffer.isView(keyData)) ?
+        toHex(keyData) :
+        JSON.stringify(keyData);
+      const __msg = '[Hook:importKey] format=' + format + ' algo=' + JSON.stringify(algorithm) +
+        ' key=' + keyHex.substring(0,64);
       {{LOG_FN}}
       const key = await _importKey(format, keyData, algorithm, true, usages);
-      window.__aiHooks['preset-crypto-key-capture'].push({ fn:'importKey', format, algorithm: JSON.stringify(algorithm), keyHex, stack: __stack, ts: Date.now() });
+      window.__aiHooks['preset-crypto-key-capture'].push(
+        {
+          fn:'importKey',
+          format,
+          algorithm: JSON.stringify(algorithm),
+          keyHex,
+          stack: __stack,
+          ts: Date.now(),
+        });
       return key;
     };
     _subtle.encrypt = async function(algo, key, data) {
@@ -86,7 +110,16 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
       const keyJwk = await tryExport(key);
       const __msg = '[Hook:encrypt] algo=' + JSON.stringify(algo) + ' plain=' + plainHex.substring(0,64);
       {{LOG_FN}}
-      window.__aiHooks['preset-crypto-key-capture'].push({ fn:'encrypt', algo: JSON.stringify(algo), plainHex, cipherHex, key: keyJwk, stack: __stack, ts: Date.now() });
+      window.__aiHooks['preset-crypto-key-capture'].push(
+        {
+          fn:'encrypt',
+          algo: JSON.stringify(algo),
+          plainHex,
+          cipherHex,
+          key: keyJwk,
+          stack: __stack,
+          ts: Date.now(),
+        });
       return result;
     };
     _subtle.decrypt = async function(algo, key, data) {
@@ -94,9 +127,19 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
       const result = await _decrypt(algo, key, data);
       const plainHex = toHex(result);
       const keyJwk = await tryExport(key);
-      const __msg = '[Hook:decrypt] algo=' + JSON.stringify(algo) + ' plain=' + new TextDecoder().decode(new Uint8Array(result instanceof ArrayBuffer ? result : result.buffer, 0, Math.min(100, (result.byteLength || result.length || 0))));
+      const __msg = '[Hook:decrypt] algo=' + JSON.stringify(algo) + ' plain=' +
+        new TextDecoder().decode(new Uint8Array(result instanceof ArrayBuffer ? result : result.buffer,
+          0, Math.min(100, (result.byteLength || result.length || 0))));
       {{LOG_FN}}
-      window.__aiHooks['preset-crypto-key-capture'].push({ fn:'decrypt', algo: JSON.stringify(algo), plainHex, key: keyJwk, stack: __stack, ts: Date.now() });
+      window.__aiHooks['preset-crypto-key-capture'].push(
+        {
+          fn:'decrypt',
+          algo: JSON.stringify(algo),
+          plainHex,
+          key: keyJwk,
+          stack: __stack,
+          ts: Date.now(),
+        });
       return result;
     };
     _subtle.sign = async function(algo, key, data) {
@@ -105,7 +148,15 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
       const keyJwk = await tryExport(key);
       const __msg = '[Hook:sign] algo=' + JSON.stringify(algo);
       {{LOG_FN}}
-      window.__aiHooks['preset-crypto-key-capture'].push({ fn:'sign', algo: JSON.stringify(algo), sigHex: toHex(result), key: keyJwk, stack: __stack, ts: Date.now() });
+      window.__aiHooks['preset-crypto-key-capture'].push(
+        {
+          fn:'sign',
+          algo: JSON.stringify(algo),
+          sigHex: toHex(result),
+          key: keyJwk,
+          stack: __stack,
+          ts: Date.now(),
+        });
       return result;
     };
   }`,
@@ -138,7 +189,14 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
                 const _fn = mod[fnName];
                 mod[fnName] = function() {
                   const args = Array.prototype.slice.call(arguments);
-                  window.__aiHooks['preset-webassembly-full'].push({ type:'import_call', mod: modName, fn: fnName, args: args.map(function(a){ return typeof a === 'number' ? a : '?'; }), ts: Date.now() });
+                  window.__aiHooks['preset-webassembly-full'].push(
+                    {
+                      type:'import_call',
+                      mod: modName,
+                      fn: fnName,
+                      args: args.map(function(a){ return typeof a === 'number' ? a : '?'; }),
+                      ts: Date.now(),
+                    });
                   return _fn.apply(this, args);
                 };
               }
@@ -148,13 +206,28 @@ export const SECURITY_PRESETS: Record<string, PresetEntry> = {
       }
       const result = await _inst(bufferSource, importObject);
       const exports = result && result.instance ? Object.keys(result.instance.exports) : [];
-      window.__aiHooks['preset-webassembly-full'].push({ type:'instantiated', size, exports, importMods: importObject ? Object.keys(importObject) : [], stack: __stack, ts: Date.now() });
+      window.__aiHooks['preset-webassembly-full'].push(
+        {
+          type:'instantiated',
+          size,
+          exports,
+          importMods: importObject ? Object.keys(importObject) : [],
+          stack: __stack,
+          ts: Date.now(),
+        });
       return result;
     };
     // Also hook WebAssembly.Memory creation
     const _Memory = WebAssembly.Memory;
     WebAssembly.Memory = function(descriptor) {
-      window.__aiHooks['preset-webassembly-full'].push({ type:'memory_created', initial: descriptor && descriptor.initial, maximum: descriptor && descriptor.maximum, shared: descriptor && descriptor.shared, ts: Date.now() });
+      window.__aiHooks['preset-webassembly-full'].push(
+        {
+          type:'memory_created',
+          initial: descriptor && descriptor.initial,
+          maximum: descriptor && descriptor.maximum,
+          shared: descriptor && descriptor.shared,
+          ts: Date.now(),
+        });
       return new _Memory(descriptor);
     };
     WebAssembly.Memory.prototype = _Memory.prototype;

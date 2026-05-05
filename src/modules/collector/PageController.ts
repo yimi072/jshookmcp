@@ -299,7 +299,8 @@ export class PageController {
       if (!frame) {
         const available = frames.map((f) => f.url()).filter((u) => u && u !== 'about:blank');
         throw new Error(
-          `No frame matching URL substring "${options.frameUrl}". Available frames: ${available.join(', ') || '(none)'}`,
+          `No frame matching URL substring "${options.frameUrl}". Available frames: ` +
+            `${available.join(', ') || '(none)'}`,
         );
       }
       return frame;
@@ -355,6 +356,21 @@ export class PageController {
   }
 
   async screenshot(options?: ScreenshotOptions): Promise<Buffer> {
+    // Prefer CDP path: avoids the Network.enable timeout that page.screenshot()
+    // triggers on WebGL/Canvas-heavy tabs.
+    if (this.hasAttachedTargetSession()) {
+      const mgr = this.collector.getBrowserTargetSessionManager();
+      if (mgr) {
+        const buf = await mgr.captureScreenshot({
+          format: options?.type ?? 'png',
+          quality: options?.quality,
+          clip: options?.clip,
+        });
+        logger.info(`Screenshot taken via CDP${options?.path ? `: ${options.path}` : ''}`);
+        return buf;
+      }
+    }
+
     const page = await this.collector.getActivePage();
     const screenshotOpts: Record<string, unknown> = {
       path: options?.path,
@@ -481,7 +497,8 @@ export class PageController {
 
     if (!resolvedDevice) {
       throw new Error(
-        `Unsupported device "${deviceName}". Supported values include: iPhone, iPad, Android (aliases like "iPhone 13" are accepted).`,
+        `Unsupported device "${deviceName}". Supported values include: iPhone, iPad, Android (aliases like "iPhone ` +
+          `13" are accepted).`,
       );
     }
 
@@ -618,7 +635,8 @@ async function checkPageCDPHealth(page: Page, timeoutMs = 500): Promise<void> {
     if (msg === 'cdp_unreachable') {
       throw new Error(
         'CDP session unresponsive — the debugger may be blocking page evaluation. ' +
-          "Call debugger_lifecycle({ action: 'disable' })() before this tool, or run it before debugger_lifecycle({ action: 'enable' })().",
+          "Call debugger_lifecycle({ action: 'disable' })() before this tool, or run it before " +
+          "debugger_lifecycle({ action: 'enable' })().",
         { cause: err },
       );
     }

@@ -60,7 +60,8 @@ export class ScanHandlers {
         ...result,
         hint:
           result.totalMatches > 0
-            ? `Found ${result.totalMatches} matches. Use memory_next_scan with sessionId "${result.sessionId}" to narrow down.`
+            ? `Found ${result.totalMatches} matches. Use memory_next_scan with sessionId "${result.sessionId}" to ` +
+              `narrow down.`
             : 'No matches found. Try a different value or type.',
       });
     } catch (error) {
@@ -102,7 +103,10 @@ export class ScanHandlers {
       return toTextResponse({
         success: true,
         ...result,
-        hint: `Captured ${result.totalMatches} addresses. Use memory_next_scan with changed/unchanged/increased/decreased to narrow.`,
+        hint:
+          `Captured ${result.totalMatches} addresses. Use memory_next_scan with ` +
+          `changed/unchanged/increased/decreased ` +
+          `to narrow.`,
       });
     } catch (error) {
       return toErrorResponse('memory_unknown_scan', error);

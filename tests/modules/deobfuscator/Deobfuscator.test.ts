@@ -120,21 +120,6 @@ describe('Deobfuscator', () => {
     });
   });
 
-  it('surfaces deprecated legacy flags as warnings instead of running old logic', async () => {
-    const result = await new Deobfuscator().deobfuscate({
-      code: 'legacy()',
-      aggressive: true,
-      preserveLogic: true,
-      inlineFunctions: true,
-    });
-
-    expect(result.warnings).toEqual([
-      'aggressive is deprecated and ignored; webcrack is now the only deobfuscation engine.',
-      'preserveLogic is deprecated and ignored.',
-      'inlineFunctions is deprecated and ignored.',
-    ]);
-  });
-
   it('throws immediately when webcrack does not produce a result', async () => {
     webcrackState.runWebcrack.mockResolvedValue({
       applied: false,

@@ -108,8 +108,22 @@ export function buildCocosSceneTreeDumpPayload(opts: DumpOpts): string {
         var py = safeProp(node, 'y', 0) || 0;
         var sx2 = safeProp(node, 'scaleX', 1);
         var sy2 = safeProp(node, 'scaleY', 1);
-        var w2 = safeProp(node, '_contentSize') && safeProp(node._contentSize, 'width', 0) || safeProp(node, 'width', 0);
-        var h2 = safeProp(node, '_contentSize') && safeProp(node._contentSize, 'height', 0) || safeProp(node, 'height', 0);
+        var w2 = safeProp(
+          node,
+          '_contentSize') && safeProp(node._contentSize,
+          'width',
+          0) || safeProp(node,
+          'width',
+          0,
+        );
+        var h2 = safeProp(
+          node,
+          '_contentSize') && safeProp(node._contentSize,
+          'height',
+          0) || safeProp(node,
+          'height',
+          0,
+        );
         return {
           x: px, y: py,
           width: Math.abs(w2 * sx2),
@@ -134,7 +148,8 @@ export function buildCocosSceneTreeDumpPayload(opts: DumpOpts): string {
         if (comps && Array.isArray(comps)) {
           for (var ci = 0; ci < comps.length; ci++) {
             var c = comps[ci];
-            if (c && c.constructor && (c.constructor.name === 'Button' || c.constructor.name === 'UICanvas' || c.constructor.name === 'Sprite')) {
+            if (c && c.constructor && (c.constructor.name === 'Button' || c.constructor.name === 'UICanvas' || c.constructor.name === 'Sprite'))
+              {
               return true;
             }
           }
@@ -399,7 +414,9 @@ export function buildCocosHitTestPayload(opts: PickOpts): string {
         var sx2 = safeProp(node, 'scaleX', 1);
         var sy2 = safeProp(node, 'scaleY', 1);
         var w2 = safeProp(node, '_contentSize') ? safeProp(node._contentSize, 'width', 0) : safeProp(node, 'width', 0);
-        var h2 = safeProp(node, '_contentSize') ? safeProp(node._contentSize, 'height', 0) : safeProp(node, 'height', 0);
+        var h2 = safeProp(node, '_contentSize') ?
+          safeProp(node._contentSize, 'height', 0) :
+          safeProp(node, 'height', 0);
         return {
           x: px, y: py,
           width: Math.abs(w2 * sx2),
@@ -485,7 +502,8 @@ export function buildCocosHitTestPayload(opts: PickOpts): string {
   var targetCanvas = null;
   ${
     canvasId
-      ? `targetCanvas = document.getElementById(${JSON.stringify(canvasId)}) || canvases[parseInt(${JSON.stringify(canvasId)})] || null;`
+      ? `targetCanvas = document.getElementById(${JSON.stringify(canvasId)}) || canvases[parseInt(` +
+        `${JSON.stringify(canvasId)})] || null;`
       : `
   for (var ci = canvases.length - 1; ci >= 0; ci--) {
     var r = canvases[ci].getBoundingClientRect();

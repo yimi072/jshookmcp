@@ -289,7 +289,8 @@ export class StructureAnalyzer {
     const lines: string[] = [];
 
     lines.push(
-      `struct ${structName} { // size: 0x${structure.totalSize.toString(16).toUpperCase()} (${structure.totalSize} bytes)`,
+      `struct ${structName} { // size: 0x${structure.totalSize.toString(16).toUpperCase()} (${structure.totalSize} ` +
+        `bytes)`,
     );
 
     for (const field of structure.fields) {

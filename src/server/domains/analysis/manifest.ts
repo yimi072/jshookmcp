@@ -177,7 +177,9 @@ const manifest = {
                 text: JSON.stringify({
                   success: false,
                   error: 'Sampling not supported by this client',
-                  hint: 'The connected MCP client does not declare sampling capabilities. Try using Claude Desktop or another sampling-capable client.',
+                  hint:
+                    'The connected MCP client does not declare sampling capabilities. ' +
+                    'Try using Claude Desktop or another sampling-capable client.',
                 }),
               },
             ],

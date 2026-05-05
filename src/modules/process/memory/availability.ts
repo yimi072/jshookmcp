@@ -35,7 +35,10 @@ function getWindowsAvailabilityFailureReason(error: unknown): string {
     combined.includes('is not recognized as an internal or external command') ||
     (combined.includes('cannot find') && combined.includes('powershell'))
   ) {
-    return 'PowerShell is unavailable. Windows memory operations require powershell.exe to verify Administrator privileges.';
+    return (
+      'PowerShell is unavailable. Windows memory operations require powershell.exe to verify Administrator ' +
+      'privileges.'
+    );
   }
 
   return `PowerShell command execution failed while checking Administrator privileges: ${errorMessage}`;
@@ -60,13 +63,17 @@ async function runWindowsAdminAvailabilityCheck(): Promise<{
       return {
         available: false,
         reason:
-          'Windows memory operations require Administrator privileges. Please run your terminal/IDE as Administrator and retry.',
+          'Windows memory operations require Administrator privileges. Please run your terminal/IDE as ' +
+          'Administrator and retry.',
       };
     }
 
     return {
       available: false,
-      reason: `PowerShell command execution failed while checking Administrator privileges: unexpected output "${stdout.trim() || '(empty)'}".`,
+      reason:
+        `PowerShell command execution failed while checking Administrator privileges: unexpected output "` +
+        `${stdout.trim()}` +
+        ` '(empty)'}".`,
     };
   } catch (error) {
     return {

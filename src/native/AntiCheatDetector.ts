@@ -92,7 +92,8 @@ const ANTI_DEBUG_IMPORTS: {
         mechanism: 'ntquery_debug',
         confidence: 'high',
         bypass:
-          'Hook NtQueryInformationProcess: return 0 for ProcessDebugPort (7), ProcessDebugObjectHandle (30), ProcessDebugFlags (31)',
+          'Hook NtQueryInformationProcess: return 0 for ProcessDebugPort (7), ProcessDebugObjectHandle (30), ' +
+          'ProcessDebugFlags (31)',
       },
       {
         name: 'NtSetInformationThread',

@@ -81,7 +81,9 @@ public class RegionEnumerator {
 
             while (VirtualQueryEx(hProcess, addr, out info, infoSize) == infoSize) {
                 scannedRegions++;
-                string state = info.State == MEM_COMMIT ? "COMMIT" : (info.State == MEM_RESERVE ? "RESERVE" : (info.State == MEM_FREE ? "FREE" : "UNKNOWN"));
+                string state = info.State == MEM_COMMIT ?
+                  "COMMIT" :
+                  (info.State == MEM_RESERVE ? "RESERVE" : (info.State == MEM_FREE ? "FREE" : "UNKNOWN"));
                 string protect = GetProtectionString(info.Protect);
                 bool isReadable = (info.State == MEM_COMMIT) && ((info.Protect & (PAGE_READONLY | PAGE_READWRITE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE)) != 0);
 

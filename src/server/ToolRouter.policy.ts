@@ -250,7 +250,9 @@ export function buildWorkflowRouteRecommendation(
   return {
     name: 'run_extension_workflow',
     domain: getToolDomainFromContext('run_extension_workflow', ctx),
-    shortDescription: `Execute routed workflow ${match.workflow.name} (${match.workflow.id}) via run_extension_workflow`,
+    shortDescription:
+      `Execute routed workflow ${match.workflow.name} (${match.workflow.id}) via ` +
+      `run_extension_workflow`,
     score: match.workflow.route.priority + match.confidence,
     isActive: isToolActive('run_extension_workflow', ctx),
   };

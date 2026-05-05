@@ -140,7 +140,8 @@ export async function replayRequest(
     !hasAuthorizedTargets(authorizationPolicy)
   ) {
     throw new Error(
-      'Replay authorization must include at least one allowed host or CIDR when enabling private network or insecure HTTP access.',
+      'Replay authorization must include at least one allowed host or CIDR when enabling private network or ' +
+        'insecure HTTP access.',
     );
   }
 
@@ -192,7 +193,8 @@ export async function replayRequest(
 
     if (!isInsecureHttpAllowed(target)) {
       throw new Error(
-        `Replay blocked: insecure HTTP is only allowed for loopback or explicitly authorized targets, got "${targetUrl}"`,
+        `Replay blocked: insecure HTTP is only allowed for loopback or explicitly authorized targets, got "` +
+          `${targetUrl}"`,
       );
     }
 

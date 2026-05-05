@@ -123,8 +123,14 @@ export class TraceToolHandlers {
         ...(cleanupErrors.length > 0 ? { cleanupErrors } : {}),
         message:
           cleanupErrors.length > 0
-            ? `Recording stopped with cleanup errors. ${session.eventCount} events, ${session.memoryDeltaCount} memory deltas, ${session.heapSnapshotCount} heap snapshots, ${session.networkRequestCount ?? 0} network requests, ${session.networkChunkCount ?? 0} network chunks, ${session.networkBodyCount ?? 0} response bodies recorded.`
-            : `Recording stopped. ${session.eventCount} events, ${session.memoryDeltaCount} memory deltas, ${session.heapSnapshotCount} heap snapshots, ${session.networkRequestCount ?? 0} network requests, ${session.networkChunkCount ?? 0} network chunks, ${session.networkBodyCount ?? 0} response bodies recorded.`,
+            ? `Recording stopped with cleanup errors. ${session.eventCount} events, ` +
+              `${session.memoryDeltaCount} memory deltas, ${session.heapSnapshotCount} heap snapshots, ` +
+              `${session.networkRequestCount ?? 0} network requests, ${session.networkChunkCount ?? 0} ` +
+              `network chunks, ${session.networkBodyCount ?? 0} response bodies recorded.`
+            : `Recording stopped. ${session.eventCount} events, ${session.memoryDeltaCount} memory deltas, ` +
+              `${session.heapSnapshotCount} heap snapshots, ${session.networkRequestCount ?? 0} network requests, ` +
+              `${session.networkChunkCount ?? 0} network chunks, ${session.networkBodyCount ?? 0} response bodies ` +
+              `recorded.`,
       })
       .json();
   }
@@ -198,7 +204,8 @@ export class TraceToolHandlers {
           : readEventsByExpression(db, eventTimeExpr, timestamp - windowMs, timestamp + windowMs);
 
       const debuggerEventsResult = db.query(
-        `SELECT * FROM events WHERE category = 'debugger' AND ${eventTimeExpr} <= ${timestamp} ORDER BY ${eventTimeExpr} DESC, sequence DESC LIMIT 5`,
+        `SELECT * FROM events WHERE category = 'debugger' AND ${eventTimeExpr} <= ${timestamp} ORDER BY ` +
+          `${eventTimeExpr} DESC, sequence DESC LIMIT 5`,
       );
 
       const memoryStateResult =
@@ -231,7 +238,8 @@ export class TraceToolHandlers {
       const snapshotResult =
         timeDomain === 'wall'
           ? db.query(
-              `SELECT id, timestamp, summary FROM heap_snapshots WHERE timestamp <= ${timestamp} ORDER BY timestamp DESC LIMIT 1`,
+              `SELECT id, timestamp, summary FROM heap_snapshots WHERE timestamp <= ${timestamp} ORDER BY timestamp ` +
+                `DESC LIMIT 1`,
             )
           : null;
 
@@ -449,7 +457,8 @@ export class TraceToolHandlers {
       if (dbPath) tempDb = db;
 
       const allEvents = db.query(
-        'SELECT timestamp, category, event_type, data, script_id, line_number FROM events ORDER BY timestamp ASC, sequence ASC',
+        'SELECT timestamp, category, event_type, data, script_id, line_number FROM events ORDER BY timestamp ASC,' +
+          ' sequence ASC',
       );
 
       const pairedBegin = new Set(['Debugger.paused']);
@@ -493,7 +502,9 @@ export class TraceToolHandlers {
           exportedPath: finalOutputPath,
           eventCount: traceEvents.length,
           format: 'Chrome Trace Event JSON',
-          message: `Exported ${traceEvents.length} events to ${finalOutputPath}. Open in chrome://tracing or ui.perfetto.dev`,
+          message:
+            `Exported ${traceEvents.length} events to ${finalOutputPath}. Open in chrome://tracing` +
+            ` or ui.perfetto.dev`,
         })
         .json();
     } finally {
@@ -520,7 +531,8 @@ export class TraceToolHandlers {
 
     try {
       const eventsResult = db.query(
-        'SELECT timestamp, category, event_type, data, script_id, line_number, wall_time, monotonic_time, request_id, sequence FROM events ORDER BY timestamp, sequence',
+        'SELECT timestamp, category, event_type, data, script_id, line_number, wall_time, monotonic_time, ' +
+          'request_id, sequence FROM events ORDER BY timestamp, sequence',
       );
       const events: SummaryTraceEvent[] = eventsResult.rows.map((row: unknown[]) => ({
         timestamp: row[0] as number,

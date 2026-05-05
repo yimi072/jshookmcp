@@ -52,7 +52,8 @@ export class StealthInjectionHandlers {
         return R.ok().build({
           driver: 'camoufox',
           message:
-            'Camoufox uses C++ engine-level fingerprint spoofing — JS-layer stealth scripts are not needed and have been skipped.',
+            'Camoufox uses C++ engine-level fingerprint spoofing — JS-layer stealth scripts are not needed and ' +
+            'have been skipped.',
         });
       }
 
@@ -140,7 +141,9 @@ export class StealthInjectionHandlers {
 
       return R.ok().build({
         jitterOptions,
-        message: `CDP timing jitter ${jitterOptions.enabled ? 'enabled' : 'disabled'}: ${jitterOptions.minDelayMs}-${jitterOptions.maxDelayMs}ms${jitterOptions.burstMode ? ' (burst mode)' : ''}`,
+        message:
+          `CDP timing jitter ${jitterOptions.enabled ? 'enabled' : 'disabled'}: ${jitterOptions.minDelayMs}-` +
+          `${jitterOptions.maxDelayMs}ms${jitterOptions.burstMode ? ' (burst mode)' : ''}`,
       });
     } catch (e) {
       return R.fail(e).build();
@@ -159,7 +162,8 @@ export class StealthInjectionHandlers {
             fingerprint: fp,
             driver: 'camoufox',
             message:
-              'Fingerprint generated using camoufox native engine. Apply via browser_launch(fingerprint=...) before launching.',
+              'Fingerprint generated using camoufox native engine. Apply via browser_launch(fingerprint=...) ' +
+              'before launching.',
           });
         } catch (err) {
           return R.fail(
@@ -172,13 +176,16 @@ export class StealthInjectionHandlers {
 
       if (!fm?.isAvailable()) {
         return R.fail(
-          'fingerprint-generator/fingerprint-injector packages are not installed. Install them with: pnpm add fingerprint-generator fingerprint-injector',
+          'fingerprint-generator/fingerprint-injector packages are not installed. Install them with: pnpm add ' +
+            'fingerprint-generator fingerprint-injector',
         )
           .merge({
             available: false,
             capability: 'fingerprint_generator',
             status: 'unavailable',
-            fix: 'Install fingerprint-generator and fingerprint-injector: pnpm add fingerprint-generator fingerprint-injector',
+            fix:
+              'Install fingerprint-generator and fingerprint-injector: pnpm add fingerprint-generator ' +
+              'fingerprint-injector',
           })
           .build();
       }
@@ -229,7 +236,8 @@ export class StealthInjectionHandlers {
         geo = await localeMod.getGeolocation(locale);
       } catch (err) {
         return R.fail(
-          `Camoufox locale module unavailable: ${err instanceof Error ? err.message : String(err)}. Ensure camoufox-js is installed.`,
+          `Camoufox locale module unavailable: ${err instanceof Error ? err.message : String(err)}. Ensure ` +
+            `camoufox-js is installed.`,
         )
           .merge({
             available: false,

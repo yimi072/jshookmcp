@@ -627,7 +627,8 @@ export class CaptchaDetector {
 
           if (!isValid) {
             console.warn(
-              `[CaptchaDetector] Slider verification rejected - captcha:${hasCaptchaKeyword}, slider:${hasSliderClass}, parent:${hasParentCaptcha}`,
+              `[CaptchaDetector] Slider verification rejected - captcha:${hasCaptchaKeyword}, slider:` +
+                `${hasSliderClass}, parent:${hasParentCaptcha}`,
             );
           }
 

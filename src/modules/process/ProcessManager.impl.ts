@@ -85,9 +85,14 @@ export class ProcessManager {
 
       let psCommand: string;
       if (normalizedPattern) {
-        psCommand = `Get-Process -Name "*${normalizedPattern.replace(/"/g, '""')}*" -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path, MainWindowTitle, MainWindowHandle, CPU, WorkingSet64 | ConvertTo-Json -Compress`;
+        psCommand =
+          `Get-Process -Name "*${normalizedPattern.replace(/"/g, '""')}*" -ErrorAction SilentlyContinue ` +
+          ` Select-Object Id, ProcessName, Path, MainWindowTitle, MainWindowHandle, CPU, WorkingSet64 ` +
+          ` ConvertTo-Json -Compress`;
       } else {
-        psCommand = `Get-Process -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path, MainWindowTitle, MainWindowHandle, CPU, WorkingSet64 | ConvertTo-Json -Compress`;
+        psCommand =
+          `Get-Process -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path, ` +
+          `MainWindowTitle, MainWindowHandle, CPU, WorkingSet64 | ConvertTo-Json -Compress`;
       }
 
       const { stdout } = await execAsync(
@@ -175,7 +180,10 @@ export class ProcessManager {
   async getProcessByPid(pid: number): Promise<ProcessInfo | null> {
     try {
       pid = safePid(pid);
-      const psCommand = `Get-Process -Id ${pid} -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path, MainWindowTitle, MainWindowHandle, CPU, WorkingSet64, StartTime | ConvertTo-Json -Compress`;
+      const psCommand =
+        `Get-Process -Id ${pid} -ErrorAction SilentlyContinue` +
+        'Select-Object Id, ProcessName, Path, MainWindowTitle, MainWindowHandle, CPU, WorkingSet64, StartTime' +
+        'ConvertTo-Json -Compress';
 
       const { stdout } = await execAsync(
         `${this.powershellPath} -NoProfile -Command "${psCommand}"`,
@@ -271,7 +279,10 @@ export class ProcessManager {
   async getProcessCommandLine(pid: number): Promise<{ commandLine?: string; parentPid?: number }> {
     try {
       pid = safePid(pid);
-      const psCommand = `Get-CimInstance Win32_Process -Filter 'ProcessId = ${pid}' | Select-Object CommandLine, ParentProcessId | ConvertTo-Json -Compress`;
+      const psCommand =
+        `Get-CimInstance Win32_Process -Filter 'ProcessId = ${pid}' | Select-Object ` +
+        `CommandLine, ParentProcessId` +
+        'ConvertTo-Json -Compress';
 
       const { stdout } = await execAsync(
         `${this.powershellPath} -NoProfile -Command "${psCommand}"`,
@@ -309,7 +320,9 @@ export class ProcessManager {
         }
       }
 
-      const psCommand = `Get-NetTCPConnection -OwningProcess ${pid} -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort | ConvertTo-Json -Compress`;
+      const psCommand =
+        `Get-NetTCPConnection -OwningProcess ${pid} -State Listen -ErrorAction SilentlyContinue` +
+        'Select-Object LocalPort | ConvertTo-Json -Compress';
 
       const { stdout } = await execAsync(
         `${this.powershellPath} -NoProfile -Command "${psCommand}"`,
@@ -340,7 +353,9 @@ export class ProcessManager {
    */
   private async findPidByListeningPort(port: number): Promise<number | null> {
     try {
-      const psCommand = `Get-NetTCPConnection -LocalPort ${port} -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1 OwningProcess | ConvertTo-Json -Compress`;
+      const psCommand =
+        `Get-NetTCPConnection -LocalPort ${port} -State Listen -ErrorAction SilentlyContinue` +
+        'Select-Object -First 1 OwningProcess | ConvertTo-Json -Compress';
       const { stdout } = await execAsync(
         `${this.powershellPath} -NoProfile -Command "${psCommand}"`,
         { maxBuffer: 1024 * 1024 },
@@ -456,7 +471,8 @@ export class ProcessManager {
       const escapedDllPath = String(_dllPath).replace(/'/g, "''");
 
       await execAsync(
-        `${this.powershellPath} -NoProfile -ExecutionPolicy Bypass -File "${scriptPath}" -TargetPid ${normalizedPid} -DllPath '${escapedDllPath}'`,
+        `${this.powershellPath} -NoProfile -ExecutionPolicy Bypass -File "${scriptPath}" -TargetPid ${normalizedPid} ` +
+          `-DllPath '${escapedDllPath}'`,
         { maxBuffer: 1024 * 1024 },
       );
 
@@ -479,7 +495,10 @@ export class ProcessManager {
       }
 
       const normalizedPid = Math.trunc(pid);
-      const psCommand = `Stop-Process -Id ${normalizedPid} -Force -ErrorAction SilentlyContinue; Write-Output "Process ${normalizedPid} killed"`;
+      const psCommand =
+        `Stop-Process -Id ${normalizedPid} -Force -ErrorAction SilentlyContinue; Write-Output` +
+        ` "Process ${normalizedPid}` +
+        ` killed"`;
 
       await execAsync(`${this.powershellPath} -NoProfile -Command "${psCommand}"`, {
         maxBuffer: 1024 * 1024,

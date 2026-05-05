@@ -323,7 +323,8 @@ export async function handleV8BytecodeDecompile(
       result.strings = strings.slice(0, 500); // Cap at 500 strings
       result.note = [
         `view8 unavailable (${view8Result.error}). Used built-in constant pool extraction.`,
-        `Found ${strings.length} code-relevant strings. These include function names, identifiers, URLs, and string literals from the original source.`,
+        `Found ${strings.length} code-relevant strings. These include function names, identifiers, URLs, and string ` +
+          `literals from the original source.`,
         `For full decompilation, install view8: pip install view8`,
       ].join(' ');
     } else {

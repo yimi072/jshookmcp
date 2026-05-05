@@ -302,7 +302,9 @@ export async function handleElectronIPCSniff(
         return toTextResponse({
           success: false,
           tool: 'electron_ipc_sniff',
-          error: `Cannot connect to CDP at port ${port}. Ensure Electron is launched with --remote-debugging-port=${port}.`,
+          error:
+            `Cannot connect to CDP at port ${port}. Ensure Electron is launched with ` +
+            `--remote-debugging-port=${port}.`,
           hint: 'Use electron_launch_debug to start the app with CDP enabled.',
         });
       }
@@ -343,7 +345,8 @@ export async function handleElectronIPCSniff(
         },
         note:
           injectResult.result === 'ipcRenderer_not_accessible'
-            ? 'ipcRenderer not accessible — contextIsolation may be enabled. IPC hooking requires nodeIntegration or a custom preload.'
+            ? 'ipcRenderer not accessible — contextIsolation may be enabled. IPC hooking requires nodeIntegration ' +
+              'or a custom preload.'
             : 'IPC hooks installed. Interact with the app, then use dump to retrieve captured messages.',
       });
     }

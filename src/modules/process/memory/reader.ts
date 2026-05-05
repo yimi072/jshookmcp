@@ -283,7 +283,10 @@ export async function readMemory(
     if (size <= 0 || size > MEMORY_MAX_READ_BYTES) {
       return {
         success: false,
-        error: `Read size must be 1–${MEMORY_MAX_READ_BYTES} bytes (${(MEMORY_MAX_READ_BYTES / 1024 / 1024).toFixed(0)} MB)`,
+        error:
+          `Read size must be 1–${MEMORY_MAX_READ_BYTES} bytes (` +
+          `${(MEMORY_MAX_READ_BYTES / 1024 / 1024).toFixed(0)} ` +
+          `MB)`,
       };
     }
 

@@ -17,9 +17,11 @@ function unavailablePayload(reason: string, tool: string): Record<string, unknow
 }
 
 const LIVE_CAPTURE_REASON =
-  'Current Mojo IPC backend only exposes a seeded interface catalog and simulated capture. Live Chromium Mojo hooks are not implemented in this build.';
+  'Current Mojo IPC backend only exposes a seeded interface catalog and simulated capture. Live Chromium Mojo ' +
+  'hooks are not implemented in this build.';
 const LIVE_CAPTURE_FIX =
-  'No user-side fix is available in this build. Treat mojo_monitor/mojo_list_interfaces/mojo_messages_get as simulation-only until real Frida hooks are implemented.';
+  'No user-side fix is available in this build. Treat mojo_monitor/mojo_list_interfaces/mojo_messages_get as ' +
+  'simulation-only until real Frida hooks are implemented.';
 
 function getFridaProbeSucceeded(monitor: MojoMonitor): boolean {
   const maybeMonitor = monitor as MojoMonitor & { didFridaProbeSucceed?: () => boolean };
@@ -189,7 +191,8 @@ export class MojoIPCHandlers {
 
     if (monitor.getInterfaceCatalogSource() === 'seeded-defaults') {
       response.warningMessage =
-        'Interface list currently comes from the seeded default catalog; no live observed Mojo interfaces have been captured yet.';
+        'Interface list currently comes from the seeded default catalog; no live observed Mojo interfaces have ' +
+        'been captured yet.';
     } else if (monitor.isSimulationMode()) {
       response.warningMessage =
         'Mojo IPC monitor is running in simulation mode. Interface counts may not reflect live traffic.';
@@ -247,7 +250,8 @@ export class MojoIPCHandlers {
 
     if (monitor.isSimulationMode()) {
       response.warningMessage =
-        'Mojo IPC is operating in simulation mode. Messages are not captured from real Frida hooks. Install Frida for live IPC monitoring.';
+        'Mojo IPC is operating in simulation mode. Messages are not captured from real Frida hooks. Install Frida' +
+        ' for live IPC monitoring.';
     }
 
     return response;

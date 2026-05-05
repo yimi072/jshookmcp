@@ -101,7 +101,8 @@ export async function extractFunctionTreeCore(
     t = await import('@babel/types');
   } catch (error: unknown) {
     throw new Error(
-      `Failed to load Babel dependencies. Please install: npm install @babel/parser @babel/traverse @babel/generator @babel/types\nError: ${getErrorMessage(error)}`,
+      `Failed to load Babel dependencies. Please install: npm install @babel/parser @babel/traverse @babel/generator ` +
+        `@babel/types\nError: ${getErrorMessage(error)}`,
       { cause: error },
     );
   }
@@ -225,7 +226,8 @@ export async function extractFunctionTreeCore(
   }
 
   logger.info(
-    `extractFunctionTree: ${functionName} - extracted ${functions.length} functions (${(totalSize / 1024).toFixed(2)}KB)`,
+    `extractFunctionTree: ${functionName} - extracted ${functions.length} functions (${(totalSize / 1024).toFixed(2)}` +
+      `KB)`,
   );
 
   return {

@@ -294,7 +294,8 @@ export class TraceRecorder {
         cleanupErrors = cleanupResults.flatMap((result, index) =>
           result.status === 'rejected'
             ? [
-                `${enabledDomains[index]}.disable failed: ${result.reason instanceof Error ? result.reason.message : String(result.reason)}`,
+                `${enabledDomains[index]}.disable failed: ` +
+                  `${result.reason instanceof Error ? result.reason.message : String(result.reason)}`,
               ]
             : [],
         );

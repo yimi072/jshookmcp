@@ -174,7 +174,8 @@ export class CapabilityHandlers {
           : 'No captured WASM modules or exported memory are visible on the current page.',
         fix: available
           ? undefined
-          : 'Load a page that instantiates WASM. For dump/trace flows, inject hook_preset("webassembly-full") before navigation.',
+          : 'Load a page that instantiates WASM. For dump/trace flows, inject hook_preset("webassembly-full") ' +
+            'before navigation.',
         details: {
           tools: ['wasm_dump', 'wasm_vmp_trace', 'wasm_memory_inspect'],
           pageAttached: true,

@@ -81,7 +81,8 @@ export class ScriptManagementHandlers {
           content: previewContent,
           hint:
             size > 51200
-              ? `Script is large (${(size / 1024).toFixed(1)}KB). Use startLine/endLine to get specific sections, or set preview=false to get full source (will return detailId).`
+              ? `Script is large (${(size / 1024).toFixed(1)}KB). Use startLine/endLine to get specific sections, or ` +
+                `set preview=false to get full source (will return detailId).`
               : 'Set preview=false to get full source',
         };
 

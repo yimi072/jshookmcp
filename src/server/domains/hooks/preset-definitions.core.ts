@@ -32,7 +32,12 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:Function] args=' + JSON.stringify(args).substring(0, 200);
     {{LOG_FN}}
-    window.__aiHooks['preset-function-constructor'].push({ args: args.map(a => String(a).substring(0,200)), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-function-constructor'].push(
+      {
+        args: args.map(a => String(a).substring(0,200)),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _orig(...args);
   };
   window.Function.prototype = _orig.prototype;`,
@@ -54,7 +59,14 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     const result = _atob(s);
     const __msg = '[Hook:atob] in=' + String(s).substring(0,100) + ' out=' + result.substring(0,100);
     {{LOG_FN}}
-    window.__aiHooks['preset-atob-btoa'].push({ fn:'atob', input: String(s).substring(0,200), output: result.substring(0,200), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-atob-btoa'].push(
+      {
+        fn:'atob',
+        input: String(s).substring(0,200),
+        output: result.substring(0,200),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return result;
   };
   window.btoa = function(s) {
@@ -62,7 +74,14 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     const result = _btoa(s);
     const __msg = '[Hook:btoa] in=' + String(s).substring(0,100) + ' out=' + result;
     {{LOG_FN}}
-    window.__aiHooks['preset-atob-btoa'].push({ fn:'btoa', input: String(s).substring(0,200), output: result, stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-atob-btoa'].push(
+      {
+        fn:'btoa',
+        input: String(s).substring(0,200),
+        output: result,
+        stack: __stack,
+        ts: Date.now(),
+      });
     return result;
   };`,
         cs,
@@ -83,14 +102,26 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
       {{STACK_CODE}}
       const __msg = '[Hook:crypto.encrypt] algo=' + JSON.stringify(algo);
       {{LOG_FN}}
-      window.__aiHooks['preset-crypto-subtle'].push({ fn:'encrypt', algo: JSON.stringify(algo), stack: __stack, ts: Date.now() });
+      window.__aiHooks['preset-crypto-subtle'].push(
+        {
+          fn:'encrypt',
+          algo: JSON.stringify(algo),
+          stack: __stack,
+          ts: Date.now(),
+        });
       return _enc(algo, key, data);
     };
     window.crypto.subtle.decrypt = function(algo, key, data) {
       {{STACK_CODE}}
       const __msg = '[Hook:crypto.decrypt] algo=' + JSON.stringify(algo);
       {{LOG_FN}}
-      window.__aiHooks['preset-crypto-subtle'].push({ fn:'decrypt', algo: JSON.stringify(algo), stack: __stack, ts: Date.now() });
+      window.__aiHooks['preset-crypto-subtle'].push(
+        {
+          fn:'decrypt',
+          algo: JSON.stringify(algo),
+          stack: __stack,
+          ts: Date.now(),
+        });
       return _dec(algo, key, data);
     };
   }`,
@@ -112,7 +143,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     const result = _stringify(v, r, s);
     const __msg = '[Hook:JSON.stringify] out=' + (result||'').substring(0,100);
     {{LOG_FN}}
-    window.__aiHooks['preset-json-stringify'].push({ fn:'stringify', output: (result||'').substring(0,300), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-json-stringify'].push(
+      {
+        fn:'stringify',
+        output: (result||'').substring(0,300),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return result;
   };
   JSON.parse = function(text, r) {
@@ -120,7 +157,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     const result = _parse(text, r);
     const __msg = '[Hook:JSON.parse] in=' + String(text).substring(0,100);
     {{LOG_FN}}
-    window.__aiHooks['preset-json-stringify'].push({ fn:'parse', input: String(text).substring(0,300), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-json-stringify'].push(
+      {
+        fn:'parse',
+        input: String(text).substring(0,300),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return result;
   };`,
         cs,
@@ -139,7 +182,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:Object.defineProperty] prop=' + String(prop);
     {{LOG_FN}}
-    window.__aiHooks['preset-object-defineproperty'].push({ prop: String(prop), descriptor: JSON.stringify(descriptor||{}).substring(0,200), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-object-defineproperty'].push(
+      {
+        prop: String(prop),
+        descriptor: JSON.stringify(descriptor||{}).substring(0,200),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _define(obj, prop, descriptor);
   };`,
         cs,
@@ -198,7 +247,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:addEventListener] type=' + type;
     {{LOG_FN}}
-    window.__aiHooks['preset-addeventlistener'].push({ type, target: this?.tagName || String(this).substring(0,50), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-addeventlistener'].push(
+      {
+        type,
+        target: this?.tagName || String(this).substring(0,50),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _orig.call(this, type, listener, options);
   };`,
         cs,
@@ -217,11 +272,23 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:postMessage] origin=' + origin + ' data=' + JSON.stringify(data).substring(0,100);
     {{LOG_FN}}
-    window.__aiHooks['preset-postmessage'].push({ origin, data: JSON.stringify(data||{}).substring(0,300), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-postmessage'].push(
+      {
+        origin,
+        data: JSON.stringify(data||{}).substring(0,300),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _orig(data, origin, transfer);
   };
   window.addEventListener('message', function(e) {
-    window.__aiHooks['preset-postmessage'].push({ direction:'received', origin: e.origin, data: JSON.stringify(e.data||{}).substring(0,300), ts: Date.now() });
+    window.__aiHooks['preset-postmessage'].push(
+      {
+        direction:'received',
+        origin: e.origin,
+        data: JSON.stringify(e.data||{}).substring(0,300),
+        ts: Date.now(),
+      });
   });`,
         cs,
         lc,
@@ -261,7 +328,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:Proxy] target=' + String(target).substring(0,50);
     {{LOG_FN}}
-    window.__aiHooks['preset-proxy'].push({ target: String(target).substring(0,100), handlerKeys: Object.keys(handler||{}), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-proxy'].push(
+      {
+        target: String(target).substring(0,100),
+        handlerKeys: Object.keys(handler||{}),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return new _Proxy(target, handler);
   };
   window.Proxy.prototype = _Proxy.prototype;
@@ -282,7 +355,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:Reflect.apply] fn=' + (target?.name || 'anonymous');
     {{LOG_FN}}
-    window.__aiHooks['preset-reflect'].push({ fn: target?.name || 'anonymous', argsCount: (args||[]).length, stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-reflect'].push(
+      {
+        fn: target?.name || 'anonymous',
+        argsCount: (args||[]).length,
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _apply(target, thisArg, args);
   };`,
         cs,
@@ -302,14 +381,28 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:history.pushState] url=' + url;
     {{LOG_FN}}
-    window.__aiHooks['preset-history-pushstate'].push({ fn:'pushState', url: String(url), state: JSON.stringify(state||{}).substring(0,100), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-history-pushstate'].push(
+      {
+        fn:'pushState',
+        url: String(url),
+        state: JSON.stringify(state||{}).substring(0,100),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _push(state, title, url);
   };
   history.replaceState = function(state, title, url) {
     {{STACK_CODE}}
     const __msg = '[Hook:history.replaceState] url=' + url;
     {{LOG_FN}}
-    window.__aiHooks['preset-history-pushstate'].push({ fn:'replaceState', url: String(url), state: JSON.stringify(state||{}).substring(0,100), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-history-pushstate'].push(
+      {
+        fn:'replaceState',
+        url: String(url),
+        state: JSON.stringify(state||{}).substring(0,100),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _replace(state, title, url);
   };`,
         cs,
@@ -359,7 +452,12 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
         const result = _origGet.call(this);
         const __msg = '[Hook:navigator.userAgent] ua=' + result.substring(0,80);
         {{LOG_FN}}
-        window.__aiHooks['preset-navigator-useragent'].push({ ua: result.substring(0,200), stack: __stack, ts: Date.now() });
+        window.__aiHooks['preset-navigator-useragent'].push(
+          {
+            ua: result.substring(0,200),
+            stack: __stack,
+            ts: Date.now(),
+          });
         return result;
       },
       configurable: true,
@@ -403,7 +501,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:window.open] url=' + url + ' target=' + target;
     {{LOG_FN}}
-    window.__aiHooks['preset-window-open'].push({ url: String(url), target: String(target||''), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-window-open'].push(
+      {
+        url: String(url),
+        target: String(target||''),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _orig(url, target, features);
   };`,
         cs,
@@ -442,7 +546,13 @@ export const CORE_PRESETS: Record<string, PresetEntry> = {
     {{STACK_CODE}}
     const __msg = '[Hook:FormData.append] name=' + name + ' value=' + String(value).substring(0,100);
     {{LOG_FN}}
-    window.__aiHooks['preset-formdata'].push({ name: String(name), value: String(value).substring(0,200), stack: __stack, ts: Date.now() });
+    window.__aiHooks['preset-formdata'].push(
+      {
+        name: String(name),
+        value: String(value).substring(0,200),
+        stack: __stack,
+        ts: Date.now(),
+      });
     return _orig.call(this, name, value, filename);
   };`,
         cs,

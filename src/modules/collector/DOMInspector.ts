@@ -127,7 +127,8 @@ export class DOMInspector {
       };
 
       logger.info(
-        `querySelectorAll: ${selector} - found ${result.elements.length} elements (limit: ${limit}, readyState: ${diagnostics.readyState}, shadowRoots: ${diagnostics.shadowRootCount}, retried: ${retried})`,
+        `querySelectorAll: ${selector} - found ${result.elements.length} elements (limit: ${limit}, readyState: ` +
+          `${diagnostics.readyState}, shadowRoots: ${diagnostics.shadowRootCount}, retried: ${retried})`,
       );
       return { elements: result.elements, diagnostics };
     } catch (error) {
@@ -185,7 +186,9 @@ export class DOMInspector {
       };
 
       logger.info(
-        `findClickable: found ${result.elements.length} elements${filterText ? ` (filtered by: ${filterText})` : ''} (readyState: ${diagnostics.readyState}, shadowRoots: ${diagnostics.shadowRootCount}, retried: ${retried})`,
+        `findClickable: found ${result.elements.length} elements` +
+          `${filterText ? ` (filtered by: ${filterText})` : ''} (readyState: ${diagnostics.readyState}, ` +
+          `shadowRoots: ${diagnostics.shadowRootCount}, retried: ${retried})`,
       );
       return { elements: result.elements, diagnostics };
     } catch (error) {

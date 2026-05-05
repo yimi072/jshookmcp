@@ -6,7 +6,8 @@ export default defineConfig(async () => ({
   entry: ['src/index.ts', 'src/server/plugin-api.ts'],
   format: 'esm',
   clean: true,
-  dts: true,
+  dts: false,
+  minify: true,
   plugins: analyzeEnabled
     ? [
         (await import('rollup-plugin-visualizer')).visualizer({
@@ -28,6 +29,14 @@ export default defineConfig(async () => ({
       'webcrack',
       'rebrowser-puppeteer-core',
       '@modelcontextprotocol/sdk',
+      'jsdom',
+      'mockttp',
+      '@babel/generator',
+      '@babel/parser',
+      '@babel/traverse',
+      '@babel/types',
+      'fingerprint-generator',
+      'fingerprint-injector',
     ],
   },
   onSuccess: 'node scripts/copy-native-scripts.mjs && node scripts/fix-bin-permissions.mjs',

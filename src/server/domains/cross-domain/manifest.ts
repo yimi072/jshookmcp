@@ -84,7 +84,9 @@ const manifest = {
       'cross_domain_correlate_all',
       'cross_domain_evidence_stats',
     ],
-    hint: 'Cross-domain reverse workflow: inspect capabilities → suggest mission workflow → correlate evidence from all v5.0 domains → export evidence graph',
+    hint:
+      'Cross-domain reverse workflow: inspect capabilities → suggest mission workflow → correlate evidence' +
+      'from all v5.0 domains → export evidence graph',
   },
   toolDependencies: [
     { from: 'cross_domain_suggest_workflow', to: 'deobfuscate', relation: 'suggests', weight: 0.6 },

@@ -143,7 +143,8 @@ export async function main(): Promise<void> {
       runtimeRecovery.errorCount += 1;
 
       logger.error(
-        `[${kind}] Runtime failure captured (${runtimeRecovery.errorCount}/${maxRecoverableErrors}): ${formatUnknownError(reason)}`,
+        `[${kind}] Runtime failure captured (${runtimeRecovery.errorCount}/${maxRecoverableErrors}): ` +
+          `${formatUnknownError(reason)}`,
       );
 
       if (!runtimeRecovery.degradedMode && runtimeRecovery.errorCount >= maxRecoverableErrors) {

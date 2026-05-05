@@ -68,7 +68,9 @@ export async function handleSearchTools(
         action: 'call',
         command: topResult.name,
         exampleArgs: topExampleArgs,
-        description: `Call ${topResult.name} directly. Use describe_tool("${topResult.name}") only if you need the full schema.`,
+        description:
+          `Call ${topResult.name} directly. Use describe_tool("${topResult.name}") only if you ` +
+          `need the full schema.`,
       });
     }
   }
@@ -78,7 +80,8 @@ export async function handleSearchTools(
     'Use activate_tools to enable specific tools, activate_domain for entire domains.';
   const refinementHint =
     results.length < 3
-      ? ' Few results — try distilling your query to key concepts (e.g. "hook fetch" instead of "how to intercept fetch requests").'
+      ? ' Few results — try distilling your query to key concepts (e.g. "hook fetch" instead of "how to intercept ' +
+        'fetch requests").'
       : '';
 
   const response: Record<string, unknown> = {

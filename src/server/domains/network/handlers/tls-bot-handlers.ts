@@ -124,7 +124,8 @@ function computeHttpFingerprint(
   cookieHeader?: string,
   acceptLanguage?: string,
 ): { http: string } {
-  // HTTP fingerprint format: {method2}{version}{cookie}{referer}{headerLen}{lang}_{headersHash}_{cookieNamesHash}_{cookieValuesHash}
+  // HTTP fingerprint format:
+  // {method2}{version}{cookie}{referer}{headerLen}{lang}_{headersHash}_{cookieNamesHash}_{cookieValuesHash}
   const methodUpper = method.toUpperCase();
   const methodCode =
     {
@@ -620,7 +621,8 @@ export class TlsBotHandlers {
     const diversitySignals: string[] = [];
     if (fingerprintDiversity > 0.8) {
       diversitySignals.push(
-        `High fingerprint diversity (${uniqueFingerprints} unique HTTP fingerprints in ${sample.length} requests) — may indicate multiple clients or rotation`,
+        `High fingerprint diversity (${uniqueFingerprints} unique HTTP fingerprints in ${sample.length} requests) — ` +
+          `may indicate multiple clients or rotation`,
       );
     }
     if (fingerprintDiversity === 1 && sample.length > 5) {

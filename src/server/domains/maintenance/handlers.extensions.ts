@@ -186,7 +186,10 @@ export class ExtensionManagementHandlers {
           installDir,
           projectDir,
           expectedEntryFile: entryFile,
-          hint: 'The registry source.entry or its compiled JS output must exist after clone/build before reloadExtensions can load it.',
+          hint:
+            'The registry source.entry or its compiled JS output must exist after clone/build before ' +
+            'reloadExtensions' +
+            ' can load it.',
         });
       }
 

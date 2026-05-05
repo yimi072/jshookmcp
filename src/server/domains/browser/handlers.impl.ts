@@ -388,7 +388,9 @@ export class BrowserToolHandlers {
             content: [
               {
                 type: 'text',
-                text: 'action=clear requires expectedCount (number). Call action=get first to obtain the current cookie count.',
+                text:
+                  'action=clear requires expectedCount (number). Call action=get first to obtain the current' +
+                  'cookie count.',
               },
             ],
             isError: true,
@@ -400,7 +402,10 @@ export class BrowserToolHandlers {
             content: [
               {
                 type: 'text',
-                text: `Cookie count mismatch: expected ${expectedCount} but found ${current}. Call action=get to refresh, then retry with the correct count.`,
+                text:
+                  `Cookie count mismatch: expected ${expectedCount} but found ${current}. Call ` +
+                  `action=get to refresh, ` +
+                  `then retry with the correct count.`,
               },
             ],
             isError: true,

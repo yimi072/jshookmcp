@@ -308,7 +308,8 @@ export async function collectInnerImpl(
             finalContent = content.substring(0, self.MAX_SINGLE_FILE_SIZE);
             truncated = true;
             logger.warn(
-              `[CDP] Large file truncated: ${url} (${(contentSize / 1024).toFixed(2)} KB -> ${(self.MAX_SINGLE_FILE_SIZE / 1024).toFixed(2)} KB)`,
+              `[CDP] Large file truncated: ${url} (${(contentSize / 1024).toFixed(2)} KB -> ` +
+                `${(self.MAX_SINGLE_FILE_SIZE / 1024).toFixed(2)} KB)`,
             );
           }
 
@@ -334,7 +335,8 @@ export async function collectInnerImpl(
               self.collectedFilesCache.set(url, file);
 
               logger.debug(
-                `[CDP] Collected (${files.length}/${self.MAX_FILES_PER_COLLECT}): ${url} (${(finalContent.length / 1024).toFixed(2)} KB)${truncated ? ' [TRUNCATED]' : ''}`,
+                `[CDP] Collected (${files.length}/${self.MAX_FILES_PER_COLLECT}): ${url} (` +
+                  `${(finalContent.length / 1024).toFixed(2)} KB)${truncated ? ' [TRUNCATED]' : ''}`,
               );
             }
           }
@@ -493,7 +495,8 @@ export async function collectInnerImpl(
           const stats = self.compressor.getStats();
           logger.info(` Compressed ${compressedResults.length}/${processedFiles.length} files`);
           logger.info(
-            ` Compression stats: ${(stats.totalOriginalSize / 1024).toFixed(2)} KB -> ${(stats.totalCompressedSize / 1024).toFixed(2)} KB (${stats.averageRatio.toFixed(1)}% reduction)`,
+            ` Compression stats: ${(stats.totalOriginalSize / 1024).toFixed(2)} KB -> ` +
+              `${(stats.totalCompressedSize / 1024).toFixed(2)} KB (${stats.averageRatio.toFixed(1)}% reduction)`,
           );
           logger.info(
             ` Cache: ${stats.cacheHits} hits, ${stats.cacheMisses} misses (${stats.cacheHits > 0 ? ((stats.cacheHits / (stats.cacheHits + stats.cacheMisses)) * 100).toFixed(1) : 0}% hit rate)`,

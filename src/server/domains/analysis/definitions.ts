@@ -109,30 +109,12 @@ export const coreTools: Tool[] = [
   tool('deobfuscate', (t) =>
     withWebcrackOpts(
       t
-        .desc(
-          'Run webcrack-powered JavaScript deobfuscation with bundle unpacking. Use engine="webcrack" for aggressive VM/advanced options.',
-        )
+        .desc('Run webcrack-powered JavaScript deobfuscation with bundle unpacking.')
         .string('code', 'Obfuscated JavaScript source')
         .enum('engine', ['auto', 'webcrack'], 'Deobfuscation engine', { default: 'auto' })
         .enum('llm', ['gpt-4', 'claude'], 'Preferred LLM for analysis', { default: 'gpt-4' })
-        .boolean('aggressive', 'Aggressive deobfuscation strategy', { default: false })
         .boolean('detectOnly', 'Detect only without transformation (webcrack engine)', {
           default: false,
-        })
-        .boolean('aggressiveVM', 'Aggressive VM deobfuscation (webcrack engine)', {
-          default: false,
-        })
-        .boolean(
-          'useASTOptimization',
-          'Apply AST optimization after transformation (webcrack engine)',
-          {
-            default: true,
-          },
-        )
-        .number('timeout', 'Operation timeout in ms (webcrack engine)', {
-          default: 60000,
-          minimum: 1000,
-          maximum: 120000,
         }),
     ).required('code'),
   ),

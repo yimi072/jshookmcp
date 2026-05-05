@@ -99,7 +99,9 @@ const manifest = {
       'instrumentation_hook_preset',
       'instrumentation_network_replay',
     ],
-    hint: 'Instrumentation session: create session → attach hook presets / network replay → record artifacts → query artifacts → destroy when done',
+    hint:
+      'Instrumentation session: create session → attach hook presets / network replay → record artifacts → query ' +
+      'artifacts → destroy when done',
   },
   registrations,
 } satisfies DomainManifest<typeof DEP_KEY, H, typeof DOMAIN>;

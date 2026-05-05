@@ -87,7 +87,8 @@ export async function activateToolNames(
   await notifyToolListChanged(ctx, activated.length > 0);
 
   logger.info(
-    `activate_tools: activated ${activated.length}, already_active ${alreadyActive.length}, not_found ${notFound.length}`,
+    `activate_tools: activated ${activated.length}, already_active ${alreadyActive.length}, not_found ` +
+      `${notFound.length}`,
   );
 
   return {
@@ -117,7 +118,8 @@ export async function handleActivateTools(
       ...result,
       hint:
         result.activated.length > 0
-          ? 'Tools activated. If they do not appear in your tool list, use call_tool({ name: "<tool>", args: {...} }) to invoke them.'
+          ? 'Tools activated. If they do not appear in your tool list, use call_tool({ name: "<tool>", args: {...} ' +
+            '}) to invoke them.'
           : undefined,
     }),
   );

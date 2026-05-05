@@ -306,7 +306,8 @@ export class PlaywrightNetworkMonitor {
           })
           .catch((err: unknown) => {
             logger.debug(
-              `[PW-BodyCache] Could not capture body for ${captureId}: ${err instanceof Error ? err.message : String(err)}`,
+              `[PW-BodyCache] Could not capture body for ${captureId}: ` +
+                `${err instanceof Error ? err.message : String(err)}`,
             );
           });
       }

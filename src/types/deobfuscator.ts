@@ -34,10 +34,7 @@ export interface Transformation {
 
 export interface DeobfuscateOptions {
   code: string;
-  aggressive?: boolean;
-  preserveLogic?: boolean;
   renameVariables?: boolean;
-  inlineFunctions?: boolean;
   unpack?: boolean;
   unminify?: boolean;
   jsx?: boolean;

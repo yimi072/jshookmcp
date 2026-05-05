@@ -106,7 +106,10 @@ export async function handleElectronLaunchDebug(
       return toTextResponse({
         success: false,
         tool: 'electron_launch_debug',
-        error: `exePath does not appear to be an Electron binary: ${exeBaseName}. Only Electron/Chromium executables are allowed.`,
+        error:
+          `exePath does not appear to be an Electron binary: ${exeBaseName}. Only Electron/Chromium ` +
+          `executables are ` +
+          `allowed.`,
       });
     }
 
@@ -128,7 +131,8 @@ export async function handleElectronLaunchDebug(
       if (fuses.fuseFound) {
         if (!fuses.inspectArgs) {
           fuseWarnings.push(
-            'EnableNodeCliInspectArguments is DISABLED — main process --inspect may be blocked. Use electron_patch_fuses first.',
+            'EnableNodeCliInspectArguments is DISABLED — main process --inspect may be blocked. Use ' +
+              'electron_patch_fuses first.',
           );
         }
         if (!fuses.nodeOptions) {

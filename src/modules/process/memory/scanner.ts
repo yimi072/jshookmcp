@@ -160,7 +160,9 @@ async function suspendProcess(platform: Platform, pid: number): Promise<boolean>
       case 'win32': {
         const { execAsync } = await import('@modules/process/memory/types');
         await execAsync(
-          `powershell -NoProfile -Command "(Add-Type -MemberDefinition '[DllImport("ntdll.dll")] public static extern int NtSuspendProcess(IntPtr h);' -Name W -Namespace N -PassThru)::NtSuspendProcess((Get-Process -Id ${pid}).Handle)"`,
+          `powershell -NoProfile -Command "(Add-Type -MemberDefinition '[DllImport("ntdll.dll")] public static extern` +
+            ` int NtSuspendProcess(IntPtr h);' -Name W -Namespace N -PassThru)::NtSuspendProcess((Get-Process -Id ` +
+            `${pid}).Handle)"`,
           { timeout: MEMORY_PROBE_CMD_TIMEOUT_MS },
         );
         return true;
@@ -192,7 +194,9 @@ async function resumeProcess(platform: Platform, pid: number): Promise<void> {
       case 'win32': {
         const { execAsync } = await import('@modules/process/memory/types');
         await execAsync(
-          `powershell -NoProfile -Command "(Add-Type -MemberDefinition '[DllImport("ntdll.dll")] public static extern int NtResumeProcess(IntPtr h);' -Name W -Namespace N -PassThru)::NtResumeProcess((Get-Process -Id ${pid}).Handle)"`,
+          `powershell -NoProfile -Command "(Add-Type -MemberDefinition '[DllImport("ntdll.dll")] public ` +
+            `static extern int NtResumeProcess(IntPtr h);' -Name W -Namespace N ` +
+            `-PassThru)::NtResumeProcess((Get-Process -Id ${pid}).Handle)"`,
           { timeout: MEMORY_PROBE_CMD_TIMEOUT_MS },
         );
         break;

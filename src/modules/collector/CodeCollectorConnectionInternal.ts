@@ -68,7 +68,8 @@ export async function resolveAutoConnectWsEndpointImpl(
     fileContent = await readFile(devToolsActivePortPath, 'utf8');
   } catch (error) {
     throw new Error(
-      `Could not read DevToolsActivePort from "${devToolsActivePortPath}". Check if Chrome is running from this profile and remote debugging is enabled at chrome://inspect/#remote-debugging.`,
+      `Could not read DevToolsActivePort from "${devToolsActivePortPath}". Check if Chrome is running from this ` +
+        `profile and remote debugging is enabled at chrome://inspect/#remote-debugging.`,
       { cause: error },
     );
   }
@@ -179,7 +180,8 @@ export function normalizeConnectError(
       `Failed to connect to existing browser: ${message}. ` +
         `Chrome is not currently listening at ${target}. ` +
         'DevToolsActivePort may be stale after a browser restart. ' +
-        'Re-open Chrome, confirm remote debugging is enabled at chrome://inspect/#remote-debugging, click Allow if prompted, and retry.',
+        'Re-open Chrome, confirm remote debugging is enabled at chrome://inspect/#remote-debugging, click Allow ' +
+        'if prompted, and retry.',
     );
   }
 
@@ -199,7 +201,8 @@ export function buildConnectTimeoutError(
 
   if (isAutoConnectRequest(endpointOrOptions)) {
     return new Error(
-      `${baseMessage} If Chrome prompted for remote debugging approval, click Allow in Chrome and then retry the tool call.`,
+      `${baseMessage} If Chrome prompted for remote debugging approval, click Allow in Chrome and then retry the tool` +
+        ` call.`,
     );
   }
 

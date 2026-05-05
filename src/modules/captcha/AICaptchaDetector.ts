@@ -72,7 +72,8 @@ export class AICaptchaDetector {
       );
 
       logger.info(
-        `CAPTCHA detection result: ${result.detected ? 'detected' : 'not_detected'} (confidence: ${result.confidence}%)`,
+        `CAPTCHA detection result: ${result.detected ? 'detected' : 'not_detected'} (confidence: ${result.confidence}` +
+          `%)`,
       );
 
       return result;
@@ -214,7 +215,8 @@ export class AICaptchaDetector {
     return {
       ...this.evaluateFallbackTextAnalysis(pageInfo),
       reasoning:
-        'AI reported no CAPTCHA, but local heuristics found strong CAPTCHA signals in the page context. / AI 判定为无验证码，但本地启发式在页面上下文中发现强信号。',
+        'AI reported no CAPTCHA, but local heuristics found strong CAPTCHA signals in the page context. / AI ' +
+        '判定为无验证码，但本地启发式在页面上下文中发现强信号。',
       screenshotPath: aiResult.screenshotPath,
     };
   }
@@ -256,7 +258,8 @@ export class AICaptchaDetector {
         type: 'none',
         confidence: 95,
         reasoning:
-          'Fallback heuristics matched OTP or account verification text, not a CAPTCHA. / 后备启发式匹配到一次性验证码或账户校验文本，不视为 CAPTCHA。',
+          'Fallback heuristics matched OTP or account verification text, not a CAPTCHA. / ' +
+          '后备启发式匹配到一次性验证码或账户校验文本，不视为 CAPTCHA。',
         suggestions: ['Continue the login or verification flow normally / 继续正常登录或验证流程'],
       };
     }
@@ -268,7 +271,8 @@ export class AICaptchaDetector {
       confidence: detected ? (hasExcludedKeywords ? 55 : 60) : 90,
       reasoning: detected
         ? hasExcludedKeywords
-          ? 'Fallback heuristics found strong CAPTCHA signals despite OTP-like wording on the page. / 后备启发式发现了强 CAPTCHA 信号，优先于页面上的一次性验证码类文案。'
+          ? 'Fallback heuristics found strong CAPTCHA signals despite OTP-like wording on the page. / 后备启发式发现了强 ' +
+            'CAPTCHA 信号，优先于页面上的一次性验证码类文案。'
           : 'Fallback heuristics matched both suspicious elements and CAPTCHA keywords. / 后备启发式匹配到可疑元素和验证码关键词。'
         : 'Fallback heuristics did not find strong CAPTCHA signals. / 后备启发式未找到强验证码信号。',
       suggestions: detected

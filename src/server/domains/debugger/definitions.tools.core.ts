@@ -67,7 +67,8 @@ Types & params:
   tool('debugger_evaluate', (t) =>
     t
       .desc(
-        'Evaluate a JavaScript expression. context="frame" evaluates in the current call frame (requires paused state); context="global" evaluates in the global context (no pause required).',
+        'Evaluate a JavaScript expression. context="frame" evaluates in the current call frame (requires paused ' +
+          'state); context="global" evaluates in the global context (no pause required).',
       )
       .enum('context', ['frame', 'global'], 'Evaluation context', { default: 'frame' })
       .string('expression', 'JavaScript expression to evaluate')
@@ -117,7 +118,8 @@ Types & params:
   tool('debugger_session', (t) =>
     t
       .desc(
-        'Manage debugger sessions. Actions: save (persist current session to file), load (restore session from file/JSON), export (export session as JSON string), list (list saved sessions in ./debugger-sessions/).',
+        'Manage debugger sessions. Actions: save (persist current session to file), load (restore session from ' +
+          'file/JSON), export (export session as JSON string), list (list saved sessions in ./debugger-sessions/).',
       )
       .enum('action', ['save', 'load', 'export', 'list'], 'Session operation')
       .string('filePath', 'File path for save/load actions')

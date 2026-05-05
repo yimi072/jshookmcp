@@ -64,7 +64,8 @@ function buildMetaToolDefinitions(ctx: MCPServerContext): MetaToolDef[] {
           query: {
             type: 'string',
             description:
-              'Before calling, distill your intent into 2-5 key concepts: what action, on what target, in which domain. ' +
+              'Before calling, distill your intent into 2-5 key concepts: what action, on what target, in which ' +
+              'domain. ' +
               'Pass only those distilled keywords — not the original user request.',
           },
           top_k: { type: 'number', description: 'Max results to return (default: 10, max: 30)' },
@@ -76,7 +77,8 @@ function buildMetaToolDefinitions(ctx: MCPServerContext): MetaToolDef[] {
     {
       name: 'route_tool',
       description:
-        'One-stop tool router: accepts a natural language task description, returns recommended tools and next actions. ' +
+        'One-stop tool router: accepts a natural language task description, returns recommended tools and next ' +
+        'actions. ' +
         'Automatically detects workflow patterns, recommends activation order, and provides example arguments. ' +
         'Use this instead of search_tools when you want guided tool discovery with actionable next steps.',
       inputSchema: {
@@ -128,7 +130,8 @@ function buildMetaToolDefinitions(ctx: MCPServerContext): MetaToolDef[] {
       description:
         'Dynamically register specific tools by name, regardless of current base tier. ' +
         'Use after search_tools to enable exactly the tools you need. ' +
-        'In search-tier sessions this is usually enough; you do not need boost_profile just to use a few exact tools. ' +
+        'In search-tier sessions this is usually enough; you do not need boost_profile just to use a few exact ' +
+        'tools. ' +
         'Activated tools appear in the tool list immediately. ' +
         'If tools do not appear after activation, use call_tool to invoke them directly.',
       inputSchema: {
@@ -188,7 +191,8 @@ function buildMetaToolDefinitions(ctx: MCPServerContext): MetaToolDef[] {
       name: 'call_tool',
       description:
         'Execute an already-active tool by name. ' +
-        'Use this when activate_tools/activate_domain registered a tool but your client did not refresh its tool list. ' +
+        'Use this when activate_tools/activate_domain registered a tool but your client did not refresh its tool ' +
+        'list. ' +
         'Does not auto-activate inactive tools.',
       inputSchema: {
         type: 'object',

@@ -72,10 +72,19 @@ export function formatBetterSqlite3Error(error: unknown): string {
   }
 
   if (issue === 'abi-mismatch') {
-    return `GRACEFUL: better-sqlite3 is installed but its native binary is incompatible with the current Node.js runtime (${process.version}, ABI ${process.versions.modules}). Rebuild it with \`${REBUILD_HINT}\` or reinstall dependencies under the active Node version. Original error: ${message}`;
+    return (
+      `GRACEFUL: better-sqlite3 is installed but its native binary is incompatible with the current ` +
+      `Node.js runtime (${process.version}, ABI ${process.versions.modules}). ` +
+      `Rebuild it with \`${REBUILD_HINT}\` or reinstall dependencies under the active Node version. ` +
+      `Original error: ${message}`
+    );
   }
 
-  return `GRACEFUL: better-sqlite3 failed to initialize. Try \`${REBUILD_HINT}\` or reinstall dependencies under the active Node version. Original error: ${message}`;
+  return (
+    `GRACEFUL: better-sqlite3 failed to initialize. Try \`${REBUILD_HINT}\` or reinstall dependencies under ` +
+    `the active Node version. ` +
+    `Original error: ${message}`
+  );
 }
 
 function readBetterSqlite3Version(): string | null {

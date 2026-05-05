@@ -19,7 +19,8 @@ const workflowNetworkPolicySchema = {
       type: 'array',
       items: { type: 'string' },
       description:
-        'Exact hostname or host:port allowlist for the primary target (for example ["labs.example.com", "localhost:8080"]).',
+        'Exact hostname or host:port allowlist for the primary target (for example ["labs.example.com", ' +
+        '"localhost:8080"]).',
     },
     allowedCidrs: {
       type: 'array',
@@ -31,18 +32,28 @@ const workflowNetworkPolicySchema = {
       type: 'array',
       items: { type: 'string' },
       description:
-        'Optional hostname or host:port allowlist for redirect hops. When omitted, redirects inherit allowedHosts/allowedCidrs.',
+        'Optional hostname or host:port allowlist for redirect hops. When omitted, redirects inherit ' +
+        'allowedHosts/allowedCidrs.',
     },
   },
   description:
-    'Request-level network authorization policy. Use this instead of process-wide bypasses when you need to reach a real lab target, private address, or plain HTTP service.',
+    'Request-level network authorization policy. Use this instead of process-wide bypasses when you need to reach' +
+    ' a real lab target, private address, or plain HTTP service.',
 } as const;
 
 export const workflowToolDefinitions: Tool[] = [
   tool('js_bundle_search', (t) =>
     t
       .desc(
-        'Fetch a remote JavaScript bundle and search it with multiple named regex patterns in a single call.\n\nFeatures over bundle_search script:\n- Server-side fetch (no browser CORS constraints)\n- Bundle caching (5-min TTL, keyed by URL) — avoids re-downloading 1MB+ files\n- SVG/base64 false-positive filtering (`stripNoise: true` by default)\n- Per-pattern independent context window (`contextBefore`/`contextAfter`)\n- Up to `maxMatches` hits per pattern\n\nExample:\n  js_bundle_search({\n    url: "https://assets.example.com/main.js",\n    patterns: [\n      { name: "tier_values",   regex: "subscription.plus|user_tier" },\n      { name: "payment_apis",  regex: "/api/v1/payment/[a-z_]+" },\n      { name: "setSubscription", regex: "setSubscriptionPlus\\\\([^)]{0,80}\\\\)" }\n    ]\n  })',
+        'Fetch a remote JavaScript bundle and search it with multiple named regex patterns in a single ' +
+          'call.\n\nFeatures over bundle_search script:\n- Server-side fetch (no browser CORS constraints)\n- ' +
+          'Bundle caching (5-min TTL, keyed by URL) — avoids re-downloading 1MB+ files\n- SVG/base64 false-positive' +
+          ' filtering (`stripNoise: true` by default)\n- Per-pattern independent context window ' +
+          '(`contextBefore`/`contextAfter`)\n- Up to `maxMatches` hits per pattern\n\nExample:\n  ' +
+          'js_bundle_search({\n    url: "https://assets.example.com/main.js",\n    patterns: [\n      { name: ' +
+          '"tier_values",   regex: "subscription.plus|user_tier" },\n      { name: "payment_apis",  regex: ' +
+          '"/api/v1/payment/[a-z_]+" },\n      { name: "setSubscription", regex: ' +
+          '"setSubscriptionPlus\\\\([^)]{0,80}\\\\)" }\n    ]\n  })',
       )
       .string('url', 'Remote URL of the JavaScript bundle to analyze')
       .array(
@@ -80,12 +91,16 @@ export const workflowToolDefinitions: Tool[] = [
   tool('page_script_register', (t) =>
     t
       .desc(
-        'Register a named reusable JavaScript snippet in the Script Library.\n\nCore ships built-in snippets such as `auth_extract`, `bundle_search`, `react_fill_form`, and `dom_find_upgrade_buttons`.\n\nRegistered scripts are executed with `page_script_run`. Scripts may reference `__params__` (set at call time via page_script_run params).',
+        'Register a named reusable JavaScript snippet in the Script Library.\n\nCore ships built-in snippets such' +
+          ' as `auth_extract`, `bundle_search`, `react_fill_form`, and `dom_find_upgrade_buttons`.\n\nRegistered ' +
+          'scripts are executed with `page_script_run`. Scripts may reference `__params__` (set at call time via ' +
+          'page_script_run params).',
       )
       .string('name', 'Unique script name (e.g. "my_extractor")')
       .string(
         'code',
-        'JavaScript expression/IIFE to register. Use `typeof __params__ !== "undefined" ? __params__ : {}` to safely access runtime parameters.',
+        'JavaScript expression/IIFE to register. Use `typeof __params__ !== "undefined" ? __params__ : {}` to ' +
+          'safely access runtime parameters.',
       )
       .string('description', 'Optional human-readable description of the script')
       .required('name', 'code'),
@@ -93,7 +108,10 @@ export const workflowToolDefinitions: Tool[] = [
   tool('page_script_run', (t) =>
     t
       .desc(
-        'Execute a named script from the Script Library in the current page context.\n\nOptionally inject runtime parameters accessible as `__params__` inside the script.\n\nExample:\n  page_script_run({ name: "bundle_search", params: { url: "https://cdn.main.js", patterns: ["tier", "subscription"] } })\n  page_script_run({ name: "auth_extract" })',
+        'Execute a named script from the Script Library in the current page context.\n\nOptionally inject runtime' +
+          ' parameters accessible as `__params__` inside the script.\n\nExample:\n  page_script_run({ name: ' +
+          '"bundle_search", params: { url: "https://cdn.main.js", patterns: ["tier", "subscription"] } })\n  ' +
+          'page_script_run({ name: "auth_extract" })',
       )
       .string('name', 'Script name to run (built-in or registered)')
       .prop('params', {
@@ -106,7 +124,14 @@ export const workflowToolDefinitions: Tool[] = [
   tool('api_probe_batch', (t) =>
     t
       .desc(
-        'Probe multiple API endpoints in a single browser-context fetch burst.\n\nAuto-injects Bearer token from localStorage[token] / localStorage[active_token]. Returns status codes, content types, and response snippets for matching statuses. Skips HTML responses (login-redirect false-positives).\n\nReplaces 5–30 individual page_evaluate fetch calls with one tool call.\n\n**ALWAYS start with OpenAPI/Swagger discovery paths first** — a single 200 response gives you the full API schema:\n  "/docs", "/openapi.json", "/api/docs", "/swagger.json", "/api/v1/openapi.json", "/api/openapi.json"\n\nExample:\n  api_probe_batch({ baseUrl: "https://chat.qwen.ai", paths: ["/docs", "/openapi.json", "/api/v1/users/me", "/api/v1/chats/", "/api/admin/users"] })',
+        'Probe multiple API endpoints in a single browser-context fetch burst.\n\nAuto-injects Bearer token from ' +
+          'localStorage[token] / localStorage[active_token]. Returns status codes, content types, and response ' +
+          'snippets for matching statuses. Skips HTML responses (login-redirect false-positives).\n\nReplaces 5–30 ' +
+          'individual page_evaluate fetch calls with one tool call.\n\n**ALWAYS start with OpenAPI/Swagger ' +
+          'discovery paths first** — a single 200 response gives you the full API schema:\n  "/docs", ' +
+          '"/openapi.json", "/api/docs", "/swagger.json", "/api/v1/openapi.json", "/api/openapi.json"\n\nExample:\n' +
+          '  api_probe_batch({ baseUrl: "https://chat.qwen.ai", paths: ["/docs", "/openapi.json", ' +
+          '"/api/v1/users/me", "/api/v1/chats/", "/api/admin/users"] })',
       )
       .string(
         'baseUrl',
@@ -150,14 +175,16 @@ export const workflowToolDefinitions: Tool[] = [
   tool('list_extension_workflows', (t) =>
     t
       .desc(
-        'List runtime-loaded extension workflows discovered from plugins/ or workflows/ directories, including metadata needed before execution.',
+        'List runtime-loaded extension workflows discovered from plugins/ or workflows/ directories, including ' +
+          'metadata needed before execution.',
       )
       .query(),
   ),
   tool('run_extension_workflow', (t) =>
     t
       .desc(
-        'Execute a runtime-loaded extension workflow contract by workflowId. Supports config overrides, per-node input overrides, and an optional timeout override.',
+        'Execute a runtime-loaded extension workflow contract by workflowId. Supports config overrides, per-node ' +
+          'input overrides, and an optional timeout override.',
       )
       .string('workflowId', 'Registered extension workflow id to execute')
       .string('profile', 'Optional profile label exposed to the workflow execution context')

@@ -18,7 +18,8 @@ export class TargetControlHandlers {
       this.deps.consoleMonitor.markContextChanged();
     } catch (error) {
       logger.warn(
-        `[${context}] Failed to mark monitoring context as stale: ${error instanceof Error ? error.message : String(error)}`,
+        `[${context}] Failed to mark monitoring context as stale: ` +
+          `${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }

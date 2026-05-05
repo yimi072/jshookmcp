@@ -12,7 +12,8 @@ export const networkAuthorizationSchema = {
   allowPrivateNetwork: {
     type: 'boolean',
     description:
-      'Allow access to private or reserved network targets, but only when the resolved host matches allowedHosts or allowedCidrs.',
+      'Allow access to private or reserved network targets, but only when the resolved host matches allowedHosts ' +
+      'or allowedCidrs.',
   },
   allowInsecureHttp: {
     type: 'boolean',

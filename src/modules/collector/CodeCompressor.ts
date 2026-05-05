@@ -141,7 +141,8 @@ export class CodeCompressor {
         }
 
         logger.debug(
-          `Compressed code: ${originalSize} -> ${compressedSize} bytes (${compressionRatio.toFixed(1)}% reduction, level ${level}, ${compressionTime}ms)`,
+          `Compressed code: ${originalSize} -> ${compressedSize} bytes (${compressionRatio.toFixed(1)}% reduction, ` +
+            `level ${level}, ${compressionTime}ms)`,
         );
 
         return result;
@@ -246,7 +247,8 @@ export class CodeCompressor {
     const totalRatio = totalOriginal > 0 ? (1 - totalCompressed / totalOriginal) * 100 : 0;
 
     logger.info(
-      `Batch compression: ${results.length} files, ${(totalOriginal / 1024).toFixed(2)} KB -> ${(totalCompressed / 1024).toFixed(2)} KB (${totalRatio.toFixed(1)}% reduction)`,
+      `Batch compression: ${results.length} files, ${(totalOriginal / 1024).toFixed(2)} KB -> ` +
+        `${(totalCompressed / 1024).toFixed(2)} KB (${totalRatio.toFixed(1)}% reduction)`,
     );
 
     return results;
@@ -297,7 +299,8 @@ export class CodeCompressor {
     const compressionTime = Date.now() - startTime;
 
     logger.info(
-      `Stream compression: ${chunks.length} chunks, ${(originalSize / 1024).toFixed(2)} KB -> ${(compressedSize / 1024).toFixed(2)} KB (${compressionRatio.toFixed(1)}% reduction, ${compressionTime}ms)`,
+      `Stream compression: ${chunks.length} chunks, ${(originalSize / 1024).toFixed(2)} KB -> ` +
+        `${(compressedSize / 1024).toFixed(2)} KB (${compressionRatio.toFixed(1)}% reduction, ${compressionTime}ms)`,
     );
 
     return {

@@ -234,7 +234,8 @@ export class JsdomHandlers {
       const session = this.getSession(sessionId);
       if (session.runScripts === 'none') {
         return R.fail(
-          'JSDOM session was created with runScripts="none". Re-parse with runScripts="outside-only" or "dangerously" to execute code.',
+          'JSDOM session was created with runScripts="none". Re-parse with runScripts="outside-only" or ' +
+            '"dangerously" to execute code.',
         ).build();
       }
 

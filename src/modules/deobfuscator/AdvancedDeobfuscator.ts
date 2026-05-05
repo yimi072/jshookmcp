@@ -11,9 +11,6 @@ import crypto from 'crypto';
 export interface AdvancedDeobfuscateOptions {
   code: string;
   detectOnly?: boolean;
-  aggressiveVM?: boolean;
-  useASTOptimization?: boolean;
-  timeout?: number;
   unpack?: boolean;
   unminify?: boolean;
   jsx?: boolean;
@@ -50,7 +47,6 @@ export class AdvancedDeobfuscator {
 
   private generateCacheKey(options: AdvancedDeobfuscateOptions): string {
     const key = JSON.stringify({
-      aggressiveVM: options.aggressiveVM,
       code: options.code.substring(0, 2000),
       detectOnly: options.detectOnly,
       forceOutput: options.forceOutput,
@@ -60,10 +56,8 @@ export class AdvancedDeobfuscator {
       mappings: options.mappings,
       maxBundleModules: options.maxBundleModules,
       outputDir: options.outputDir,
-      timeout: options.timeout,
       unpack: options.unpack,
       unminify: options.unminify,
-      useASTOptimization: options.useASTOptimization,
     });
     return crypto.createHash('md5').update(key).digest('hex');
   }
@@ -81,20 +75,6 @@ export class AdvancedDeobfuscator {
     const detectedTechniques = detectObfuscationTypeUtil(options.code);
     const warnings: string[] = [];
 
-    if (options.aggressiveVM !== undefined) {
-      warnings.push(
-        'aggressiveVM is deprecated and ignored; VM-specific legacy logic has been removed.',
-      );
-    }
-    if (options.useASTOptimization !== undefined) {
-      warnings.push(
-        'useASTOptimization is deprecated and ignored; legacy AST post-processing has been removed.',
-      );
-    }
-    if (options.timeout !== undefined) {
-      warnings.push('timeout is currently ignored; webcrack controls its own execution flow.');
-    }
-
     if (options.detectOnly) {
       const result: AdvancedDeobfuscateResult = {
         code: options.code,
@@ -102,7 +82,8 @@ export class AdvancedDeobfuscator {
         confidence: Math.min(0.6 + detectedTechniques.length * 0.05, 0.9),
         warnings: [
           ...warnings,
-          'detectOnly does not invoke a separate legacy detector anymore; techniques are inferred from the current static signature pass.',
+          'detectOnly does not invoke a separate legacy detector anymore; techniques are inferred from the ' +
+            'current static signature pass.',
         ],
         astOptimized: false,
         engine: 'webcrack',

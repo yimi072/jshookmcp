@@ -221,7 +221,8 @@ export class CoreAnalysisHandlers {
 
     if (result.totalSize > maxSafeCollectedSize || estimatedResponseSize > maxSafeResponseSize) {
       logger.warn(
-        `Collected code is too large (collected=${(result.totalSize / 1024).toFixed(2)}KB, response=${(estimatedResponseSize / 1024).toFixed(2)}KB), returning summary mode.`,
+        `Collected code is too large (collected=${(result.totalSize / 1024).toFixed(2)}KB, response=` +
+          `${(estimatedResponseSize / 1024).toFixed(2)}KB), returning summary mode.`,
       );
 
       const summaryResult = summarizeResult(result);
@@ -378,11 +379,6 @@ export class CoreAnalysisHandlers {
         code,
         ...this.extractWebcrackArgs(args),
         ...(typeof args.detectOnly === 'boolean' ? { detectOnly: args.detectOnly } : {}),
-        ...(typeof args.aggressiveVM === 'boolean' ? { aggressiveVM: args.aggressiveVM } : {}),
-        ...(typeof args.useASTOptimization === 'boolean'
-          ? { useASTOptimization: args.useASTOptimization }
-          : {}),
-        ...(typeof args.timeout === 'number' ? { timeout: args.timeout } : {}),
       });
       return asJsonResponse(result);
     }
@@ -390,7 +386,6 @@ export class CoreAnalysisHandlers {
     // auto engine = former deobfuscate path
     const result = await this.deobfuscator.deobfuscate({
       code,
-      aggressive: argBool(args, 'aggressive'),
       ...this.extractWebcrackArgs(args),
     });
 

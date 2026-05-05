@@ -355,7 +355,8 @@ const manifest: DomainManifest<typeof DEP_KEY, H, typeof DOMAIN> = {
       'memory_write_history',
     ],
     hint: IS_WIN32
-      ? 'Memory domain: scan → narrow → pointer chain → structure | breakpoint trace → patch/NOP → freeze | speedhack | heap analysis | PE introspection | anti-cheat detection'
+      ? 'Memory domain: scan → narrow → pointer chain → structure | breakpoint trace → patch/NOP → freeze ' +
+        ' speedhack | heap analysis | PE introspection | anti-cheat detection'
       : 'Memory domain: scan → narrow → pointer chain → structure | patch/NOP → freeze | dump',
   },
 };

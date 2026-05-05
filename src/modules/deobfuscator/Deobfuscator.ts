@@ -18,18 +18,14 @@ export class Deobfuscator {
 
   private generateCacheKey(options: DeobfuscateOptions): string {
     const key = JSON.stringify({
-      aggressive: options.aggressive,
       code: options.code.substring(0, 2000),
       forceOutput: options.forceOutput,
       includeModuleCode: options.includeModuleCode,
-      inlineFunctions: options.inlineFunctions,
       jsx: options.jsx,
-      llm: false /* llm removed */,
       mangle: options.mangle ?? options.renameVariables,
       mappings: options.mappings,
       maxBundleModules: options.maxBundleModules,
       outputDir: options.outputDir,
-      preserveLogic: options.preserveLogic,
       unpack: options.unpack,
       unminify: options.unminify,
     });
@@ -49,19 +45,6 @@ export class Deobfuscator {
     const startTime = Date.now();
 
     const obfuscationType = this.detectObfuscationType(options.code);
-    const warnings: string[] = [];
-
-    if (options.aggressive !== undefined) {
-      warnings.push(
-        'aggressive is deprecated and ignored; webcrack is now the only deobfuscation engine.',
-      );
-    }
-    if (options.preserveLogic !== undefined) {
-      warnings.push('preserveLogic is deprecated and ignored.');
-    }
-    if (options.inlineFunctions !== undefined) {
-      warnings.push('inlineFunctions is deprecated and ignored.');
-    }
 
     const webcrackResult = await runWebcrack(options.code, {
       unpack: options.unpack,
@@ -86,7 +69,10 @@ export class Deobfuscator {
     const transformations = [
       {
         type: 'webcrack',
-        description: `Ran webcrack (unminify=${webcrackResult.optionsUsed.unminify}, unpack=${webcrackResult.optionsUsed.unpack}, jsx=${webcrackResult.optionsUsed.jsx}, mangle=${webcrackResult.optionsUsed.mangle})`,
+        description:
+          `Ran webcrack (unminify=${webcrackResult.optionsUsed.unminify}, unpack=` +
+          `${webcrackResult.optionsUsed.unpack}, ` +
+          `jsx=${webcrackResult.optionsUsed.jsx}, mangle=${webcrackResult.optionsUsed.mangle})`,
         success: true,
       },
       ...(webcrackResult.bundle
@@ -127,7 +113,6 @@ export class Deobfuscator {
       bundle: webcrackResult.bundle,
       savedTo: webcrackResult.savedTo,
       savedArtifacts: webcrackResult.savedArtifacts,
-      warnings: warnings.length > 0 ? warnings : undefined,
       engine: 'webcrack',
       webcrackApplied: true,
     };

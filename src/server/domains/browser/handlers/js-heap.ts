@@ -130,7 +130,8 @@ export class JSHeapSearchHandlers {
           matches,
           tip:
             matches.length > 0
-              ? 'Use page_evaluate to inspect the objects at the paths found. E.g., eval the objectPath as a JS expression.'
+              ? 'Use page_evaluate to inspect the objects at the paths found. E.g., eval the objectPath as a JS ' +
+                'expression.'
               : 'No matches found. The value may be encrypted, compressed, or stored in a non-string form.',
         };
 

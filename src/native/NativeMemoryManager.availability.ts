@@ -84,7 +84,9 @@ async function checkDarwinAvailability(
     const sipNote = sipInfo ? ` SIP status: ${sipInfo}` : '';
     return {
       available: false,
-      reason: `macOS memory operations require root privileges for task_for_pid. Run with: sudo node <your-script>.${sipNote}`,
+      reason:
+        `macOS memory operations require root privileges for task_for_pid. Run with: sudo node ` +
+        `<your-script>.${sipNote}`,
     };
   }
 

@@ -224,7 +224,8 @@ export async function getObjectPropertiesByIdCore(
       message.includes('Invalid remote object id')
     ) {
       throw new Error(
-        'Object handle is expired or invalid. Pause execution again and reacquire objectId from get_scope_variables_enhanced.',
+        'Object handle is expired or invalid. Pause execution again and reacquire objectId from ' +
+          'get_scope_variables_enhanced.',
         { cause: error },
       );
     }

@@ -104,7 +104,9 @@ export class AdvancedToolHandlersIntercept extends AdvancedToolHandlersReplay {
             responseCode: r.responseCode,
           })),
           totalActiveRules: status.rules.length,
-          hint: 'Use network_intercept(action: "list") to see all rules and hit counts. Use network_intercept(action: "disable") to remove rules.',
+          hint:
+            'Use network_intercept(action: "list") to see all rules and hit counts. ' +
+            'Use network_intercept(action: "disable") to remove rules.',
         })
         .json();
     } catch (error) {
@@ -127,7 +129,8 @@ export class AdvancedToolHandlersIntercept extends AdvancedToolHandlersReplay {
       .merge({
         hint:
           status.rules.length > 0
-            ? 'Use network_intercept(action: "disable", ruleId) to remove a specific rule, or network_intercept(action: "disable", all: true) to remove all.'
+            ? 'Use network_intercept(action: "disable", ruleId) to remove a specific rule, or ' +
+              'network_intercept(action: "disable", all: true) to remove all.'
             : 'No active interception rules. Use network_intercept(action: "add") to add rules.',
       })
       .json();

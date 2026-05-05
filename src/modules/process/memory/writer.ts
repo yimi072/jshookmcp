@@ -290,7 +290,9 @@ export async function writeMemory(
     if (buffer.length === 0 || buffer.length > MEMORY_MAX_WRITE_BYTES) {
       return {
         success: false,
-        error: `Write size must be 1–${MEMORY_MAX_WRITE_BYTES} bytes (${(MEMORY_MAX_WRITE_BYTES / 1024).toFixed(0)} KB)`,
+        error:
+          `Write size must be 1–${MEMORY_MAX_WRITE_BYTES} bytes (` +
+          `${(MEMORY_MAX_WRITE_BYTES / 1024).toFixed(0)} KB)`,
       };
     }
 

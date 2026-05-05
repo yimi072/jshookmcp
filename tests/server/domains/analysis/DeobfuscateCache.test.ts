@@ -108,22 +108,19 @@ describe('DeobfuscateCache Integration', () => {
       const handlers = createHandlers();
       const code = 'const x = 1;';
 
-      // Call without aggressive option
+      // Call without mangle option
       const result1 = parseToolResponse<{ cached?: boolean }>(
         await handlers.handleDeobfuscate({ code }),
       );
 
-      // Call with aggressive option
-      const result2 = parseToolResponse<{ cached?: boolean; warnings?: string[] }>(
-        await handlers.handleDeobfuscate({ code, aggressive: true }),
+      // Call with mangle option
+      const result2 = parseToolResponse<{ cached?: boolean }>(
+        await handlers.handleDeobfuscate({ code, mangle: true }),
       );
 
       // Second call should not be cached (different options)
       expect(result1.cached).toBe(false);
       expect(result2.cached).toBe(false);
-      expect(result2.warnings).toContain(
-        'aggressive is deprecated and ignored; webcrack is now the only deobfuscation engine.',
-      );
 
       // Third call with same options as first - should be cached
       const result3 = parseToolResponse<{ cached?: boolean }>(
@@ -168,30 +165,27 @@ describe('DeobfuscateCache Integration', () => {
       expect(result2.cached).toBe(true);
     });
 
-    it('should use different cache keys for different VM options', async () => {
+    it('should use different cache keys for different jsx options', async () => {
       const handlers = createHandlers();
       const code = 'const x = 1;';
 
-      // Call without aggressiveVM
+      // Call without jsx option
       const result1 = parseToolResponse<{ cached?: boolean }>(
         await handlers.handleDeobfuscate({ code, engine: 'webcrack' }),
       );
 
-      // Call with aggressiveVM
-      const result2 = parseToolResponse<{ cached?: boolean; warnings?: string[] }>(
-        await handlers.handleDeobfuscate({ code, engine: 'webcrack', aggressiveVM: true }),
+      // Call with jsx=false
+      const result2 = parseToolResponse<{ cached?: boolean }>(
+        await handlers.handleDeobfuscate({ code, engine: 'webcrack', jsx: false }),
       );
 
       // Should have different cache entries
       expect(result1.cached).toBe(false);
       expect(result2.cached).toBe(false);
-      expect(result2.warnings).toContain(
-        'aggressiveVM is deprecated and ignored; VM-specific legacy logic has been removed.',
-      );
 
-      // Repeat call with aggressiveVM - should be cached
+      // Repeat call with jsx=false - should be cached
       const result3 = parseToolResponse<{ cached?: boolean }>(
-        await handlers.handleDeobfuscate({ code, engine: 'webcrack', aggressiveVM: true }),
+        await handlers.handleDeobfuscate({ code, engine: 'webcrack', jsx: false }),
       );
       expect(result3.cached).toBe(true);
     });
@@ -220,29 +214,23 @@ describe('DeobfuscateCache Integration', () => {
       expect(result3.cached).toBe(true);
     });
 
-    it('should include timeout in cache key', async () => {
+    it('should include unminify in cache key', async () => {
       const handlers = createHandlers();
       const code = 'const x = 1;';
 
-      const result1 = parseToolResponse<{ cached?: boolean; warnings?: string[] }>(
-        await handlers.handleDeobfuscate({ code, engine: 'webcrack', timeout: 5000 }),
+      const result1 = parseToolResponse<{ cached?: boolean }>(
+        await handlers.handleDeobfuscate({ code, engine: 'webcrack', unminify: false }),
       );
-      const result2 = parseToolResponse<{ cached?: boolean; warnings?: string[] }>(
-        await handlers.handleDeobfuscate({ code, engine: 'webcrack', timeout: 10000 }),
+      const result2 = parseToolResponse<{ cached?: boolean }>(
+        await handlers.handleDeobfuscate({ code, engine: 'webcrack', unminify: true }),
       );
 
       expect(result1.cached).toBe(false);
       expect(result2.cached).toBe(false);
-      expect(result1.warnings).toContain(
-        'timeout is currently ignored; webcrack controls its own execution flow.',
-      );
-      expect(result2.warnings).toContain(
-        'timeout is currently ignored; webcrack controls its own execution flow.',
-      );
 
-      // Same timeout - should be cached
+      // Same unminify=false - should be cached
       const result3 = parseToolResponse<{ cached?: boolean }>(
-        await handlers.handleDeobfuscate({ code, engine: 'webcrack', timeout: 5000 }),
+        await handlers.handleDeobfuscate({ code, engine: 'webcrack', unminify: false }),
       );
       expect(result3.cached).toBe(true);
     });

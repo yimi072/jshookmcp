@@ -159,7 +159,8 @@ export const protocolAnalysisTools: Tool[] = [
   tool('checksum_apply', (t) =>
     t
       .desc(
-        'Apply a deterministic 16-bit Internet checksum across a payload slice, optionally zeroing and writing the checksum field back into the packet.',
+        'Apply a deterministic 16-bit Internet checksum across a payload slice, optionally zeroing and writing ' +
+          'the checksum field back into the packet.',
       )
       .string('hexPayload', 'Source payload as a hex string')
       .number('startOffset', 'Inclusive start offset for checksum range. Default: 0', {
@@ -228,7 +229,8 @@ export const protocolAnalysisTools: Tool[] = [
   tool('pcap_read', (t) =>
     t
       .desc(
-        'Read a classic PCAP file and return compact deterministic packet summaries. PCAPNG is intentionally not supported.',
+        'Read a classic PCAP file and return compact deterministic packet summaries. PCAPNG is intentionally not ' +
+          'supported.',
       )
       .string('path', 'Path to the PCAP file to parse')
       .number('maxPackets', 'Maximum number of packet records to decode')

@@ -97,9 +97,12 @@ export class ProcessManagementHandlers implements MemoryOperationHost {
 
     const aslrNote = modulesInfo.enumerated
       ? modulesInfo.count && modulesInfo.count > 0
-        ? `Enumerated ${modulesInfo.count} module(s). Treat absolute addresses as session-specific because ASLR can shift module bases between launches.`
-        : 'Module enumeration succeeded but returned no modules. Absolute addresses may still change across process launches because of ASLR.'
-      : 'Module enumeration was unavailable. Assume ASLR may shift absolute addresses between launches and re-resolve addresses after restarts.';
+        ? `Enumerated ${modulesInfo.count} module(s). Treat absolute addresses as session-specific because ASLR can ` +
+          `shift module bases between launches.`
+        : 'Module enumeration succeeded but returned no modules. Absolute addresses may still change across process' +
+          ' launches because of ASLR.'
+      : 'Module enumeration was unavailable. Assume ASLR may shift absolute addresses between launches and ' +
+        're-resolve addresses after restarts.';
 
     return {
       permission: {

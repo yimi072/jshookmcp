@@ -10,7 +10,8 @@ import type { ProcessManagementHandlers } from './process-management';
 import { validatePid, requireString } from '../handlers.base.types';
 
 const INJECTION_TOOLS_DISABLED_ERROR =
-  'Injection tools are disabled by configuration. Set ENABLE_INJECTION_TOOLS=true before starting the server to enable DLL and shellcode injection.';
+  'Injection tools are disabled by configuration. Set ENABLE_INJECTION_TOOLS=true before starting the server to ' +
+  'enable DLL and shellcode injection.';
 
 const INJECTION_TOOLS_ENABLE_GUIDANCE =
   'Set ENABLE_INJECTION_TOOLS=true before starting the server.';
@@ -71,7 +72,8 @@ async function connectElectronBrowserCompatible(browserWSEndpoint: string) {
         settled = true;
         reject(
           new Error(
-            `Timed out after ${ELECTRON_ATTACH_CONNECT_TIMEOUT_MS}ms while connecting to Electron browser endpoint ${browserWSEndpoint}.`,
+            `Timed out after ${ELECTRON_ATTACH_CONNECT_TIMEOUT_MS}ms while connecting to Electron browser endpoint ` +
+              `${browserWSEndpoint}.`,
           ),
         );
       }, ELECTRON_ATTACH_CONNECT_TIMEOUT_MS);
@@ -113,7 +115,8 @@ async function connectElectronBrowserCompatible(browserWSEndpoint: string) {
       );
     } catch (fallbackError) {
       throw new Error(
-        `Failed to connect to Electron browser endpoint ${browserWSEndpoint} via both rebrowser-puppeteer and Playwright compatibility fallback. ` +
+        `Failed to connect to Electron browser endpoint ${browserWSEndpoint} via both rebrowser-puppeteer and ` +
+          `Playwright compatibility fallback. ` +
           `Primary error: ${formatUnknownError(primaryError)}. Fallback error: ${formatUnknownError(fallbackError)}.`,
         { cause: fallbackError },
       );
@@ -454,7 +457,9 @@ export class InjectionHandlers {
         }, evaluateExpr);
 
         if (!evaluated?.ok) {
-          evalError = `Evaluation failed: ${evaluated?.error?.name || 'Error'}: ${evaluated?.error?.message || 'Unknown error'}`;
+          evalError =
+            `Evaluation failed: ${evaluated?.error?.name || 'Error'}: ` +
+            `${evaluated?.error?.message || 'Unknown error'}`;
         } else {
           evalResult = evaluated.result;
         }
@@ -561,7 +566,8 @@ export class InjectionHandlers {
         const original = formatUnknownError(fallbackError || listError);
         throw new Error(
           `Cannot connect to Electron CDP at ${baseUrl}. ` +
-            `Ensure the target app is running with a remote debugging port (for example: process_launch_debug with debugPort=${baseUrl.split(':').pop()}), ` +
+            `Ensure the target app is running with a remote debugging port (for example: process_launch_debug with ` +
+            `debugPort=${baseUrl.split(':').pop()}), ` +
             `then retry electron_attach. Original error: ${original}`,
           { cause: fallbackError },
         );

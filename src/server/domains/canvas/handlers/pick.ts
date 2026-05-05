@@ -33,7 +33,8 @@ export async function handlePick(
       var target = null;
       ${
         canvasId
-          ? `target = document.getElementById(${JSON.stringify(canvasId)}) || canvases[parseInt(${JSON.stringify(canvasId)})];`
+          ? `target = document.getElementById(${JSON.stringify(canvasId)}) || canvases[parseInt(` +
+            `${JSON.stringify(canvasId)})];`
           : `
         for (var i = canvases.length - 1; i >= 0; i--) {
           var r = canvases[i].getBoundingClientRect();

@@ -102,23 +102,6 @@ describe('AdvancedDeobfuscator', () => {
     expect(result.detectedTechniques).toContain('webcrack');
   });
 
-  it('reports deprecated legacy flags as warnings without enabling old logic', async () => {
-    const result = await new AdvancedDeobfuscator().deobfuscate({
-      code: 'legacy()',
-      aggressiveVM: true,
-      useASTOptimization: true,
-      timeout: 1234,
-    });
-
-    expect(result.warnings).toEqual([
-      'aggressiveVM is deprecated and ignored; VM-specific legacy logic has been removed.',
-      'useASTOptimization is deprecated and ignored; legacy AST post-processing has been removed.',
-      'timeout is currently ignored; webcrack controls its own execution flow.',
-    ]);
-    expect(result.vmDetected).toBeUndefined();
-    expect(result.astOptimized).toBe(false);
-  });
-
   it('throws when webcrack does not produce a result', async () => {
     webcrackState.runWebcrack.mockResolvedValue({
       applied: false,

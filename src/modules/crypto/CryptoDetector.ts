@@ -109,7 +109,9 @@ export class CryptoDetector {
             type: rule.category as CryptoAlgorithm['type'],
             confidence: rule.confidence,
             location: { file: 'current', line: this.findLineNumber(code, keyword) },
-            usage: `Found ${matches.length} occurrence(s) of ${keyword}${rule.description ? ` (${rule.description})` : ''}`,
+            usage:
+              `Found ${matches.length} occurrence(s) of ${keyword}` +
+              `${rule.description ? ` (${rule.description})` : ''}`,
           });
         }
       });

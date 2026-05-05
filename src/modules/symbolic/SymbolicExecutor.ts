@@ -113,14 +113,14 @@ export class SymbolicExecutor {
 
       while (worklist.length > 0 && paths.length < maxPaths) {
         if (Date.now() - startTime > timeout) {
-          warnings.push('');
+          warnings.push('Symbolic execution timed out');
           break;
         }
 
         const { state, depth } = worklist.pop()!;
 
         if (depth >= maxDepth) {
-          warnings.push(`: ${maxDepth}`);
+          warnings.push(`Max depth reached: ${maxDepth}`);
           continue;
         }
 

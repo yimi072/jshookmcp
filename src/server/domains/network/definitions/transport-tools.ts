@@ -44,7 +44,8 @@ export const transportTools: Tool[] = [
       .object(
         'authorization',
         networkAuthorizationSchema,
-        'Request-scoped authorization policy for private-network or insecure-HTTP targets. Use exact hosts/CIDRs instead of process-wide bypasses.',
+        'Request-scoped authorization policy for private-network or insecure-HTTP targets. Use exact hosts/CIDRs ' +
+          'instead of process-wide bypasses.',
       )
       .number('timeoutMs', 'Socket timeout in milliseconds', {
         default: 30000,
@@ -73,7 +74,8 @@ export const transportTools: Tool[] = [
       .object(
         'authorization',
         networkAuthorizationSchema,
-        'Request-scoped authorization policy for private-network or insecure-HTTP targets. Use exact hosts/CIDRs instead of process-wide bypasses.',
+        'Request-scoped authorization policy for private-network or insecure-HTTP targets. Use exact hosts/CIDRs ' +
+          'instead of process-wide bypasses.',
       )
       .number('timeoutMs', 'Probe timeout in milliseconds', {
         default: 30000,

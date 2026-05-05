@@ -166,7 +166,9 @@ export class CamoufoxBrowserManager {
       ({ Camoufox } = await import('camoufox-js'));
     } catch (error) {
       throw new PrerequisiteError(
-        `camoufox-js is not installed or its binaries are missing. Run \`pnpm run install:full\` or \`pnpm exec camoufox-js fetch\` before using the Camoufox driver. Root cause: ${error instanceof Error ? error.message : String(error)}`,
+        `camoufox-js is not installed or its binaries are missing. Run \`pnpm run install:full\` or \`pnpm ` +
+          `exec camoufox-js fetch\` before using the Camoufox driver. Root cause: ` +
+          `${error instanceof Error ? error.message : String(error)}`,
       );
     }
 
@@ -262,7 +264,9 @@ export class CamoufoxBrowserManager {
       ({ launchServer } = await import('camoufox-js'));
     } catch (error) {
       throw new PrerequisiteError(
-        `camoufox-js server support is unavailable. Run \`pnpm run install:full\` or \`pnpm exec camoufox-js fetch\` before launching a Camoufox WebSocket server. Root cause: ${error instanceof Error ? error.message : String(error)}`,
+        `camoufox-js server support is unavailable. Run \`pnpm run install:full\` or \`pnpm exec ` +
+          `camoufox-js fetch\` before launching a Camoufox WebSocket server. Root cause: ` +
+          `${error instanceof Error ? error.message : String(error)}`,
       );
     }
 

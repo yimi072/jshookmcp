@@ -351,7 +351,8 @@ export class MemoryScanner {
       for (const region of regions) {
         if (options.moduleOnly /* unused cast */) {
         }
-        // Use scanOptions for onProgress if we added it, but wait, pointerScan doesn't accept onProgress yet in its options!
+        // Use scanOptions for onProgress if we added it, but wait, pointerScan doesn't accept onProgress yet in its
+        // options!
         // We'll update pointerScan options separately if needed. For now just loop:
         if (pointers.length >= maxResults) break;
 

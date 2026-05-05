@@ -244,7 +244,12 @@ export class ProxyHandlers {
       // 4. Set global HTTP proxy on the device
       await execAsync(`adb ${deviceFlag} shell settings put global http_proxy 127.0.0.1:${port}`);
 
-      const instructions = `ADB Configuration Applied Automatically:\n- Verified device connection.\n- Pushed CA to /data/local/tmp/ca.pem\n- Reversed forwarded tcp:${port} -> tcp:${port}\n- Set global http_proxy to 127.0.0.1:${port}\n\nNote: For HTTPS decryption, you still need to manually install the CA cert from /data/local/tmp/ca.pem in Android Settings (due to security restrictions) unless device is rooted.`;
+      const instructions =
+        `ADB Configuration Applied Automatically:\n- Verified device connection.\n- Pushed CA to ` +
+        `/data/local/tmp/ca.pem\n- Reversed forwarded tcp:${port} -> tcp:${port}\n- Set global http_proxy ` +
+        `to 127.0.0.1:` +
+        `${port}\n\nNote: For HTTPS decryption, you still need to manually install the CA cert from ` +
+        `/data/local/tmp/ca.pem in Android Settings (due to security restrictions) unless device is rooted.`;
 
       return ResponseBuilder.success({
         message: 'ADB device successfully configured.',

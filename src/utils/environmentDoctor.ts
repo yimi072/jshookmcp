@@ -298,7 +298,10 @@ function checkNativeMemory(): DoctorCheck {
     return {
       name: 'native-memory',
       status: 'warn',
-      detail: `koffi ${koffiVersion} — no native FFI memory provider for ${process.platform} (proc-based ops available on Linux)`,
+      detail:
+        `koffi ${koffiVersion} — no native FFI memory provider for ${process.platform} (proc-based ops ` +
+        `available on ` +
+        `Linux)`,
     };
   } catch {
     return {
@@ -439,11 +442,13 @@ function buildPlatformLimitations(): string[] {
         '15 Windows-only tools unavailable (PE analysis, anti-cheat, code injection, speedhack, hardware breakpoints).',
     );
     limitations.push(
-      'Native memory operations (mach_vm_read/write) require root privileges and may require SIP configuration on ARM64.',
+      'Native memory operations (mach_vm_read/write) require root privileges and may require SIP configuration on' +
+        ' ARM64.',
     );
   } else if (process.platform === 'linux') {
     limitations.push(
-      'Process management available via /proc. Native FFI memory provider not implemented — memory read/write uses /proc/pid/mem (requires root or CAP_SYS_PTRACE).',
+      'Process management available via /proc. Native FFI memory provider not implemented — memory read/write ' +
+        'uses /proc/pid/mem (requires root or CAP_SYS_PTRACE).',
     );
     limitations.push(
       'Camoufox runs on Linux, but some Chrome/CDP-heavy workflows are better served by the Chrome driver.',
@@ -467,7 +472,9 @@ function buildRecommendations(
   const corepackCommand = commands.find((item) => item.name === 'corepack');
   if (packages.some((item) => item.name === 'better-sqlite3' && item.status !== 'ok')) {
     recommendations.push(
-      'Install or rebuild the optional SQLite trace backend with `pnpm add -O better-sqlite3@12.6.2` or `npm rebuild better-sqlite3 --foreground-scripts` under the active Node version if you need trace tooling.',
+      'Install or rebuild the optional SQLite trace backend with ' +
+        '`pnpm add -O better-sqlite3@12.6.2` or `npm rebuild better-sqlite3 ' +
+        '--foreground-scripts` under the active Node version if you need trace tooling.',
     );
   }
   if (packages.some((item) => item.name === 'camoufox-js' && item.status !== 'ok')) {
@@ -493,7 +500,8 @@ function buildRecommendations(
     corepackCommand.detail.includes('standalone pnpm')
   ) {
     recommendations.push(
-      'Use `pnpm` or `npx pnpm` directly on this machine; `corepack` is optional and may be absent on nvm4w-managed Windows installs.',
+      'Use `pnpm` or `npx pnpm` directly on this machine; `corepack` is optional and may be absent on ' +
+        'nvm4w-managed Windows installs.',
     );
   }
   if (bridges.some((item) => item.status !== 'ok')) {

@@ -253,7 +253,8 @@ export function buildPhaserHitTestPayload(opts: PickOpts): string {
   var targetCanvas = null;
   ${
     canvasId
-      ? `targetCanvas = document.getElementById(${JSON.stringify(canvasId)}) || canvases[parseInt(${JSON.stringify(canvasId)})] || null;`
+      ? `targetCanvas = document.getElementById(${JSON.stringify(canvasId)}) || canvases[parseInt(` +
+        `${JSON.stringify(canvasId)})] || null;`
       : `
   for (var ci = canvases.length - 1; ci >= 0; ci--) {
     var r = canvases[ci].getBoundingClientRect();

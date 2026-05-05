@@ -309,7 +309,10 @@ export class DebuggerToolHandlers {
           type: 'text',
           text: JSON.stringify({
             success: false,
-            error: `Invalid breakpoint action/type: ${action}/${type}. Valid types: code, xhr, event, event_category, exception. Valid actions: set, remove, list.`,
+            error:
+              `Invalid breakpoint action/type: ${action}/${type}. Valid types: code, xhr, event, ` +
+              `event_category, ` +
+              `exception. Valid actions: set, remove, list.`,
           }),
         },
       ],

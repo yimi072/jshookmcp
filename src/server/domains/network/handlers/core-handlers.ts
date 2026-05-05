@@ -104,7 +104,10 @@ export class CoreHandlers {
       return R.ok()
         .merge({
           enabled: true,
-          message: ` Network monitoring is active. Captured ${status.requestCount} requests and ${status.responseCount} responses.`,
+          message:
+            ` Network monitoring is active. Captured ${status.requestCount} requests and ` +
+            `${status.responseCount} ` +
+            `responses.`,
           requestCount: status.requestCount,
           responseCount: status.responseCount,
           listenerCount: status.listenerCount,
@@ -545,7 +548,9 @@ export class CoreHandlers {
         },
         ...(filterMiss && {
           filterMiss: true,
-          hint: `URL filter "${url}" matched 0 of ${originalCount} captured requests. Check urlSamples to verify the correct filter substring.`,
+          hint:
+            `URL filter "${url}" matched 0 of ${originalCount} captured requests. Check urlSamples to verify the ` +
+            `correct filter substring.`,
           urlSamples,
         }),
         tip:
@@ -554,7 +559,10 @@ export class CoreHandlers {
             : undefined,
         ...(excludedStaticCount > 0 && {
           staticResourcesExcluded: excludedStaticCount,
-          staticFilterNote: `${excludedStaticCount} static resources (Image/Font/Stylesheet/Media) excluded by default. Set any filter to include all types.`,
+          staticFilterNote:
+            `${excludedStaticCount} static resources (Image/Font/Stylesheet/Media) ` +
+            `excluded by default. Set any filter ` +
+            `to include all types.`,
         }),
         ...(originalCount > 100 &&
           !hasAnyFilter && {

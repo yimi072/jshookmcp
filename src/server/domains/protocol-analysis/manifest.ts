@@ -101,7 +101,9 @@ const manifest = {
       'pcap_write',
       'pcap_read',
     ],
-    hint: 'Capture or craft packet bytes -> build Ethernet/ARP/IP/ICMP headers -> apply deterministic checksums and payload mutations -> read/write compact PCAP files -> infer fields or state machines from resulting payloads',
+    hint:
+      'Capture or craft packet bytes -> build Ethernet/ARP/IP/ICMP headers -> apply deterministic checksums and ' +
+      'payload mutations -> read/write compact PCAP files -> infer fields or state machines from resulting payloads',
   },
   toolDependencies: [
     {

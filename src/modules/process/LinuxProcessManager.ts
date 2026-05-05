@@ -206,7 +206,9 @@ export class LinuxProcessManager {
         // Keeping as best-effort; no window data is parsed from this path.
         try {
           const { stdout: gnomeOut } = await execAsync(
-            `gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell --method org.gnome.Shell.Eval "global.get_window_actors().filter(w => w.meta_window.get_pid() === ${pid}).map(w => w.meta_window.get_title() + '|' + w.meta_window.get_wm_class())" 2>/dev/null`,
+            `gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell --method org.gnome.Shell.Eval` +
+              ` "global.get_window_actors().filter(w => w.meta_window.get_pid() === ${pid}).map(w => ` +
+              `w.meta_window.get_title() + '|' + w.meta_window.get_wm_class())" 2>/dev/null`,
           );
           if (gnomeOut.includes(String(pid)) || gnomeOut.includes(',')) {
             logger.debug(

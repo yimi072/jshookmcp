@@ -98,7 +98,8 @@ export class StructureHandlers {
         success: true,
         ...result,
         hint: result.className
-          ? `Detected class: ${result.className}${result.baseClasses?.length ? ` (inherits: ${result.baseClasses.join(' → ')})` : ''}`
+          ? `Detected class: ${result.className}` +
+            `${result.baseClasses?.length ? ` (inherits: ${result.baseClasses.join(' → ')})` : ''}`
           : `Inferred ${result.fields.length} fields. Use memory_structure_export_c to export as C struct.`,
       });
     } catch (error) {

@@ -46,7 +46,8 @@ export function getRegistryBaseUrl(): string {
   const baseUrl = (process.env.EXTENSION_REGISTRY_BASE_URL ?? '').trim().replace(/\/+$/, '');
   if (!baseUrl) {
     throw new Error(
-      'EXTENSION_REGISTRY_BASE_URL is not configured. Set it in .env or environment before browsing or installing extensions.',
+      'EXTENSION_REGISTRY_BASE_URL is not configured. Set it in .env or environment before browsing or installing' +
+        ' extensions.',
     );
   }
   return baseUrl;
@@ -499,19 +500,22 @@ export async function findRegistryEntryBySlug(
 
   if (workflowFetchError && pluginFetchError) {
     throw new Error(
-      `Failed to resolve extension slug "${slug}": workflow registry error: ${workflowFetchError.message}; plugin registry error: ${pluginFetchError.message}`,
+      `Failed to resolve extension slug "${slug}": workflow registry error: ${workflowFetchError.message}; plugin ` +
+        `registry error: ${pluginFetchError.message}`,
     );
   }
 
   if (pluginFetchError) {
     throw new Error(
-      `Extension "${slug}" was not found in workflow registry, and plugin registry lookup failed: ${pluginFetchError.message}`,
+      `Extension "${slug}" was not found in workflow registry, and plugin registry lookup failed: ` +
+        `${pluginFetchError.message}`,
     );
   }
 
   if (workflowFetchError) {
     throw new Error(
-      `Extension "${slug}" was not found in plugin registry, and workflow registry lookup failed: ${workflowFetchError.message}`,
+      `Extension "${slug}" was not found in plugin registry, and workflow registry lookup failed: ` +
+        `${workflowFetchError.message}`,
     );
   }
 

@@ -121,7 +121,10 @@ const manifest = {
       'page_type',
       'page_screenshot',
     ],
-    hint: 'Browser automation workflow: bootstrap browser/page state -> inspect page state -> interact -> capture visual evidence only when needed',
+    hint:
+      'Browser automation workflow: bootstrap browser/page state -> inspect page state -> interact -> capture ' +
+      'visual ' +
+      'evidence only when needed',
   },
 
   prerequisites: {

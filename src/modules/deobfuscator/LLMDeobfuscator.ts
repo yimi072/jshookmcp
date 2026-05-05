@@ -74,7 +74,8 @@ export class LLMDeobfuscator {
 
     const result = await this.bridge.sampleText({
       systemPrompt:
-        'You are an expert JavaScript reverse engineer. You specialize in deobfuscation and renaming obfuscated identifiers to semantically meaningful names. Output only valid JSON.',
+        'You are an expert JavaScript reverse engineer. You specialize in deobfuscation and renaming obfuscated ' +
+        'identifiers to semantically meaningful names. Output only valid JSON.',
       userMessage,
       maxTokens: 256,
       temperature: 0.3,
@@ -100,7 +101,9 @@ export class LLMDeobfuscator {
     const result = await this.bridge.sampleText({
       systemPrompt:
         'You are a JavaScript reverse engineer. Analyze code and describe its purpose in one concise sentence.',
-      userMessage: `What does this function do?\n\n\`\`\`javascript\n${trimmedCode}\n\`\`\`\n\nRespond with a single sentence.`,
+      userMessage:
+        `What does this function do?\n\n\`\`\`javascript\n${trimmedCode}\n\`\`\`\n\nRespond with a` +
+        ` single sentence.`,
       maxTokens: 100,
       temperature: 0.2,
       modelHint: 'haiku',

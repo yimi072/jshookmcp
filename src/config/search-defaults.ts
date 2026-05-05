@@ -72,7 +72,8 @@ export const DEFAULT_QUERY_CATEGORY_PROFILE_CONFIGS = [
   },
   {
     pattern:
-      '(?:reverse|mission|signature|hook|crypto|encrypt|websocket|\\bws\\b|protocol|bundle|webpack|deobfusc|stealth|fingerprint|evidence|\\bhar\\b|逆向|签名|加签|协议|反混淆|反检测|指纹|证据|报告)',
+      '(?:reverse|mission|signature|hook|crypto|encrypt|websocket|\\bws\\b|protocol|bundle|webpack|deobfusc|stealth' +
+      'fingerprint|evidence|\\bhar\\b|逆向|签名|加签|协议|反混淆|反检测|指纹|证据|报告)',
     flags: 'i',
     domainBoosts: [
       { domain: 'workflow', weight: 1.8 },
@@ -215,7 +216,8 @@ export const DEFAULT_INTENT_TOOL_BOOST_RULE_CONFIGS = [
   },
   {
     pattern:
-      '(?:register|signup|sign\\s*up|账号注册|账户注册|邮箱验证|验证账号|激活账号|注册验证|验证码|邮箱激活|激活链接|mail\\s*verify|email\\s*verify|account\\s*pending|keygen)',
+      '(?:register|signup|sign\\s*up|账号注册|账户注册|邮箱验证|验证账号|激活账号|注册验证|验证码|邮箱激活|激活链接|mail\\s*verify|email\\s*verify' +
+      'account\\s*pending|keygen)',
     flags: 'i',
     boosts: [
       { tool: 'run_extension_workflow', bonus: 12 },

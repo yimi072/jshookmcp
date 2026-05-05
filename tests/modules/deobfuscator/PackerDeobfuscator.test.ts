@@ -68,7 +68,7 @@ describe('Packer-family deobfuscators', () => {
 
     expect(result.success).toBe(true);
     expect(result.iterations).toBe(0);
-    expect(result.warnings).toContain('');
+    expect(result.warnings).toContain('Packer unpack produced no change, stopping early');
   });
 
   it('parses packer params from sandbox output', async () => {

@@ -40,7 +40,10 @@ export class DebuggerSteppingHandlers {
               {
                 success: false,
                 error: 'Cannot step while not paused',
-                hint: "The debugger must be paused at a breakpoint to perform step operations. Set one with breakpoint({ action: 'set', type: 'code', ... }) or pause with debugger_pause().",
+                hint:
+                  'The debugger must be paused at a breakpoint to perform step operations. Set one with ' +
+                  'breakpoint({ ' +
+                  "action: 'set', type: 'code', ... }) or pause with debugger_pause().",
                 currentState: 'running',
               },
               null,
@@ -121,7 +124,10 @@ export class DebuggerSteppingHandlers {
               {
                 success: false,
                 error: 'Cannot step while not paused',
-                hint: "The debugger must be paused at a breakpoint to perform step operations. Set one with breakpoint({ action: 'set', type: 'code', ... }) or pause with debugger_pause().",
+                hint:
+                  'The debugger must be paused at a breakpoint to perform step operations. Set one with ' +
+                  'breakpoint({ ' +
+                  "action: 'set', type: 'code', ... }) or pause with debugger_pause().",
                 currentState: 'running',
               },
               null,
@@ -202,7 +208,10 @@ export class DebuggerSteppingHandlers {
               {
                 success: false,
                 error: 'Cannot step out while not paused',
-                hint: "The debugger must be paused at a breakpoint to perform step out. Set one with breakpoint({ action: 'set', type: 'code', ... }) or pause with debugger_pause().",
+                hint:
+                  'The debugger must be paused at a breakpoint to perform step out. Set one with breakpoint({ ' +
+                  'action:' +
+                  " 'set', type: 'code', ... }) or pause with debugger_pause().",
                 currentState: 'running',
               },
               null,

@@ -108,7 +108,9 @@ const manifest = {
       'tls_decrypt_payload',
       'tls_cert_pin_bypass',
     ],
-    hint: 'TLS/WebSocket analysis: probe endpoint → open ws/wss session → exchange frames → inspect trust/cipher/ALPN → enable keylog or bypass pinning when needed.',
+    hint:
+      'TLS/WebSocket analysis: probe endpoint → open ws/wss session → exchange frames → inspect' +
+      'trust/cipher/ALPN → enable keylog or bypass pinning when needed.',
   },
   prerequisites: {
     tls_probe_endpoint: [

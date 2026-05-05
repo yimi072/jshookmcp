@@ -253,7 +253,8 @@ export function VirtualQueryEx(
   }
 
   // Parse the struct manually from buffer
-  // Layout: BaseAddress(8), AllocationBase(8), AllocationProtect(4), padding(4), RegionSize(8), State(4), Protect(4), Type(4), padding(4)
+  // Layout: BaseAddress(8), AllocationBase(8), AllocationProtect(4), padding(4), RegionSize(8), State(4), Protect(4),
+  // Type(4), padding(4)
   const info: MemoryBasicInfo = {
     BaseAddress: buffer.readBigUInt64LE(0),
     AllocationBase: buffer.readBigUInt64LE(8),

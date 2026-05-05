@@ -117,7 +117,11 @@ const __bootstrap = async () => {
       const { code, functionName, testInputs } = payload;
       const sandbox = Object.create(null);
       sandbox.console = Object.freeze({ log() {}, warn() {}, error() {} });
-      sandbox.Buffer = { from: (...args) => Buffer.from(...args), alloc: (size) => Buffer.alloc(Math.min(size, 1048576)), concat: (...args) => Buffer.concat(...args) };
+      sandbox.Buffer = {
+        from: (...args) => Buffer.from(...args),
+        alloc: (size) => Buffer.alloc(Math.min(size, 1048576)),
+        concat: (...args) => Buffer.concat(...args),
+      };
       Object.freeze(sandbox.Buffer);
       sandbox.TextEncoder = TextEncoder; sandbox.TextDecoder = TextDecoder;
       sandbox.atob = (v) => Buffer.from(String(v), 'base64').toString('binary');
@@ -126,7 +130,8 @@ const __bootstrap = async () => {
       const context = vm.createContext(sandbox);
       const isValidIdentifier = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(functionName);
       const targetExpression = isValidIdentifier
-        ? "(typeof " + functionName + " !== 'undefined' ? " + functionName + " : globalThis[" + JSON.stringify(functionName) + "])"
+        ? "(typeof " + functionName + " !== 'undefined' ? " +
+          functionName + " : globalThis[" + JSON.stringify(functionName) + "])"
         : "globalThis[" + JSON.stringify(functionName) + "]";
       const script = new vm.Script(
         "(() => {\\n" + code + "\\n;return " + targetExpression + ";\\n})()",
@@ -140,18 +145,40 @@ const __bootstrap = async () => {
         try {
           const raw = targetFn(input);
           const resolved = raw && typeof raw.then === 'function' ? await raw : raw;
-          rows.push({ input, output: normalizeOutput(resolved), duration: Number((performance.now() - started).toFixed(3)) });
+          rows.push(
+            {
+              input,
+              output: normalizeOutput(resolved),
+              duration: Number((performance.now() - started).toFixed(3)),
+            }
+          );
         } catch (err) {
-          rows.push({ input, output: '', error: err && err.message ? err.message : String(err), duration: Number((performance.now() - started).toFixed(3)) });
+          rows.push(
+            {
+              input,
+              output: '',
+              error: err && err.message ? err.message : String(err),
+              duration: Number((performance.now() - started).toFixed(3)),
+            }
+          );
         }
       }
       parentPort.postMessage({ jobId, ok: true, result: { ok: true, results: rows } });
     } catch (error) {
-      parentPort.postMessage({ jobId, ok: true, result: { ok: false, error: error && error.message ? error.message : String(error), results: [] } });
+      parentPort.postMessage(
+        {
+          jobId,
+          ok: true,
+          result: { ok: false, error: error && error.message ? error.message : String(error), results: [] },
+        }
+      );
     }
   });
 };
-__bootstrap().catch((error) => { if (typeof console !== 'undefined' && typeof console.error === 'function') console.error('crypto harness worker bootstrap failed:', error && error.message ? error.message : String(error)); });
+__bootstrap().catch((error) => {
+  if (typeof console !== 'undefined' && typeof console.error === 'function')
+    console.error('crypto harness worker bootstrap failed:', error && error.message ? error.message : String(error));
+});
 `;
 
 export interface TransformSharedState {
@@ -367,8 +394,14 @@ export function buildCryptoPolyfills(): string {
   return `
 const __textEncoder = typeof TextEncoder !== 'undefined' ? new TextEncoder() : null;
 const __textDecoder = typeof TextDecoder !== 'undefined' ? new TextDecoder() : null;
-if (typeof globalThis.atob === 'undefined') { globalThis.atob = (value) => Buffer.from(String(value), 'base64').toString('binary'); }
-if (typeof globalThis.btoa === 'undefined') { globalThis.btoa = (value) => Buffer.from(String(value), 'binary').toString('base64'); }
+if (typeof globalThis.atob === 'undefined') {
+  globalThis.atob = (value) => Buffer.from(String(value), 'base64').toString('binary');
+  ;
+}
+if (typeof globalThis.btoa === 'undefined') {
+  globalThis.btoa = (value) => Buffer.from(String(value), 'binary').toString('base64');
+  ;
+}
 `.trim();
 }
 

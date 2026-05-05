@@ -63,7 +63,10 @@ export class IntegrityHandlers {
       return toTextResponse({
         success: true,
         ...result,
-        hint: `Enumerated ${result.heaps.length} heaps. Use memory_heap_stats for statistics or memory_heap_anomalies to check for issues.`,
+        hint:
+          `Enumerated ${result.heaps.length} heaps. Use memory_heap_stats for statistics or ` +
+          `memory_heap_anomalies to ` +
+          `check for issues.`,
       });
     } catch (error) {
       return toErrorResponse('memory_heap_enumerate', error);
@@ -177,7 +180,8 @@ export class IntegrityHandlers {
         count: guardPages.length,
         scan: stats,
         hint: stats.truncated
-          ? `Scan stopped after ${stats.scannedRegions} regions in ${stats.durationMs}ms to avoid hanging. Results may be partial.`
+          ? `Scan stopped after ${stats.scannedRegions} regions in ${stats.durationMs}ms to avoid ` +
+            `hanging. Results may be partial.`
           : guardPages.length > 0
             ? `Found ${guardPages.length} guard page regions — these may indicate anti-tampering.`
             : 'No guard pages found.',
@@ -202,7 +206,8 @@ export class IntegrityHandlers {
         modifiedCount: modified.length,
         scan: stats,
         hint: stats.truncated
-          ? `Checked ${stats.scannedSections} executable section(s) across ${stats.scannedModules} module(s) before hitting safety limits. Results may be partial.`
+          ? `Checked ${stats.scannedSections} executable section(s) across ${stats.scannedModules} module(s) before ` +
+            `hitting safety limits. Results may be partial.`
           : modified.length > 0
             ? `${modified.length} section(s) modified — code may have been patched or hooked.`
             : 'All checked sections match disk — no runtime modifications detected.',

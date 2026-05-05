@@ -97,9 +97,7 @@ describe('server/domains/analysis/definitions', () => {
     const tool = coreTools.find((t) => t.name === 'deobfuscate')!;
     expect(tool.inputSchema.required).toContain('code');
     expect(tool.inputSchema.properties).toHaveProperty('engine');
-    expect(tool.inputSchema.properties).toHaveProperty('aggressiveVM');
-    expect(tool.inputSchema.properties).toHaveProperty('useASTOptimization');
-    expect(tool.inputSchema.properties).toHaveProperty('timeout');
+    expect(tool.inputSchema.properties).toHaveProperty('detectOnly');
     expect(tool.inputSchema.properties).toHaveProperty('unpack');
   });
 

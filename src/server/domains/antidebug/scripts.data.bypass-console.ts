@@ -76,7 +76,8 @@ export const ANTI_DEBUG_BYPASS_CONSOLE_SCRIPT = {
     }
 
     var valueType = typeof value;
-    if (value == null || valueType === 'string' || valueType === 'number' || valueType === 'boolean' || valueType === 'bigint') {
+    if (value == null || valueType === 'string' || valueType === 'number' || valueType === 'boolean' || valueType === 'bigint')
+      {
       return value;
     }
 

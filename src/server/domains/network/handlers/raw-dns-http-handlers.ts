@@ -146,7 +146,8 @@ export class RawDnsHttpHandlers {
             const targetHost = normalizeTargetHost(targetUrl.hostname);
             if (targetHost !== host && targetHost !== (target.resolvedAddress ?? '')) {
               throw new Error(
-                `HTTP request blocked: request-line target host "${targetHost}" does not match authorized host "${host}"`,
+                `HTTP request blocked: request-line target host "${targetHost}" does not match authorized host "` +
+                  `${host}"`,
               );
             }
           } catch (e) {

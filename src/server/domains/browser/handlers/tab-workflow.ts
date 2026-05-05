@@ -125,7 +125,8 @@ export class TabWorkflowHandlers {
     try {
       if (!isTabAction(action)) {
         return R.fail(
-          `Unknown action: "${String(action)}". Valid: list, alias_bind, alias_open, navigate, wait_for, context_set, context_get, transfer, clear`,
+          `Unknown action: "${String(action)}". Valid: list, alias_bind, alias_open, navigate, wait_for, context_set,` +
+            ` context_get, transfer, clear`,
         ).build();
       }
 

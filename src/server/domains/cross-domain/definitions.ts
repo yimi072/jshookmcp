@@ -23,7 +23,8 @@ export const crossDomainToolDefinitions: Tool[] = [
   tool('cross_domain_correlate_all', (t) =>
     t
       .desc(
-        'Run the built-in skia, mojo, syscall, and binary correlators and merge the results into the shared evidence graph.',
+        'Run the built-in skia, mojo, syscall, and binary correlators and merge the results into the shared ' +
+          'evidence graph.',
       )
       .prop('sceneTree', {
         type: 'object',

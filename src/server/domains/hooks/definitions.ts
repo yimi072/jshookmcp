@@ -5,7 +5,9 @@ export const aiHookTools: Tool[] = [
   tool('ai_hook', (t) =>
     t
       .desc(
-        'Manage AI hooks. Actions: inject (inject code into page), get_data (retrieve captured hook data), list (all active hooks), clear (remove hook data by id or all), toggle (enable/disable a hook), export (export data as JSON/CSV).',
+        'Manage AI hooks. Actions: inject (inject code into page), get_data (retrieve captured hook data), list ' +
+          '(all active hooks), clear (remove hook data by id or all), toggle (enable/disable a hook), export ' +
+          '(export data as JSON/CSV).',
       )
       .enum(
         'action',
@@ -35,7 +37,9 @@ export const hookPresetTools: Tool[] = [
   tool('hook_preset', (t) =>
     t
       .desc(
-        'Install a pre-built JavaScript hook from 20+ built-in presets (eval, atob/btoa, Proxy, Reflect, Object.defineProperty, etc.), or provide customTemplate/customTemplates to install your own reusable hook bodies. Use listPresets=true to see all available preset descriptions.',
+        'Install a pre-built JavaScript hook from 20+ built-in presets (eval, atob/btoa, Proxy, Reflect, ' +
+          'Object.defineProperty, etc.), or provide customTemplate/customTemplates to install your own reusable ' +
+          'hook bodies. Use listPresets=true to see all available preset descriptions.',
       )
       .string(
         'preset',
@@ -61,7 +65,8 @@ export const hookPresetTools: Tool[] = [
         },
         required: ['id', 'body'],
         description:
-          'Inline custom template. body should contain the hook body inserted into the standard buildHookCode wrapper. Use {{STACK_CODE}} and {{LOG_FN}} placeholders when needed.',
+          'Inline custom template. body should contain the hook body inserted into the standard buildHookCode ' +
+          'wrapper. Use {{STACK_CODE}} and {{LOG_FN}} placeholders when needed.',
       })
       .prop('customTemplates', {
         type: 'array',

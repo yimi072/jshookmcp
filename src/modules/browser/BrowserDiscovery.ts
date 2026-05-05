@@ -163,7 +163,10 @@ export class BrowserDiscovery {
   async findByProcessName(name: string): Promise<BrowserInfo[]> {
     try {
       const escapedPattern = this.escapePowerShellSingleQuoted(name);
-      const psCommand = `$Pattern='${escapedPattern}'; Get-Process -Name "*$Pattern*" -ErrorAction SilentlyContinue | Select-Object Id, ProcessName, Path, MainWindowTitle, MainWindowHandle, CPU, WorkingSet64 | ConvertTo-Json -Compress`;
+      const psCommand =
+        `$Pattern='${escapedPattern}'; Get-Process -Name "*$Pattern*" -ErrorAction SilentlyContinue` +
+        'Select-Object Id, ProcessName, Path, MainWindowTitle, MainWindowHandle, CPU, WorkingSet64' +
+        'ConvertTo-Json -Compress';
       const { execFile } = await import('child_process');
       const { promisify } = await import('util');
       const execFileAsync = promisify(execFile);
@@ -303,7 +306,9 @@ export class BrowserDiscovery {
         return null;
       }
 
-      const psCommand = `Get-CimInstance Win32_Process -Filter "ProcessId = ${Math.trunc(pid)}" | Select-Object CommandLine, ParentProcessId | ConvertTo-Json -Compress`;
+      const psCommand =
+        `Get-CimInstance Win32_Process -Filter "ProcessId = ${Math.trunc(pid)}"` +
+        'Select-Object CommandLine, ParentProcessId | ConvertTo-Json -Compress';
       const { stdout } = await execFileAsync(
         'powershell.exe',
         ['-NoProfile', '-Command', psCommand],
@@ -341,7 +346,10 @@ export class BrowserDiscovery {
         return false;
       }
 
-      const psCommand = `Get-NetTCPConnection -OwningProcess ${Math.trunc(pid)} -State Listen -ErrorAction SilentlyContinue | Select-Object LocalPort | ConvertTo-Json -Compress`;
+      const psCommand =
+        `Get-NetTCPConnection -OwningProcess ${Math.trunc(pid)} -State Listen -ErrorAction ` +
+        `SilentlyContinue` +
+        'Select-Object LocalPort | ConvertTo-Json -Compress';
       const { stdout } = await execFileAsync(
         'powershell.exe',
         ['-NoProfile', '-Command', psCommand],

@@ -85,7 +85,8 @@ export class SessionProfileManager {
 
     this.cachedProfile = profile;
     logger.info(
-      `Session profile exported: cookies=${profile.cookies.length}, origin=${profile.origin ?? 'unknown'}, ttlSec=${profile.ttlSec}`,
+      `Session profile exported: cookies=${profile.cookies.length}, origin=${profile.origin ?? 'unknown'}, ttlSec=` +
+        `${profile.ttlSec}`,
     );
     return profile;
   }

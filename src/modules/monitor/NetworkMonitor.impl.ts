@@ -231,7 +231,8 @@ export class NetworkMonitor {
         // Auto-capture response body into LRU cache (fire-and-forget)
         this.captureResponseBody(params.requestId).catch((err) => {
           logger.debug(
-            `[BodyCache] Auto-capture failed for ${params.requestId}: ${err instanceof Error ? err.message : String(err)}`,
+            `[BodyCache] Auto-capture failed for ${params.requestId}: ` +
+              `${err instanceof Error ? err.message : String(err)}`,
           );
         });
       };
@@ -473,7 +474,9 @@ export class NetworkMonitor {
         url: response.url,
         status: response.status,
         error: errorMessage,
-        hint: 'The response body may not be available for this request type (e.g., cached, redirected, or failed requests)',
+        hint:
+          'The response body may not be available for this request type (e.g., cached, redirected, or failed ' +
+          'requests)',
       });
       return null;
     }

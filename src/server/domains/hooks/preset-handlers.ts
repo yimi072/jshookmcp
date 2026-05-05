@@ -77,7 +77,8 @@ export class HookPresetToolHandlers {
                 {
                   success: false,
                   error:
-                    ' Provide either preset (single) or presets (multiple), or set listPresets=true to list available presets',
+                    ' Provide either preset (single) or presets (multiple), or set listPresets=true to list ' +
+                    'available presets',
                 },
                 null,
                 2,

@@ -77,11 +77,13 @@ export const analysisTools: Tool[] = [
       .object(
         'authorization',
         networkAuthorizationSchema,
-        'Request-scoped authorization policy for private-network or insecure-HTTP replay. Use exact hosts/CIDRs instead of process-wide bypasses.',
+        'Request-scoped authorization policy for private-network or insecure-HTTP replay. Use exact hosts/CIDRs ' +
+          'instead of process-wide bypasses.',
       )
       .string(
         'authorizationCapability',
-        'Base64url-encoded JSON capability for request-scoped authorization. Payload fields mirror authorization and must include requestId.',
+        'Base64url-encoded JSON capability for request-scoped authorization. Payload fields mirror authorization ' +
+          'and must include requestId.',
       )
       .number('timeoutMs', 'Request timeout in milliseconds', {
         default: 30000,

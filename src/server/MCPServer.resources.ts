@@ -97,7 +97,9 @@ export function registerServerResources(ctx: MCPServerContext): void {
           name: session.name || `Instrumentation Session ${session.id}`,
           uri: `jshook://instrumentation/session/${session.id}`,
           mimeType: 'application/json',
-          description: `operations=${session.operationCount}, artifacts=${session.artifactCount}, status=${session.status}`,
+          description:
+            `operations=${session.operationCount}, artifacts=${session.artifactCount}, status=` +
+            `${session.status}`,
         })),
       };
     },

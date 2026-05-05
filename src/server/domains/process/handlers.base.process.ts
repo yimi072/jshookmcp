@@ -134,9 +134,12 @@ export class ProcessHandlersCore {
 
     const aslrNote = modulesEnumerated
       ? moduleCount && moduleCount > 0
-        ? `Enumerated ${moduleCount} module(s). Treat absolute addresses as session-specific because ASLR can shift module bases between launches.`
-        : 'Module enumeration succeeded but returned no modules. Absolute addresses may still change across process launches because of ASLR.'
-      : 'Module enumeration was unavailable. Assume ASLR may shift absolute addresses between launches and re-resolve addresses after restarts.';
+        ? `Enumerated ${moduleCount} module(s). Treat absolute addresses as session-specific because ASLR can shift ` +
+          `module bases between launches.`
+        : 'Module enumeration succeeded but returned no modules. Absolute addresses may still change across process' +
+          ' launches because of ASLR.'
+      : 'Module enumeration was unavailable. Assume ASLR may shift absolute addresses between launches and ' +
+        're-resolve addresses after restarts.';
 
     return {
       permission: {

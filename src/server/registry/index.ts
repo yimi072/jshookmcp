@@ -55,7 +55,8 @@ async function init(profile?: ToolProfileId): Promise<void> {
         const existing = registrationsByName.get(registration.tool.name);
         if (existing) {
           logger.warn(
-            `[registry] Duplicate tool name "${registration.tool.name}": domain "${registration.domain}" conflicts with "${existing.domain}" — keeping first`,
+            `[registry] Duplicate tool name "${registration.tool.name}": domain "${registration.domain}" conflicts ` +
+              `with "${existing.domain}" — keeping first`,
           );
         } else {
           registrationsByName.set(registration.tool.name, registration);

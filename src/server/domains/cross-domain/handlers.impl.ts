@@ -239,7 +239,11 @@ export class CrossDomainWorkflowClassifier {
     if (evaluation.missingDomains.length === 0) {
       return `Matched goal "${normalizedGoal}" and all required domains are enabled.`;
     }
-    return `Matched goal "${normalizedGoal}" with ${Math.round(evaluation.coverage * 100)}% domain coverage. Missing: ${evaluation.missingDomains.join(', ')}.`;
+    return (
+      `Matched goal "${normalizedGoal}" with ${Math.round(evaluation.coverage * 100)}% domain coverage. ` +
+      `Missing: ` +
+      `${evaluation.missingDomains.join(', ')}.`
+    );
   }
 }
 

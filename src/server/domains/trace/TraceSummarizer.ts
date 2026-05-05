@@ -153,7 +153,9 @@ export function extractKeyMoments(events: TraceEvent[]): KeyMoment[] {
       moments.push({
         timestamp: event.timestamp,
         type: 'breakpoint',
-        description: `Debugger paused${event.scriptId ? ` at script ${event.scriptId}` : ''}${event.lineNumber ? `:${event.lineNumber}` : ''}`,
+        description:
+          `Debugger paused${event.scriptId ? ` at script ${event.scriptId}` : ''}` +
+          `${event.lineNumber ? `:${event.lineNumber}` : ''}`,
         data: event.data,
       });
     } else if (event.eventType === 'Network.loadingFinished') {

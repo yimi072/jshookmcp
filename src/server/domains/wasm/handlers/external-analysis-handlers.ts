@@ -59,7 +59,10 @@ export class ExternalAnalysisHandlers extends ExternalToolHandlersBase {
       detections.push({
         type: 'constant-encoding',
         confidence: Math.min((xorChainCount + rotCount + shiftCount) / 50, 0.9),
-        description: `High density of bitwise ops (${xorChainCount} xor, ${shiftCount} shift, ${rotCount} rotate) — constant decoding`,
+        description:
+          `High density of bitwise ops (${xorChainCount} xor, ${shiftCount} shift, ${rotCount} ` +
+          `rotate) — constant ` +
+          `decoding`,
       });
     }
 
@@ -93,7 +96,10 @@ export class ExternalAnalysisHandlers extends ExternalToolHandlersBase {
       detections.push({
         type: 'code-bloat',
         confidence: 0.5,
-        description: `Average ${(totalSize / funcCount).toFixed(0)} chars/function across ${funcCount} functions — unusually large`,
+        description:
+          `Average ${(totalSize / funcCount).toFixed(0)} chars/function across ${funcCount} ` +
+          `functions — unusually ` +
+          `large`,
       });
     }
 
@@ -110,7 +116,8 @@ export class ExternalAnalysisHandlers extends ExternalToolHandlersBase {
       detectionCount: detections.length,
       detections,
       summary: hasObfuscation
-        ? `Detected ${detections.length} obfuscation pattern(s). Highest confidence: ${(maxConfidence * 100).toFixed(0)}%`
+        ? `Detected ${detections.length} obfuscation pattern(s). Highest confidence: ` +
+          `${(maxConfidence * 100).toFixed(0)}%`
         : 'No obfuscation patterns detected.',
       ...(verbose ? { watPreview: this.preview(wat, 200) } : {}),
     });
@@ -305,7 +312,11 @@ export class ExternalAnalysisHandlers extends ExternalToolHandlersBase {
       .map(({ module, name }) => {
         const safeModule = JSON.stringify(module);
         const safeName = JSON.stringify(name);
-        return `if (!imports[${safeModule}]) imports[${safeModule}] = {};\n  if (!imports[${safeModule}][${safeName}]) imports[${safeModule}][${safeName}] = () => {};`;
+        return (
+          `if (!imports[${safeModule}]) imports[${safeModule}] = {};\n  if (!imports[${safeModule}][` +
+          `${safeName}]) ` +
+          `imports[${safeModule}][${safeName}] = () => {};`
+        );
       })
       .join('\n  ');
     const wrapper = `// WASM Instrumentation Wrapper (Wasabi-style)
@@ -386,10 +397,14 @@ ${activeHooks
     const inputPathLooksLocal = isExplicitLocalFilePath(inputPath);
     const warnings = [
       inputPathLooksLocal
-        ? 'Wrapper embeds the provided inputPath into browser-side fetch(). Local filesystem paths are not browser-accessible; provide an http(s) URL instead, or upload the module with wasm_dump and use the resulting URL.'
+        ? 'Wrapper embeds the provided inputPath into browser-side fetch(). Local filesystem paths are not ' +
+          'browser-accessible; provide an http(s) URL instead, or upload the module with wasm_dump and use the ' +
+          'resulting URL.'
         : undefined,
       activeHooks.includes('branch') && callIndirectMatches.length > 0
-        ? `Branch hook only observes JS-visible WebAssembly.Table access. This module contains ${callIndirectMatches.length} call_indirect site(s), which are dispatched inside the Wasm engine and will not appear in branch logs.`
+        ? `Branch hook only observes JS-visible WebAssembly.Table access. This module contains ` +
+          `${callIndirectMatches.length} call_indirect site(s), which are dispatched inside the Wasm engine and will ` +
+          `not appear in branch logs.`
         : undefined,
     ].filter((warning): warning is string => typeof warning === 'string' && warning.length > 0);
     const warning = warnings.length > 0 ? warnings.join(' ') : undefined;

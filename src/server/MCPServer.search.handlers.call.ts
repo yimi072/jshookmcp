@@ -95,7 +95,9 @@ export async function handleCallTool(
     return asTextResponse(
       JSON.stringify({
         success: false,
-        error: `Tool "${name}" is not currently active. Use activate_tools or activate_domain first, then call it directly.`,
+        error:
+          `Tool "${name}" is not currently active. Use activate_tools or activate_domain first, then call it ` +
+          `directly.`,
         ...callMetadata,
       }),
     );

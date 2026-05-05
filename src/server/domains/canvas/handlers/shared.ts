@@ -147,7 +147,9 @@ export async function fingerprintCanvas(
               if (canvasEquals(game.canvas) || canvasEquals(game._canvas)) {
                 evidence.push('target canvas matches cc.game canvas');
               }
-              if (game.container && typeof game.container.contains === 'function' && game.container.contains(targetCanvas)) {
+              if (game.container && typeof game.container.contains === 'function' &&
+                  game.container.contains(targetCanvas))
+                {
                 evidence.push('target canvas is inside cc.game.container');
               }
             }
@@ -156,10 +158,14 @@ export async function fingerprintCanvas(
           if (adapterId === 'laya' && window.Laya) {
             var candidates = [
               window.Laya.Browser && window.Laya.Browser.canvas,
-              window.Laya.Render && window.Laya.Render._mainCanvas && (window.Laya.Render._mainCanvas.source || window.Laya.Render._mainCanvas._source || window.Laya.Render._mainCanvas),
-              window.Laya.Render && window.Laya.Render._context && window.Laya.Render._context.canvas && (window.Laya.Render._context.canvas.source || window.Laya.Render._context.canvas),
-              window.Laya.stage && window.Laya.stage._canvas && (window.Laya.stage._canvas.source || window.Laya.stage._canvas._source || window.Laya.stage._canvas),
-              window.Laya.stage && window.Laya.stage.canvas && (window.Laya.stage.canvas.source || window.Laya.stage.canvas._source || window.Laya.stage.canvas)
+              window.Laya.Render && window.Laya.Render._mainCanvas &&
+                (window.Laya.Render._mainCanvas.source || window.Laya.Render._mainCanvas._source || window.Laya.Render._mainCanvas),
+              window.Laya.Render && window.Laya.Render._context && window.Laya.Render._context.canvas &&
+                (window.Laya.Render._context.canvas.source || window.Laya.Render._context.canvas),
+              window.Laya.stage && window.Laya.stage._canvas &&
+                (window.Laya.stage._canvas.source || window.Laya.stage._canvas._source || window.Laya.stage._canvas),
+              window.Laya.stage && window.Laya.stage.canvas &&
+                (window.Laya.stage.canvas.source || window.Laya.stage.canvas._source || window.Laya.stage.canvas)
             ].filter(Boolean);
             if (candidates.some(canvasEquals)) {
               evidence.push('target canvas matches Laya render canvas');
